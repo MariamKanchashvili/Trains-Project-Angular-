@@ -1,5 +1,5 @@
 // გზა მოირგე შენს ფოლდერების სტრუქტურაზე
-@use '../../../../shared/styles/auth_sharedStyles.scss' as auth;
+@use '../../../../shared/styles/auth_sharedStyles.scss' as *;
 
 :host {
   display: block;
