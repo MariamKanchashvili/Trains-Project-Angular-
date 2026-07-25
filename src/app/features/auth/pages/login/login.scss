@@ -1,0 +1,75 @@
+// გზა მოირგე შენს ფოლდერების სტრუქტურაზე
+@use '../../../../shared/styles/auth_sharedStyles.scss' as auth;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.auth-card {
+  @include auth.card;
+
+  &__icon {
+    @include auth.icon-badge;
+  }
+
+  &__title {
+    @include auth.title;
+  }
+
+  &__subtitle {
+    @include auth.subtitle;
+  }
+}
+
+.auth-form {
+  @include auth.form;
+}
+
+.auth-field {
+  @include auth.field-wrapper;
+
+  &__icon {
+    @include auth.field-icon;
+  }
+
+  &__input {
+    @include auth.input;
+
+    &--invalid {
+      @include auth.input-invalid;
+    }
+  }
+
+  &__error {
+    @include auth.error-text;
+  }
+}
+
+.auth-checkbox-row {
+  @include auth.checkbox-row;
+}
+
+.auth-checkbox {
+  @include auth.checkbox-label;
+}
+
+.auth-link {
+  @include auth.link;
+
+  &--strong {
+    @include auth.link-strong;
+  }
+}
+
+.auth-btn {
+  @include auth.button-primary;
+}
+
+.auth-divider {
+  @include auth.divider;
+}
+
+.auth-footer {
+  @include auth.footer-note;
+}

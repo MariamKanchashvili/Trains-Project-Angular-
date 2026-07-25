@@ -1,0 +1,43 @@
+<div class="auth-layout">
+
+  <!-- მარცხენა პანელი: ბრენდინგი, უცვლელია ყველა auth გვერდზე -->
+  <aside class="auth-layout__brand">
+    <div class="auth-layout__brand-grid"></div>
+
+    <div class="auth-layout__brand-content">
+      <div class="brand-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+        </svg>
+      </div>
+
+      <h2 class="brand-title">STEP TRAINS</h2>
+      <p class="brand-subtitle">Book train tickets and manage your trips with your account.</p>
+
+      <div class="brand-stats">
+        <div class="brand-stats__item">
+          <span class="brand-stats__value">500+</span>
+          <span class="brand-stats__label">Routes</span>
+        </div>
+        <div class="brand-stats__item">
+          <span class="brand-stats__value">50+</span>
+          <span class="brand-stats__label">Stations</span>
+        </div>
+        <div class="brand-stats__item">
+          <span class="brand-stats__value">24/7</span>
+          <span class="brand-stats__label">Support</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- მარჯვენა პანელი: აქ იცვლება login / register / forgot-password / reset-password -->
+  <section class="auth-layout__content">
+    <div class="auth-layout__content-inner">
+      <ng-content></ng-content>
+    </div>
+  </section>
+
+</div>

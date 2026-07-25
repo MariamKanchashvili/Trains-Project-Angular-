@@ -1,0 +1,136 @@
+// ---- ტოკენები ----
+$color-bg-left: #0a0e18;
+$color-bg-right: #101830;
+$color-border: rgba(212, 175, 90, 0.15);
+$color-gold: #d4af5a;
+$color-gold-dark: #c9a83f;
+$color-text-heading: #f4efe2;
+$color-text-body: #7d8598;
+$color-text-muted: #565d70;
+
+$font-heading: 'Poppins', 'Segoe UI', sans-serif;
+$font-body: 'Inter', 'Segoe UI', sans-serif;
+
+:host {
+  display: block;
+  height: 100%;
+  min-height: 100vh;
+}
+
+.auth-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  background-color: $color-bg-right;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+
+  // ---------------- მარცხენა პანელი ----------------
+  &__brand {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px;
+    background-color: $color-bg-left;
+    overflow: hidden;
+
+    @media (max-width: 900px) {
+      display: none; // მობაილზე მხოლოდ ფორმა რჩება ხილული
+    }
+  }
+
+  &__brand-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(212, 175, 90, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(212, 175, 90, 0.06) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(circle at 30% 35%, black 0%, transparent 70%);
+  }
+
+  &__brand-content {
+    position: relative;
+    z-index: 1;
+    max-width: 420px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  // ---------------- მარჯვენა პანელი ----------------
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+  }
+
+  &__content-inner {
+    width: 100%;
+    max-width: 440px;
+  }
+}
+
+// ---------------- ბრენდის აიქონი ----------------
+.brand-icon {
+  width: 88px;
+  height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32px;
+  border-radius: 20px;
+  color: #1a1406;
+  background: linear-gradient(150deg, $color-gold 0%, $color-gold-dark 100%);
+  box-shadow: 0 0 48px rgba(212, 175, 90, 0.35);
+}
+
+.brand-title {
+  font-family: $font-heading;
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: $color-text-heading;
+  margin: 0 0 16px;
+}
+
+.brand-subtitle {
+  font-family: $font-body;
+  font-size: 1rem;
+  color: $color-text-body;
+  margin: 0 0 48px;
+  line-height: 1.5;
+}
+
+// ---------------- სტატისტიკა ----------------
+.brand-stats {
+  display: flex;
+  gap: 48px;
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &__value {
+    font-family: $font-heading;
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: $color-gold;
+  }
+
+  &__label {
+    font-family: $font-body;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: $color-text-muted;
+  }
+}

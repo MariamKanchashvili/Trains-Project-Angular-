@@ -1,0 +1,110 @@
+
+<div class="auth-layout">
+
+  <!-- მარცხენა პანელი: ბრენდინგი, უცვლელია ყველა auth გვერდზე -->
+  <aside class="auth-layout__brand">
+    <div class="auth-layout__brand-grid"></div>
+
+    <div class="auth-layout__brand-content">
+      <div class="brand-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+        </svg>
+      </div>
+
+      <h2 class="brand-title">STEP TRAINS</h2>
+      <p class="brand-subtitle">Book train tickets and manage your trips with your account.</p>
+
+      <div class="brand-stats">
+        <div class="brand-stats__item">
+          <span class="brand-stats__value">500+</span>
+          <span class="brand-stats__label">Routes</span>
+        </div>
+        <div class="brand-stats__item">
+          <span class="brand-stats__value">50+</span>
+          <span class="brand-stats__label">Stations</span>
+        </div>
+        <div class="brand-stats__item">
+          <span class="brand-stats__value">24/7</span>
+          <span class="brand-stats__label">Support</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+<div class="auth-card">
+
+  <div class="auth-card__icon">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+      <polyline points="10 17 15 12 10 7" />
+      <line x1="15" y1="12" x2="3" y2="12" />
+    </svg>
+  </div>
+
+  <h1 class="auth-card__title">Welcome Back</h1>
+  <p class="auth-card__subtitle">Sign in to book your next trip</p>
+
+  <form [formGroup]="loginFormInfo" (ngSubmit)="login()" class="auth-form">
+
+    <div class="auth-field">
+      <svg class="auth-field__icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 6c0-1.1-.9-2-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h16a2 2 0 0 0 2-2V6z" />
+        <path d="m2 7 8.97 5.7a2 2 0 0 0 2.06 0L22 7" />
+      </svg>
+      <input
+        type="email"
+        formControlName="email"
+        placeholder="Email address"
+        [class.auth-field__input--invalid]="loginFormInfo.get('email')?.touched && loginFormInfo.get('email')?.invalid"
+        class="auth-field__input"
+      >
+    </div>
+    @if (loginFormInfo.get('email')?.touched && loginFormInfo.get('email')?.invalid) {
+      <p class="auth-field__error">Invalid email address</p>
+    }
+
+    <div class="auth-field">
+      <svg class="auth-field__icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+      </svg>
+      <input
+        type="password"
+        formControlName="password"
+        placeholder="Password"
+        [class.auth-field__input--invalid]="loginFormInfo.get('password')?.touched && loginFormInfo.get('password')?.hasError('required')"
+        class="auth-field__input"
+      >
+    </div>
+    @if (loginFormInfo.get('password')?.touched && loginFormInfo.get('password')?.hasError('required')) {
+      <p class="auth-field__error">Password is required</p>
+    }
+
+    <div class="auth-checkbox-row">
+      <label class="auth-checkbox">
+        <input type="checkbox">
+        <span>Remember me</span>
+      </label>
+      <a routerLink="/forgot-password" class="auth-link">Forgot password?</a>
+    </div>
+
+    <button type="submit" class="auth-btn">Sign In</button>
+  </form>
+
+  <div class="auth-divider"><span>or</span></div>
+
+  <fieldset class="auth-footer">
+    <p>
+      Don't have an account?
+      <a routerLink="/register" class="auth-link auth-link--strong">Create one now</a>
+    </p>
+  </fieldset>
+
+</div>
+</div>
