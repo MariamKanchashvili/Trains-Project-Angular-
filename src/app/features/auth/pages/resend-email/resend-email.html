@@ -1,83 +1,315 @@
 <div class="auth-layout">
 
-  <!-- მარცხენა პანელი: ბრენდინგი, უცვლელია ყველა auth გვერდზე -->
+
+  <!-- LEFT BRAND PANEL -->
   <aside class="auth-layout__brand">
+
     <div class="auth-layout__brand-grid"></div>
 
+
     <div class="auth-layout__brand-content">
+
+
       <div class="brand-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
-          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="28"
+             height="28"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+
+          <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+
         </svg>
+
       </div>
 
-      <h2 class="brand-title">Almost There</h2>
-      <p class="brand-subtitle">Just one more step to start booking your train</p>
+
+
+      <h2 class="brand-title">
+        Almost There
+      </h2>
+
+
+
+      <p class="brand-subtitle">
+        Just one more step to start booking your train
+      </p>
+
+
+
 
       <div class="brand-stats">
+
+
         <div class="brand-stats__item">
+
+
           <div class="feature-icon">
-              <svg _ngcontent-ng-c445333715="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect _ngcontent-ng-c445333715="" x="2" y="4" width="20" height="16" rx="2"></rect><path _ngcontent-ng-c445333715="" d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="24"
+                 height="24"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+
+              <rect x="2" y="4" width="20" height="16" rx="2"/>
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+
+            </svg>
+
           </div>
-          <span class="brand-stats__value">Secure Account</span>
-          <span class="brand-stats__label">Your account security is our priority</span>
+
+
+          <span class="brand-stats__value">
+            Secure Account
+          </span>
+
+
+          <span class="brand-stats__label">
+            Your account security is our priority
+          </span>
+
+
         </div>
+
+
+
+
+
         <div class="brand-stats__item">
+
+
           <div class="feature-icon">
-            <svg _ngcontent-ng-c445333715="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path _ngcontent-ng-c445333715="" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="24"
+                 height="24"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+
+            </svg>
+
+
           </div>
-          <span class="brand-stats__value">Quick Process</span>
-          <span class="brand-stats__label">Verification takes less than a minute</span>
+
+
+
+          <span class="brand-stats__value">
+            Quick Process
+          </span>
+
+
+          <span class="brand-stats__label">
+            Verification takes less than a minute
+          </span>
+
+
         </div>
+
+
+
+
+
+
         <div class="brand-stats__item">
-          <span class="brand-stats__value">Join the Community</span>
-          <span class="brand-stats__label">50 000+ verified travelers</span>
+
+
+          <span class="brand-stats__value">
+            Join the Community
+          </span>
+
+
+          <span class="brand-stats__label">
+            50 000+ verified travelers
+          </span>
+
+
         </div>
+
+
+
       </div>
+
+
     </div>
+
+
   </aside>
-<div class="auth-card">
 
-  <div class="auth-card__icon">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M22 6c0-1.1-.9-2-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h8" />
-      <path d="m2 7 8.97 5.7a2 2 0 0 0 2.06 0L22 7" />
-      <path d="m16 19 2 2 4-4" />
-    </svg>
-  </div>
 
-  <h1 class="auth-card__title">Verify Your Email</h1>
-  <p class="auth-card__subtitle">Enter the 6-digit code we sent to your inbox</p>
 
-  <form [formGroup]="verifyInfo" (ngSubmit)="ResendVerifyEmail()" class="auth-form">
 
-    <div class="auth-field">
-      <input
-        formControlName="code"
-        type="text"
-        placeholder="Enter verify code"
-        [class.auth-field__input--invalid]="verifyInfo.get('code')?.touched && verifyInfo.get('code')?.hasError('minlength')"
-        class="auth-field__input auth-field__input--code"
-      >
+
+
+  <!-- RIGHT CONTENT -->
+
+  <main class="auth-layout__content">
+
+
+    <div class="auth-card">
+
+
+
+      <div class="auth-card__icon">
+
+
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="24"
+             height="24"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+
+          <path d="M22 6c0-1.1-.9-2-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h8"/>
+          <path d="m2 7 8.97 5.7a2 2 0 0 0 2.06 0L22 7"/>
+          <path d="m16 19 2 2 4-4"/>
+
+        </svg>
+
+
+      </div>
+
+
+
+
+
+      <h1 class="auth-card__title">
+        Verify Your Email
+      </h1>
+
+
+
+
+      <p class="auth-card__subtitle">
+        Enter the 6-digit code we sent to your inbox
+      </p>
+
+
+
+
+
+
+
+      <form
+        [formGroup]="verifyInfo"
+        (ngSubmit)="ResendVerifyEmail()"
+        class="auth-form">
+
+
+
+        <div class="auth-field">
+
+
+          <input
+            formControlName="code"
+            type="text"
+            placeholder="Enter verify code"
+            [class.auth-field__input--invalid]="verifyInfo.get('code')?.touched && verifyInfo.get('code')?.hasError('minlength')"
+            class="auth-field__input auth-field__input--code">
+
+
+        </div>
+
+
+
+
+        @if (verifyInfo.get('code')?.touched && verifyInfo.get('code')?.hasError('minlength')) {
+
+
+          <p class="auth-field__error">
+            Code must be 6 characters
+          </p>
+
+
+        }
+
+
+
+
+
+        <button
+          type="submit"
+          class="auth-btn">
+
+          Verify Email
+
+        </button>
+
+
+
+
+      </form>
+
+
+
+
+
+
+
+      <div class="auth-divider">
+
+        <span>
+          or
+        </span>
+
+      </div>
+
+
+
+
+
+
+      <fieldset class="auth-footer">
+
+
+        <p>
+
+          Back to
+
+          <a
+            routerLink="/login"
+            class="auth-link auth-link--strong">
+
+            Login
+
+          </a>
+
+
+        </p>
+
+
+      </fieldset>
+
+
+
+
+
     </div>
-    @if (verifyInfo.get('code')?.touched && verifyInfo.get('code')?.hasError('minlength')) {
-      <p class="auth-field__error">Code must be 6 characters</p>
-    }
 
-    <button type="submit" class="auth-btn">Verify Email</button>
-  </form>
 
-  <div class="auth-divider"><span>or</span></div>
+  </main>
 
-  <fieldset class="auth-footer">
-    <p>
-      Back to
-      <a routerLink="/login" class="auth-link auth-link--strong">Login</a>
-    </p>
-  </fieldset>
 
-</div>
+
+
 </div>
