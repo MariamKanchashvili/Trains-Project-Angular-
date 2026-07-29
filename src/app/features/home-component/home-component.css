@@ -153,10 +153,24 @@ button:hover {
   border-radius: 20px;
   text-align: left;
   transition: 0.3s;
+  /* ახალი სტილები ჩარჩოსა და პადინგისთვის */
+}
+.home-cards__items .icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px; /* შიდა დაშორება (padding) */
+  border-radius: 12px; /* ჩარჩოს მომრგვალება */
+  margin-bottom: 20px; /* დაშორება ქვედა ტექსტამდე */
+  /* თითქმის გამჭვირვალე ოქროსფერი ჩარჩო და ფონი */
+  background: rgba(212, 175, 90, 0.03);
+  border: 1px solid rgba(212, 175, 90, 0.15);
+  transition: 0.3s;
 }
 .home-cards__items svg {
   color: #d4af5a;
-  margin-bottom: 20px;
+  margin-bottom: 0; /* ძველი margin მოვაშორეთ, რადგან wrapper-ს აქვს */
+  display: block;
 }
 .home-cards__items p {
   color: #f0e6c8;
@@ -169,10 +183,18 @@ button:hover {
   line-height: 1.5;
   font-size: 14px;
 }
+.home-cards__items {
+  /* ეფექტი, როდესაც მომხმარებელი მიიტანს მაუსს ქარდზე (Hover) */
+}
 .home-cards__items:hover {
   transform: translateY(-8px);
   border-color: #d4af5a;
   box-shadow: 0 15px 35px rgba(212, 175, 90, 0.15);
+  /* მაუსის მიტანისას ჩარჩოც ოდნავ უფრო მკვეთრი გახდება */
+}
+.home-cards__items:hover .icon-wrapper {
+  border-color: rgba(212, 175, 90, 0.4);
+  background: rgba(212, 175, 90, 0.07);
 }
 
 /* ==========================================================
@@ -249,4 +271,15 @@ button:hover {
 }
 .search-alert.success p {
   color: #e0f7fa;
+}
+
+@media screen and (max-width: 780px) {
+  .home-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media screen and (max-width: 580px) {
+  .home-cards {
+    grid-template-columns: 1fr;
+  }
 }/*# sourceMappingURL=home-component.css.map */

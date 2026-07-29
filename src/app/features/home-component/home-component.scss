@@ -275,76 +275,62 @@ span{
 
 
   &__items {
+  padding: 30px 25px;
+  background: rgba(18,25,51,.7);
+  border: 1px solid $border;
+  border-radius: 20px;
+  text-align: left;
+  transition: .3s;
 
-    padding:30px 25px;
-
-    background:
-    rgba(18,25,51,.7);
-
-
-    border:1px solid $border;
-
-    border-radius:20px;
-
-
-    text-align:left;
-
-
-    transition:.3s;
-
-
-
-    svg {
-
-      color:$gold;
-
-      margin-bottom:20px;
-
-    }
-
-
-
-    p {
-
-      color:$text-main;
-
-      font-size:18px;
-
-      font-weight:600;
-
-      margin-bottom:10px;
-
-    }
-
-
-
-    span {
-
-      color:$text-light;
-
-      line-height:1.5;
-
-      font-size:14px;
-
-    }
-
-
-
-    &:hover {
-
-      transform:translateY(-8px);
-
-
-      border-color:$gold;
-
-
-      box-shadow:
-      0 15px 35px rgba(212,175,90,.15);
-
-    }
-
-
+  /* ახალი სტილები ჩარჩოსა და პადინგისთვის */
+  .icon-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    
+    padding: 12px;               /* შიდა დაშორება (padding) */
+    border-radius: 12px;         /* ჩარჩოს მომრგვალება */
+    margin-bottom: 20px;         /* დაშორება ქვედა ტექსტამდე */
+    
+    /* თითქმის გამჭვირვალე ოქროსფერი ჩარჩო და ფონი */
+    background: rgba(212, 175, 90, 0.03); 
+    border: 1px solid rgba(212, 175, 90, 0.15); 
+    
+    transition: .3s;
   }
+
+  svg {
+    color: $gold;
+    margin-bottom: 0;            /* ძველი margin მოვაშორეთ, რადგან wrapper-ს აქვს */
+    display: block;
+  }
+
+  p {
+    color: $text-main;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  span {
+    color: $text-light;
+    line-height: 1.5;
+    font-size: 14px;
+  }
+
+  /* ეფექტი, როდესაც მომხმარებელი მიიტანს მაუსს ქარდზე (Hover) */
+  &:hover {
+    transform: translateY(-8px);
+    border-color: $gold;
+    box-shadow: 0 15px 35px rgba(212,175,90,.15);
+
+    /* მაუსის მიტანისას ჩარჩოც ოდნავ უფრო მკვეთრი გახდება */
+    .icon-wrapper {
+      border-color: rgba(212, 175, 90, 0.4);
+      background: rgba(212, 175, 90, 0.07);
+    }
+  }
+}
 
 }
 
@@ -480,3 +466,13 @@ span{
   }
 }
 
+@media screen and (max-width:780px){
+  .home-cards{
+    grid-template-columns: repeat(2,1fr);
+  }
+}
+@media screen and (max-width:580px){
+  .home-cards{
+    grid-template-columns: 1fr;
+  }
+}
