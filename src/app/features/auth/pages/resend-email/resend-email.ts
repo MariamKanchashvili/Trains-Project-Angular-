@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { RouterLink } from '@angular/router';
-import { AuthLayout } from "../../auth-layout/auth-layout";
+
 
 @Component({
   selector: 'app-resend-email',

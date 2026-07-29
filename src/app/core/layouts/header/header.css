@@ -1,1 +1,72 @@
-/*# sourceMappingURL=header.css.map */
+.header-wrapper {
+  background-color: #121933;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  align-items: center;
+  gap: 5px;
+  font-size: 18px;
+  cursor: pointer;
+}
+.logo p {
+  color: white;
+}
+.logo span {
+  color: #b79234;
+}
+.logo svg {
+  color: #d4af5a;
+}
+.logo {
+  text-shadow: #b8a882;
+}
+
+.nav-list {
+  display: flex;
+  gap: 15px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.nav-items {
+  position: relative;
+  color: #d4af5a;
+  padding-bottom: 8px;
+}
+
+.nav-items.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #b79234;
+}
+
+.btn-wrapper {
+  font-size: 13px;
+}
+
+.btn-signin {
+  color: #b8a882;
+  margin-right: 30px;
+}
+
+.btn-signup {
+  background-color: #d4af5a;
+  border: 1px solid #d4af5a;
+  color: #121933;
+  border-radius: 8px;
+  padding: 10px;
+  height: 5vh;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}/*# sourceMappingURL=header.css.map */

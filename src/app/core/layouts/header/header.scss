@@ -1,0 +1,85 @@
+// =========================================
+// Header Variables
+// =========================================
+$bg-left: #0b0f1c;
+$bg-right: #121933;
+
+$gold: #d4af5a;
+$gold-dark: #b79234;
+
+$text-white: #ffffff;
+$text-light:#b8a882;
+$text-muted: #4a4535;
+
+$border: rgba(212,175,90,.15);
+
+$card-bg: #17213f;
+
+.header-wrapper{
+    background-color: $bg-right;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 20px;
+    
+}
+.logo{
+    display: flex;
+    align-items: center;
+    align-items: center;
+    gap: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    p{
+        color: white;
+
+    }
+    span{
+        color: $gold-dark;
+    }
+    svg{
+        color: $gold;
+    }
+text-shadow: #b8a882;
+}
+.nav-list{
+    display: flex;
+    gap: 15px;
+    cursor: pointer;
+    font-size: 13px;
+}
+.nav-items{
+    position: relative;
+    color: $gold;
+    padding-bottom: 8px;
+ 
+}
+.nav-items.active::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background-color:  $gold-dark;
+ }
+.btn-wrapper{
+   
+    font-size: 13px;
+}
+.btn-signin{
+color: $text-light;
+margin-right: 30px;
+
+}
+.btn-signup{
+    background-color: $gold;
+    border: 1px solid $gold;
+    color: $bg-right;
+    border-radius: 8px;
+    padding: 10px;
+    height: 5vh;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
