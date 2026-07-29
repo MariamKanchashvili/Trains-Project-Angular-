@@ -288,9 +288,9 @@ span{
     align-items: center;
     justify-content: center;
     
-    padding: 12px;               /* შიდა დაშორება (padding) */
-    border-radius: 12px;         /* ჩარჩოს მომრგვალება */
-    margin-bottom: 20px;         /* დაშორება ქვედა ტექსტამდე */
+    padding: 12px;               
+    border-radius: 12px;         
+    margin-bottom: 20px;         
     
     /* თითქმის გამჭვირვალე ოქროსფერი ჩარჩო და ფონი */
     background: rgba(212, 175, 90, 0.03); 
@@ -301,7 +301,7 @@ span{
 
   svg {
     color: $gold;
-    margin-bottom: 0;            /* ძველი margin მოვაშორეთ, რადგან wrapper-ს აქვს */
+    margin-bottom: 0;            
     display: block;
   }
 
@@ -447,9 +447,7 @@ span{
     font-size: 25px;
   }
 
-  /* ==========================================================
-     МАГИЯ УСПЕХА: Если у алерта есть класс .success
-  ========================================================== */
+
   &.success {
   
     border-color: rgba(46, 213, 115, 0.4); 

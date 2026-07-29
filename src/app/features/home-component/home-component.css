@@ -159,9 +159,9 @@ button:hover {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 12px; /* შიდა დაშორება (padding) */
-  border-radius: 12px; /* ჩარჩოს მომრგვალება */
-  margin-bottom: 20px; /* დაშორება ქვედა ტექსტამდე */
+  padding: 12px;
+  border-radius: 12px;
+  margin-bottom: 20px;
   /* თითქმის გამჭვირვალე ოქროსფერი ჩარჩო და ფონი */
   background: rgba(212, 175, 90, 0.03);
   border: 1px solid rgba(212, 175, 90, 0.15);
@@ -169,7 +169,7 @@ button:hover {
 }
 .home-cards__items svg {
   color: #d4af5a;
-  margin-bottom: 0; /* ძველი margin მოვაშორეთ, რადგან wrapper-ს აქვს */
+  margin-bottom: 0;
   display: block;
 }
 .home-cards__items p {
@@ -259,11 +259,6 @@ button:hover {
 }
 .search-alert span {
   font-size: 25px;
-}
-.search-alert {
-  /* ==========================================================
-     МАГИЯ УСПЕХА: Если у алерта есть класс .success
-  ========================================================== */
 }
 .search-alert.success {
   border-color: rgba(46, 213, 115, 0.4);
