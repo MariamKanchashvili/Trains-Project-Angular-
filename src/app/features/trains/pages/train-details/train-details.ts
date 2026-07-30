@@ -1,10 +1,10 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { ServicesTrainsService } from '../../services/services.trains.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Location } from '@angular/common';
 @Component({
   selector: 'app-train-details',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './train-details.html',
   styleUrl: './train-details.scss',
 })
