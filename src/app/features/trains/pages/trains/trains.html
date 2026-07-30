@@ -2,8 +2,9 @@
 
 <aside class="filters">
 
-<app-train-filter>
-    (trainsFound)="updateTrains($event)"
+<app-train-filter
+  (trainsFound)="updateTrains($event)"
+   (filtersCleared)="onFiltersCleared()">
 </app-train-filter>
 
 </aside>
@@ -12,7 +13,7 @@
 <section class="trains-list">
 
 <app-train-card 
-[items]="trains">
+[items]="trains()">
 </app-train-card>
 
 </section>

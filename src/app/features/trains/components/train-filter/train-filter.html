@@ -2,45 +2,47 @@
     <form class="searchByNumber" [formGroup]="searchByIdForm" (ngSubmit)="searchTrainQuery()">
         <h4>TRAIN SEARCH</h4>
         <label for="train-number"></label>
-     <input type="text" name="train-number" placeholder="e.g. : number, city" formControlName="trainNumber">
-     <button type="submit">Search</button>   
+        <input type="text" name="train-number" placeholder="e.g. : number, city" formControlName="trainNumber">
+        <button type="submit">Search</button>
     </form>
+
     <form class="filterBy" [formGroup]="searchForm" (ngSubmit)="search()">
         <h4>FILTER BY ROUTE</h4>
+
         <div class="search-field">
-   <label for="from">From</label>
-<select  id="from" formControlName="from">
-    <option value="" disabled>   Select origin station</option>
-    @for ( station of stations; track $index) {
-      <option [value]="station.name">{{station.name}}</option>
-    }
-</select>         
+            <label for="from">From</label>
+            <select id="from" formControlName="from">
+                <option value="" disabled>Select origin station</option>
+                @for (station of stations(); track station.id) {
+                  <option [value]="station.name">{{station.name}}</option>
+                }
+            </select>
         </div>
 
+        <div class="search-field">
+            <label for="to">To</label>
+            <select id="to" formControlName="to">
+                <option value="" disabled>Select destination city</option>
+                @for (station of stations(); track station.id) {
+                  <option [value]="station.name">{{station.name}}</option>
+                }
+            </select>
+        </div>
 
-<div class="search-field">
-    <label for="to">To</label>
-
-  <select id="to" formControlName="to">
-
-    <option value="" disabled>
-      Select destination city
-    </option>
-
-
-    @for(station of stations; track $index){
-      <option [value]="station.name">
-        {{station.name}}
-      </option>
-    }
-
-  </select>
-  
-</div>
-<button type="submit">Apply Filters</button>
-
-<button class="clearBtn" >Clear Filters</button>
-
+        <button type="submit">Apply Filters</button>
+        <button class="clearBtn" type="button" (click)="clearFilters()">Clear Filters</button>
     </form>
- 
+
+    @if (showAlert()) {
+      <div class="search-alert" [class.success]="isSuccess()">
+        <span>
+          @if (isSuccess()) { ✅ } @else { ⚠️ }
+        </span>
+        @if (isSuccess()) {
+          <p>{{ successMessage() }}</p>
+        } @else {
+          <p>{{ errorMessage() }}</p>
+        }
+      </div>
+    }
 </fieldset>
