@@ -1,6 +1,6 @@
-import { Component, Input,  OnInit } from '@angular/core';
-import { TrainFilter } from '../train-filter/train-filter';
-import { RouterLink } from '@angular/router';
+import { Component, inject, Input } from '@angular/core';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-train-card',
@@ -12,7 +12,11 @@ export class TrainCard  {
 
 @Input() items:any[]=[];
 
+private router=inject(Router);
 
+goToDetails(id:number){
+  this.router.navigate(['/trains',id]);
+}
   
 
 }

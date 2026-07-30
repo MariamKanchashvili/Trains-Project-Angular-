@@ -1,31 +1,10 @@
 <div class="train-card-container">
-
 @for(train of items; track train.id){
-
-<div class="train-card">
-
-<img 
-[src]="train.thumbnail"
-[alt]="train.name">
-
-
-<h3>
-{{train.name}}
-</h3>
-
-
-<p>
-Train number: {{train.number}}
-</p>
-
-
-<p>
-Seats: {{train.totalSeats}}
-</p>
-
-
-</div>
-
+  <div class="train-card" (click)="goToDetails(train.id)">
+    <img [src]="train.thumbnail" [alt]="train.name">
+    <h3>{{train.name}}</h3>
+    <p>Train number: {{train.number}}</p>
+    <p>Seats: {{train.totalSeats}}</p>
+  </div>
 }
-
 </div>

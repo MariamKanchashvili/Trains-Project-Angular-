@@ -1,0 +1,270 @@
+@use '../../../../shared/styles/variables' as vars;
+
+.status-msg {
+  color: vars.$text-main;
+  text-align: center;
+  padding: 40px;
+
+  &.error {
+    color: vars.$error;
+  }
+}
+
+.train-details {
+  position: relative;
+  padding: 30px 20px;
+  background: vars.$bg-right;
+  color: vars.$text-main;
+}
+
+.back-btn {
+  background: none;
+  border: 1px solid vars.$border;
+  color: vars.$gold;
+  font-size: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: .3s;
+
+  &:hover {
+    background: vars.$border;
+    transform: translateX(-3px);
+  }
+}
+
+.train-header {
+  text-align: center;
+  margin-top: 20px;
+
+  img {
+    display: block;
+    margin: 0 auto 20px;
+
+    width: 70%;                 // 🔧 საბაზისო (desktop) სიგანე
+    max-width: 700px;
+    aspect-ratio: 16 / 9;       // 🔧 ფიქსირებული პროპორცია — height თავად გამოითვლება
+    object-fit: cover;
+    object-position: center;
+    border-radius: 16px;
+  }
+}
+
+.train-number {
+  color: vars.$text-muted;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+.train-name {
+  color: vars.$gold;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 6px 0 0;
+}
+
+/* 🔧 train-stats — კომპაქტური, ცენტრში, აღარ იჭიმება მთელ სიგანეზე */
+.train-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  margin: 30px auto;
+  padding: 16px 24px;
+  width: fit-content;
+  border-top: 1px solid vars.$border;
+  border-bottom: 1px solid vars.$border;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+
+  .stat-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: vars.$text-main;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: vars.$text-muted;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+}
+
+.stat-divider {
+  width: 1px;
+  height: 30px;
+  background: vars.$border;
+}
+
+.twin-pages {
+  display: flex;
+  gap: 20px;
+  border-bottom: 2px solid vars.$border;
+  margin-bottom: 20px;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  padding: 10px 0;
+  font-size: 15px;
+  cursor: pointer;
+  color: vars.$text-muted;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color .2s, border-color .2s;
+
+  &.active {
+    color: vars.$gold;
+    border-bottom-color: vars.$gold;
+  }
+
+  &:hover {
+    color: vars.$text-light;
+  }
+}
+
+.tab-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.schedule-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  background: vars.$bg-left;
+  border: 1px solid vars.$border;
+  border-radius: 12px;
+  flex-wrap: wrap;
+
+  .route {
+    font-weight: 600;
+    color: vars.$text-main;
+  }
+
+  .time {
+    color: vars.$text-light;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .book-btn {
+    background: vars.$gold;
+    color: vars.$bg-left;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 13px;
+    transition: .3s;
+
+    &:hover {
+      background: vars.$gold-dark;
+    }
+  }
+}
+
+.coach-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 12px;
+  padding: 14px 16px;
+  background: vars.$bg-left;
+  border: 1px solid vars.$border;
+  border-radius: 12px;
+  align-items: center;
+
+  .coach-name {
+    font-weight: 600;
+    color: vars.$text-main;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .coach-class {
+    font-size: 12px;
+    font-weight: 500;
+    color: vars.$gold;
+    border: 1px solid vars.$gold;
+    border-radius: 6px;
+    padding: 2px 8px;
+  }
+
+  .coach-seats {
+    color: vars.$text-light;
+    font-size: 14px;
+    margin-left: 50%;
+  }
+
+  .coach-price {
+    color: vars.$gold;
+    font-weight: 700;
+  }
+}
+
+/* 📱 ტაბლეტი */
+@media (max-width: 768px) {
+  .train-header img {
+    width: 85%;      // 🔧 პროცენტული სიგანე იზრდება, aspect-ratio ინარჩუნებს პროპორციას
+  }
+}
+
+/* 📱 მობილური */
+@media (max-width: 480px) {
+  .train-details {
+    padding: 20px 14px;
+  }
+
+  .train-header img {
+    width: 90%;              // 🔧 კიდევ უფრო ფართო პროცენტულად პატარა ეკრანზე
+    border-radius: 12px;     // 🔧 პატარა ეკრანზე ოდნავ მცირე radius ჰარმონიულია
+  }
+
+  .train-stats {
+    gap: 16px;
+    padding: 14px 16px;
+  }
+
+  .stat-item .stat-value {
+    font-size: 18px;
+  }
+
+  .schedule-item,
+  .coach-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .coach-item {
+    display: flex; // 🔧 პატარა ეკრანზე grid-ი აღარ არის საჭირო, სვეტები ერთმანეთს დაემეჩხერება
+  }
+
+  .coach-seats {
+    margin-left: 0; // 🔧 mobile-ზე უქმდება desktop-ის 50% margin
+  }
+
+  .schedule-item .book-btn {
+    align-self: stretch;
+    text-align: center;
+  }
+}

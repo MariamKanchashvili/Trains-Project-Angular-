@@ -35,4 +35,7 @@ export class ServicesTrainsService {
     };
     return this.http.get(`${API_URL}/trains/filter`,{params})
 }
+getTrainById(id:number){
+return this.http.get(`${API_URL}/trains/${id}`)
+}
 }
