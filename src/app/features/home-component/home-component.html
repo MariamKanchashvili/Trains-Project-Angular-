@@ -35,16 +35,16 @@
        <div class="search-field">
 
   <label for="from">From</label>
-
+<p>Stations count: {{ stations.length }}</p> 
   <select 
     id="from"
     formControlName="from">
 
-    <option value="" disabled>
+    <option value="" >
       Select origin station
     </option>
 
-@for ( station of stations; track $index) {
+@for ( station of stations; track station.id) {
   <option [value]="station.name">
     {{station.name}}
   </option>
@@ -76,7 +76,7 @@
     </option>
 
 
-    @for(station of stations; track $index){
+    @for(station of stations; track station.id){
       <option [value]="station.name">
         {{station.name}}
       </option>
@@ -145,8 +145,8 @@
 <section class="ready">
     <h3>Ready to book your journey?</h3>
     <span>Browse all available trains and schedules, then choose your seat.</span>
-    <button><a routerLink="/trains">Browse Trains</a></button>
-    <button> <a routerLink="/register">Create Account</a></button>
+    <button routerLink="/trains">Browse Trains</button>
+    <button routerLink="/register"> Create Account</button>
 </section>
 
 </fieldset>

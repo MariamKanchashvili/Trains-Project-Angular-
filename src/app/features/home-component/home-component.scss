@@ -126,12 +126,15 @@ section span {
     0 20px 50px rgba(0,0,0,.35);
  flex-wrap: wrap;
 
+ button{
+   margin-top: 20px;
+ }
 }
 
 
 
 .search-field {
-
+position: relative;
   flex: 1;
 
   display: flex;
@@ -209,7 +212,7 @@ section span {
 .error {
   color: $error;
   font-size: 12px;
-  margin-top: 78px;
+  margin-top: 6px;
 }
 
 /* BUTTON */
@@ -240,7 +243,7 @@ button {
   gap:10px;
 
   transition:.3s;
- margin-top: 20px;
+
 span{
     color: black;
     font-size: 13px;
@@ -409,15 +412,7 @@ span{
 ========================================================== */
 
 
-.search-form p {
 
-  position:absolute;
-
-  color:$error;
-
-  font-size:13px;
-
-}
 .search-alert {
   position: fixed;
   top: 30px;

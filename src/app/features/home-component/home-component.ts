@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnChanges, OnInit, signal, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HomeService } from './service/home-service';
 import { Router, RouterLink } from '@angular/router';
@@ -26,13 +26,16 @@ export class HomeComponent  implements OnInit{
   });
 
   ngOnInit(): void {
+
+      console.log("Before request:", this.stations);
     this.homeService.getStations().subscribe((res: any) => {
       console.log("stations: ", res);
       this.stations = res.data;
+       console.log("After assign:", this.stations);
     });
   }
 
-  search() {
+ search() {
     if (this.searchForm.invalid) {
       this.searchForm.markAllAsTouched();
       return;
@@ -89,3 +92,7 @@ export class HomeComponent  implements OnInit{
     });
   }
 }
+  
+
+
+ 

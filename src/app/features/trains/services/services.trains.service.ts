@@ -12,8 +12,15 @@ export class ServicesTrainsService {
         return this.http.get(`${API_URL}/trains`)
     }
 
-    getTrainsById(id:number){}
-    searchTrains(){}
+    getTrainsByQuery(query:string,page:number,take:number){
+        const params={
+       query:query,
+       Take:take,
+       Page:page,
+        }
+        return this.http.get(`${API_URL}/trains/search`,{params});
+    }
+    
     filterTrains(
   origin: string,
   destination: string,

@@ -62,8 +62,12 @@ section span {
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
   flex-wrap: wrap;
 }
+.search-form button {
+  margin-top: 20px;
+}
 
 .search-field {
+  position: relative;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -109,7 +113,7 @@ section span {
 .error {
   color: #ff6b6b;
   font-size: 12px;
-  margin-top: 78px;
+  margin-top: 6px;
 }
 
 /* BUTTON */
@@ -126,7 +130,6 @@ button {
   align-items: center;
   gap: 10px;
   transition: 0.3s;
-  margin-top: 20px;
 }
 button span {
   color: black;
@@ -229,12 +232,6 @@ button:hover {
 /* ==========================================================
    ERRORS
 ========================================================== */
-.search-form p {
-  position: absolute;
-  color: #ff6b6b;
-  font-size: 13px;
-}
-
 .search-alert {
   position: fixed;
   top: 30px;

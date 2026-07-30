@@ -1,83 +1,46 @@
 .trains-page {
-
   min-height: 100vh;
   display: grid;
- max-width: 1600px;
-  grid-template-columns: 320px 1fr ;
-
+  max-width: 1600px;
+  grid-template-columns: 320px 1fr;
   gap: 30px;
-
   padding: 40px 60px;
-
   border: none;
   margin: 0;
-
-  background:
-    linear-gradient(
-      135deg,
-      #0b0f1c,
-      #121933
-    );
-
+  background: linear-gradient(135deg, #0b0f1c, #121933);
   color: #f0e6c8;
-
 }
-
 
 /* ==========================
    FILTER SIDE
 ========================== */
-
 .filters {
-
-  background: rgba(18,25,51,.75);
-
-  border: 1px solid rgba(212,175,90,.25);
-
+  background: rgba(18, 25, 51, 0.75);
+  border: 1px solid rgba(212, 175, 90, 0.25);
   border-radius: 20px;
-
   padding: 25px;
-
+  height: -moz-fit-content;
   height: fit-content;
-
 }
-
 
 /* ==========================
    TRAIN LIST
 ========================== */
-
-
 .trains-list {
-
   display: grid;
-
   grid-template-columns: 1fr;
-
   gap: 25px;
-
 }
-
 
 /* ==========================
    RESPONSIVE
 ========================== */
-
-@media(max-width:900px){
-
-  .trains-page{
-
+@media (max-width: 900px) {
+  .trains-page {
     grid-template-columns: 1fr;
-
-    padding:20px;
-
+    padding: 20px;
   }
-
-
-  .trains-list{
-
-    grid-template-columns:1fr;
-
+  .trains-list {
+    grid-template-columns: 1fr;
   }
-
-}
+}/*# sourceMappingURL=trains.css.map */

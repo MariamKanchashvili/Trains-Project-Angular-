@@ -1,23 +1,28 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { ServicesTrainsService } from '../../services/services.trains.service';
 import { toSignal } from '@angular/core/rxjs-interop';
-
+import { HomeService } from '../../../home-component/service/home-service';
 @Component({
   selector: 'app-train-filter',
   imports: [ReactiveFormsModule],
   templateUrl: './train-filter.html',
   styleUrl: './train-filter.scss',
 })
-export class TrainFilter {
-  private trainService=inject(ServicesTrainsService)
+export class TrainFilter implements OnInit{
+  private trainService=inject(ServicesTrainsService);
+  private homeService=inject(HomeService);
   public stations:any[] = [];
-   // სიგნალები alert ებისთვის
+   // სიგნალები alert ებებისთვის
   public showError = signal<boolean>(false);
   public errorMessage = signal<string>('');
   public sucessMessage = signal<string>('');
   public isSuccess = signal<boolean>(false);
+//  ნომრით  და ქალაქით ძებნის ცვლადი
+public trainResult:any[]=[];
+
+@Output() trainsFound = new EventEmitter<any[]>();
   public searchByIdForm = new FormGroup({
 
     trainNumber: new FormControl('', Validators.required)
@@ -32,10 +37,40 @@ export class TrainFilter {
 
   });
 
-  searchTrainId(){
-
+  ngOnInit(): void {
+    this.homeService.getStations().subscribe((res:any)=>{
+      console.log("TrainFilter stations:", res);
+      this.stations=res.data
+    })
   }
+  searchTrainQuery(){
+     console.log('SEARCH CLICKED');
+// ფორმის შემოწმება :
+if(this.searchByIdForm.invalid){
+  this.searchByIdForm.markAllAsTouched();
+  return;
+}
 
+  // number ის მნიშვნელობის ცვლადის შემოტანა:
+  const number=this.searchByIdForm.value.trainNumber;
+// სერვისიდან ფუნქციის წამოღება:
+this.trainService.getTrainsByQuery(number!,1,10).subscribe({
+  next:(res:any)=>{
+    console.log("Train by query",res)
+    this.trainResult=res.data.items;
+    this.trainsFound.emit(this.trainResult);
+
+    if(this.trainResult.length===0){
+    console.log("Train not found",this.trainResult);
+    alert("Train with this number not found ")  
+    }
+  },
+  error:(err)=>{
+    console.log(err)
+  }
+});
+
+};
   search(){
 if (this.searchForm.invalid) {
       this.searchForm.markAllAsTouched();
@@ -94,5 +129,9 @@ const to = this.searchForm.get('to')?.value ?? '';
       }
     });
   }
+  
+
   }
+
+
 

@@ -1,8 +1,8 @@
 <fieldset>
-    <form class="searchByNumber" [formGroup]="searchByIdForm" (ngSubmit)="searchTrainId()">
-        <h4>TRAIN NUMBER</h4>
+    <form class="searchByNumber" [formGroup]="searchByIdForm" (ngSubmit)="searchTrainQuery()">
+        <h4>TRAIN SEARCH</h4>
         <label for="train-number"></label>
-     <input type="text" name="train-number" placeholder="e.g. : Exress 42" formControlName="trainNumber">
+     <input type="text" name="train-number" placeholder="e.g. : number, city" formControlName="trainNumber">
      <button type="submit">Search</button>   
     </form>
     <form class="filterBy" [formGroup]="searchForm" (ngSubmit)="search()">
@@ -35,11 +35,12 @@
     }
 
   </select>
-  <button type="submit">Apply Filters</button>
+  
 </div>
-
+<button type="submit">Apply Filters</button>
 
 <button class="clearBtn" >Clear Filters</button>
 
     </form>
+ 
 </fieldset>

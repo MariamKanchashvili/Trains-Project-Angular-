@@ -11,14 +11,22 @@ import { RouterLink } from '@angular/router';
   styleUrl: './trains.scss',
 })
 export class Trains implements OnInit {
-  private trainsService=inject(ServicesTrainsService)
+  private trainsService=inject(ServicesTrainsService);
   public trains:any[]=[];
+
+
 ngOnInit(): void {
   this.trainsService.getAllTrains().subscribe(
     (res:any)=>{
-      console.log(res)
-      this.trains=res.data.items
+      console.log("All Trains response:",res)
+      this.trains=res.data.items;
+      console.log("TRAIN ARRAY:", this.trains);
     }
+  
   )
+};
+
+updateTrains(data:any[]){
+  this.trains=data
 }
 }

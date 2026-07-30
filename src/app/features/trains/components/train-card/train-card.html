@@ -1,9 +1,31 @@
-<fieldset class="train-card">
-  @for ( item of items; track $index) {
-    <img [src]="item.thumbnail" [alt]="item.name" >
-    <p>{{item.name}}</p>
-    <p>{{item.number}}</p>
-    <p>{{item.coachesCount}}</p>
-    <p>{{item.totalSeats}}</p>
-  }
-</fieldset>
+<div class="train-card-container">
+
+@for(train of items; track train.id){
+
+<div class="train-card">
+
+<img 
+[src]="train.thumbnail"
+[alt]="train.name">
+
+
+<h3>
+{{train.name}}
+</h3>
+
+
+<p>
+Train number: {{train.number}}
+</p>
+
+
+<p>
+Seats: {{train.totalSeats}}
+</p>
+
+
+</div>
+
+}
+
+</div>
