@@ -1,0 +1,45 @@
+<fieldset>
+    <form class="searchByNumber" [formGroup]="searchByIdForm" (ngSubmit)="searchTrainId()">
+        <h4>TRAIN NUMBER</h4>
+        <label for="train-number"></label>
+     <input type="text" name="train-number" placeholder="e.g. : Exress 42" formControlName="trainNumber">
+     <button type="submit">Search</button>   
+    </form>
+    <form class="filterBy" [formGroup]="searchForm" (ngSubmit)="search()">
+        <h4>FILTER BY ROUTE</h4>
+        <div class="search-field">
+   <label for="from">From</label>
+<select  id="from" formControlName="from">
+    <option value="" disabled>   Select origin station</option>
+    @for ( station of stations; track $index) {
+      <option [value]="station.name">{{station.name}}</option>
+    }
+</select>         
+        </div>
+
+
+<div class="search-field">
+    <label for="to">To</label>
+
+  <select id="to" formControlName="to">
+
+    <option value="" disabled>
+      Select destination city
+    </option>
+
+
+    @for(station of stations; track $index){
+      <option [value]="station.name">
+        {{station.name}}
+      </option>
+    }
+
+  </select>
+  <button type="submit">Apply Filters</button>
+</div>
+
+
+<button class="clearBtn" >Clear Filters</button>
+
+    </form>
+</fieldset>

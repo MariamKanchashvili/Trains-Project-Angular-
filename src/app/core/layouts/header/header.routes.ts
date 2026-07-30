@@ -2,6 +2,7 @@ import { Routes } from "@angular/router";
 import { Login } from "../../../features/auth/pages/login/login";
 import { Register } from "../../../features/auth/pages/register/register";
 import { HomeComponent } from "../../../features/home-component/home-component";
+import { Trains } from "../../../features/trains/pages/trains/trains";
 
 export const  headerRouts :Routes=[
   {
@@ -17,7 +18,10 @@ export const  headerRouts :Routes=[
         path:'register',
         component:Register
     },
-  
+  {
+    path:'trains',
+    component:Trains
+  }
    
 
 ]

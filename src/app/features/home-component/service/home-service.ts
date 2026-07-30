@@ -7,7 +7,7 @@ export class HomeService {
     private http=inject(HttpClient);
      
      searchTrains(
-    origin: string,
+    origin:string,
     destination: string,
     page: number,
     take: number
