@@ -4,17 +4,25 @@
 
 <app-train-filter
   (trainsFound)="updateTrains($event)"
-   (filtersCleared)="onFiltersCleared()">
+   (filtersCleared)="onFiltersCleared()"
+   (searchError)="onSearchError($event)">
 </app-train-filter>
 
 </aside>
 
 
 <section class="trains-list">
-
-<app-train-card 
+@if (errorMessage()) {
+  <app-state-message type="error" title="No results" [message]="errorMessage ()"></app-state-message>
+}@else if (trains().length === 0) {
+  <app-state-message type="empty" title="No trains avaliable" message="Please check back later."></app-state-message>
+ 
+} @else {
+ <app-train-card 
 [items]="trains()">
-</app-train-card>
+</app-train-card> 
+}
+
 
 </section>
 

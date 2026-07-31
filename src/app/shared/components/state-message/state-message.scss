@@ -1,0 +1,32 @@
+@use '../../styles/variables' as vars; // 🔧 დაარეგულირე path შენი structure-ის მიხედვით
+
+.state-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 60px 20px;
+  color: vars.$text-muted;
+
+  .state-icon {
+    font-size: 40px;
+  }
+
+  h3 {
+    color: vars.$text-main;
+    font-size: 20px;
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+    max-width: 400px;
+  }
+
+  &.error {
+    h3 {
+      color: vars.$error;
+    }
+  }
+}

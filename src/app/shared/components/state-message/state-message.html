@@ -1,0 +1,7 @@
+<div class="state-message" [class.error]="type==='error'">
+ <span class="state-icon">
+    @if (type==='error') {⚠️} @else {🔍}
+ </span>
+<h3>{{title}}</h3>
+<p>{{message}}</p>
+</div>

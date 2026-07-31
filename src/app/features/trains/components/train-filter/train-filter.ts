@@ -23,7 +23,9 @@ export class TrainFilter implements OnInit {
   public isSuccess = signal<boolean>(false);
 
   @Output() trainsFound = new EventEmitter<any[]>();
-  @Output() filtersCleared=new EventEmitter<void>()
+  @Output() filtersCleared=new EventEmitter<void>();
+  // შეცდომის ტექსტი უნდა გადაეცეს მობელს trains:
+  @Output() searchError=new EventEmitter<string>();
 
   public searchByIdForm = new FormGroup({
     trainNumber: new FormControl('', Validators.required)
@@ -59,7 +61,7 @@ export class TrainFilter implements OnInit {
 
         if (this.trainResult().length === 0) {
           console.log("Train not found", this.trainResult());
-          alert("Train with this number not found");
+          this.searchError.emit('Trains not found');
         }
       },
       error: (err) => {
@@ -85,9 +87,7 @@ export class TrainFilter implements OnInit {
         const stations = response.data?.items;
 
         if (!stations || stations.length === 0) {
-          this.isSuccess.set(false);
-          this.errorMessage.set("No trains found for this route. Please choose another destination.");
-          this.showAlert.set(true);
+           this.searchError.emit("No trains found for this route. Please choose another destination.");
           return;
         }
 
@@ -103,9 +103,8 @@ export class TrainFilter implements OnInit {
       },
       error: (err) => {
         console.log(err);
-        this.isSuccess.set(false);
-        this.errorMessage.set("Something went wrong. Please try again later.");
-        this.showAlert.set(true);
+       this.searchError.emit("Something went wrong. Please try again later.");
+
       }
     });
   }
