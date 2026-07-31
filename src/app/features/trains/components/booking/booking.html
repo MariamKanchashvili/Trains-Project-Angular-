@@ -1,1 +1,74 @@
-<p>booking works!</p>
+@if (isLoading()) {
+  <p class="status-msg">Loading booking details...</p>
+}
+@else if (errorMessage()) {
+  <p class="status-msg error">{{ errorMessage() }}</p>
+}
+@else if (train() && schedule()) {
+
+  <div class="booking-page">
+
+    <a routerLink="/trains" class="back-link">← Back to trains</a>
+
+    <!-- 🔧 STEPPER — 4 სტეპის ვიზუალური ინდიკატორი -->
+    <div class="stepper">
+      @for (step of [1, 2, 3, 4]; track step) {
+        <div class="stepper__item" [class.active]="currentStep() === step" [class.done]="currentStep() > step">
+          <div class="stepper__circle">{{ step }}</div>
+          <span class="stepper__label">
+            {{ step === 1 ? 'COACH' : step === 2 ? 'DATE' : step === 3 ? 'SEATS' : 'CONFIRM' }}
+          </span>
+        </div>
+        @if (step < 4) {
+          <div class="stepper__line" [class.done]="currentStep() > step"></div>
+        }
+      }
+    </div>
+
+    <!-- 🔧 მარშრუტის შემაჯამებელი ზოლი -->
+    <div class="route-summary">
+      <span>
+        <strong>{{ schedule().origin }}</strong> → <strong>{{ schedule().destination }}</strong>
+      </span>
+      <span class="route-summary__time">{{ schedule().departureTime }}</span>
+    </div>
+
+    <!-- 🔧 STEP 1 — Coach-ის არჩევა -->
+    @if (currentStep() === 1) {
+      <div class="step-coach">
+        <h2>Select a Coach</h2>
+        <p class="step-subtitle">Choose the class of coach you'd like to travel in.</p>
+
+        <div class="train-scroll">
+          <!-- ლოკომოტივი -->
+          <div class="locomotive"></div>
+
+          <!-- ვაგონები, დინამიურად, coach-ების მიხედვით -->
+          @for (coach of train().coaches; track coach.id) {
+            <div
+              class="coach-car"
+              [class.selected]="selectedCoachId() === coach.id"
+              (click)="selectCoach(coach.id)">
+              <span class="coach-car__badge">{{ coach.class }}</span>
+              <span class="coach-car__seats">{{ coach.seatCount }} seats</span>
+              <span class="coach-car__price">${{ coach.price }}</span>
+            </div>
+          }
+        </div>
+
+        <button
+          class="continue-btn"
+          [disabled]="!selectedCoachId()"
+          (click)="goToNextStep()">
+          Continue
+        </button>
+      </div>
+    }
+
+    <!-- Step 2-4 მომავალი ეტაპებისთვის -->
+    @if (currentStep() === 2) {
+      <p>Date selection — მომავალი ეტაპი</p>
+    }
+
+  </div>
+}

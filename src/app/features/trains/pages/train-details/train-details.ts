@@ -62,5 +62,11 @@ setActiveTab(tab:'schedules'|'coaches'):void{
     this.location.back();
   }
   goToBooking(scheduleId:number):void{
-    this.router.navigate(['/booking',scheduleId])
-  }}
+     console.log('FULL TRAIN OBJECT:', this.train());
+    const trainId=this.train().id;
+    console.log('trainId:', trainId, 'scheduleId:', scheduleId);
+    this.router.navigate(['/booking',trainId,scheduleId])
+  }
+
+
+}

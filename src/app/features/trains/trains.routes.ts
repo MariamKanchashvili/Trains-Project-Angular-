@@ -13,7 +13,7 @@ export const trainsRoutes:Routes=[
         component:TrainDetails
     },
     {
-        path:'booking/scheduleId',
+        path:'booking/:trainId/:scheduleId',
         component:Booking
     }
 ]

@@ -1,0 +1,204 @@
+@use '../../../../shared/styles/variables' as vars;
+
+.status-msg {
+  text-align: center;
+  padding: 60px;
+  color: vars.$text-main;
+
+  &.error { color: vars.$error; }
+}
+
+.booking-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  color: vars.$text-main;
+}
+
+.back-link {
+  color: vars.$text-muted;
+  text-decoration: none;
+  font-size: 14px;
+  display: inline-block;
+  margin-bottom: 30px;
+
+  &:hover { color: vars.$gold; }
+}
+
+/* STEPPER */
+.stepper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.stepper__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.stepper__circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid vars.$border;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: vars.$text-muted;
+  transition: .3s;
+}
+
+.stepper__label {
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: vars.$text-muted;
+}
+
+.stepper__item.active {
+  .stepper__circle {
+    border-color: vars.$gold;
+    color: vars.$gold;
+  }
+  .stepper__label { color: vars.$gold; }
+}
+
+.stepper__item.done .stepper__circle {
+  background: vars.$gold;
+  border-color: vars.$gold;
+  color: vars.$bg-left;
+}
+
+.stepper__line {
+  flex: 1;
+  height: 2px;
+  background: vars.$border;
+  margin: 0 8px;
+  margin-bottom: 24px; // circle-ის სიმაღლის გასათანაბრებლად
+
+  &.done { background: vars.$gold; }
+}
+
+/* ROUTE SUMMARY */
+.route-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  background: vars.$bg-right;
+  border: 1px solid vars.$border;
+  border-radius: 14px;
+  margin-bottom: 30px;
+
+  &__time { color: vars.$gold; }
+}
+
+/* STEP 1 — COACH SELECTION */
+.step-coach h2 {
+  color: vars.$gold;
+  margin-bottom: 6px;
+}
+
+.step-subtitle {
+  color: vars.$text-muted;
+  margin-bottom: 30px;
+}
+
+.train-scroll {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  overflow-x: auto;       // 🔧 ჰორიზონტალური სქროლი
+  padding: 20px 10px 30px;
+  scroll-snap-type: x proximity; // 🔧 რბილი "მიწებება" ვაგონებზე სქროლისას
+
+  &::-webkit-scrollbar {
+    height: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: vars.$border;
+    border-radius: 3px;
+  }
+}
+
+.locomotive {
+  flex-shrink: 0;
+  width: 140px;
+  height: 90px;
+  background: linear-gradient(135deg, vars.$bg-right, vars.$bg-left);
+  border: 1px solid vars.$border;
+  border-radius: 45px 20px 20px 45px; // 🔧 ასიმეტრიული — "ცხვირიანი" ლოკომოტივის ფორმა
+  scroll-snap-align: start;
+}
+
+.coach-car {
+  flex-shrink: 0;
+  width: 180px;
+  height: 90px;
+  background: vars.$bg-right;
+  border: 1px solid vars.$border;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  scroll-snap-align: start;
+  transition: border-color .3s, transform .3s;
+
+  &:hover {
+    border-color: vars.$gold-dark;
+  }
+
+  &.selected {
+    border-color: vars.$gold;
+    box-shadow: 0 0 20px rgba(212, 175, 90, .3);
+    transform: translateY(-4px);
+  }
+
+  &__badge {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 6px;
+    background: rgba(212, 175, 90, .15);
+    color: vars.$gold;
+  }
+
+  &__seats {
+    font-size: 13px;
+    color: vars.$text-muted;
+  }
+
+  &__price {
+    font-size: 16px;
+    font-weight: 700;
+    color: vars.$text-main;
+  }
+}
+
+.continue-btn {
+  margin-top: 30px;
+  background: vars.$gold;
+  color: vars.$bg-left;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .3s;
+
+  &:disabled {
+    background: vars.$border;
+    color: vars.$text-muted;
+    cursor: not-allowed;
+  }
+
+  &:not(:disabled):hover {
+    background: vars.$gold-dark;
+  }
+}
