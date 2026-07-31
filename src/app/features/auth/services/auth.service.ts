@@ -31,13 +31,13 @@ signin(info:any){
 }
 resendVerify(email:string){
 
-    return this.http.post(`${API_URL}/resend-email-verification/${email}`,{})
+    return this.http.post(`${API_URL}/auth/resend-email-verification/${email}`,{})
 }
 forgotPass(email:string){
     return this.http.post(`${API_URL}/auth/forget-password/${email}`, {})
 }
-verifyEmail( code:string){
-    return this.http.put(`${API_URL}/auth/verify-email`, code)
+verifyEmail(email: string, code: string) {
+  return this.http.put(`${API_URL}/auth/verify-email`, { email, code });
 }
 resetPassword(info:any){
     return this.http.put(`${API_URL}/auth/reset-password`, info)

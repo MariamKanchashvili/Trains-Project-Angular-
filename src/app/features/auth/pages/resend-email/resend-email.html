@@ -52,20 +52,7 @@
 
           <div class="feature-icon">
 
-            <svg xmlns="http://www.w3.org/2000/svg"
-                 width="24"
-                 height="24"
-                 viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="2"
-                 stroke-linecap="round"
-                 stroke-linejoin="round">
-
-              <rect x="2" y="4" width="20" height="16" rx="2"/>
-              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-
-            </svg>
+           <svg _ngcontent-ng-c1286158984="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path _ngcontent-ng-c1286158984="" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
 
           </div>
 
@@ -92,19 +79,7 @@
           <div class="feature-icon">
 
 
-            <svg xmlns="http://www.w3.org/2000/svg"
-                 width="24"
-                 height="24"
-                 viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="2"
-                 stroke-linecap="round"
-                 stroke-linejoin="round">
-
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-
-            </svg>
+  <svg _ngcontent-ng-c1286158984="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path _ngcontent-ng-c1286158984="" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
 
 
           </div>
@@ -129,8 +104,10 @@
 
 
         <div class="brand-stats__item">
-
-
+        
+          <div class="feature-icon">
+<svg _ngcontent-ng-c1286158984="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path _ngcontent-ng-c1286158984="" d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle _ngcontent-ng-c1286158984="" cx="9" cy="7" r="4"></circle><path _ngcontent-ng-c1286158984="" d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path _ngcontent-ng-c1286158984="" d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+</div>  
           <span class="brand-stats__value">
             Join the Community
           </span>
@@ -212,7 +189,7 @@
 
       <form
         [formGroup]="verifyInfo"
-        (ngSubmit)="ResendVerifyEmail()"
+        (ngSubmit)="verifyEmailCode()"
         class="auth-form">
 
 
@@ -247,13 +224,13 @@
 
 
 
-        <button
-          type="submit"
-          class="auth-btn">
+     @if (errorMessage()) {
+  <p class="auth-field__error">{{ errorMessage() }}</p>
+}
 
-          Verify Email
-
-        </button>
+<button type="submit" class="auth-btn" [disabled]="isLoading()">
+  {{ isLoading() ? 'Verifying...' : 'Verify Email' }}
+</button>
 
 
 
@@ -264,17 +241,17 @@
 
 
 
+<div class="auth-divider">
+  <span>or</span>
+</div>
 
-
-      <div class="auth-divider">
-
-        <span>
-          or
-        </span>
-
-      </div>
-
-
+<button
+  type="button"
+  class="resend-code-btn"
+  [disabled]="isResending()"
+  (click)="resendCode()">
+  {{ isResending() ? 'Sending...' : 'Resend Code' }}
+</button>
 
 
 
