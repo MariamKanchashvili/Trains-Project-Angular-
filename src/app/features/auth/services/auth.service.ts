@@ -4,11 +4,13 @@ import { API_URL } from '../../../core/config/api.config';
 import { from, of, tap } from 'rxjs';
 import { TokenService } from '../../../core/services/token.service';
 import { StorageService } from '../../../core/services/storage.service';
+import { AuthState } from '../../../core/services/auth-state';
 @Service()
 export class AuthService {
     private http=inject(HttpClient);
     private tokenService=inject(TokenService);
     private storage=inject(StorageService);
+    public authState=inject(AuthState);
 
 
 signup(info:any){
@@ -17,6 +19,7 @@ signup(info:any){
             tap((response:any)=>{
                 this.tokenService.saveAccessToken(response.data.accessToken);
                 this.tokenService.saveRefreshToken(response.data.refreshToken);
+                this.authState.login();
             })
         )
 }
@@ -26,9 +29,15 @@ signin(info:any){
             tap((response:any)=>{
                 this.tokenService.saveAccessToken(response.data.accessToken);
                 this.tokenService.saveRefreshToken(response.data.refreshToken);
+                this.authState.login();
             })
         )
 }
+
+logout():void{
+    this.authState.logout();
+}
+
 resendVerify(email:string){
 
     return this.http.post(`${API_URL}/auth/resend-email-verification/${email}`,{})

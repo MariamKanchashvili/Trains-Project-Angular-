@@ -22,7 +22,52 @@ $card-bg: #17213f;
     justify-content: space-around;
     padding: 20px;
     
+    position: relative;
 }
+/* 🔧 ბურგერ-ღილაკი — default-ად დამალულია, მხოლოდ მობილურზე ჩნდება */
+.burger-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 20;
+
+  span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: $text-muted;
+    transition: transform .3s, opacity .3s;
+  }
+
+  // 🔧 "X" ანიმაცია, როცა მენიუ ღიაა
+  &.burger-btn--open {
+    span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    span:nth-child(2) {
+      opacity: 0;
+    }
+    span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+  }
+}
+
+.mobile-panel {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  justify-content: space-evenly;
+}
+
+
+
 .logo{
     display: flex;
     align-items: center;
@@ -64,12 +109,22 @@ text-shadow: #b8a882;
     background-color:  $gold-dark;
  }
 .btn-wrapper{
-   
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 30px;
     font-size: 13px;
 }
 .btn-signin{
 color: $text-light;
 margin-right: 30px;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 10px;
+cursor: pointer;
+max-width: 60px;
+    width: 100%;
 
 }
 .btn-signup{
@@ -82,4 +137,53 @@ margin-right: 30px;
     max-width: 400px;
     width: 100%;
     text-align: center;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.auth-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+@media (max-width: 768px) {
+  .burger-btn {
+    display: flex; // 🔧 მობილურზე ჩნდება
+  }
+
+  .mobile-panel {
+    position: absolute;
+    top: 100%;
+  
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    padding: 20px;
+  background-color: whitesmoke;
+  z-index: 99999;
+
+    // 🔧 default-ად დამალული — slide-down ანიმაციით
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height .3s ease, opacity .3s ease;
+
+    &.mobile-panel--open {
+      max-height: 400px; // 🔧 საკმარისად დიდი, რომ მთელი content დატიოს
+      opacity: 1;
+    }
+  }
+
+  .nav-list {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .btn-wrapper {
+    flex-direction: column;
+    gap: 10px;
+  }
 }

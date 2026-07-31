@@ -1,18 +1,64 @@
 <fieldset class="header-wrapper">
-<div class="logo" routerLink="/">
-  <svg _ngcontent-ng-c1704741386="" width="28" height="28" viewBox="0 0 24 24" fill="none"><path _ngcontent-ng-c1704741386="" d="M4 15V9a8 8 0 0 1 16 0v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path><rect _ngcontent-ng-c1704741386="" x="3" y="15" width="18" height="4" rx="2" stroke="currentColor" stroke-width="1.5"></rect><circle _ngcontent-ng-c1704741386="" cx="7.5" cy="17" r="1" fill="currentColor"></circle><circle _ngcontent-ng-c1704741386="" cx="16.5" cy="17" r="1" fill="currentColor"></circle><line _ngcontent-ng-c1704741386="" x1="6" y1="21" x2="6" y2="23" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></line><line _ngcontent-ng-c1704741386="" x1="18" y1="21" x2="18" y2="23" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></line></svg>
+
+  <div class="logo" routerLink="/">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+      <path d="M4 15V9a8 8 0 0 1 16 0v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+      <rect x="3" y="15" width="18" height="4" rx="2" stroke="currentColor" stroke-width="1.5"></rect>
+      <circle cx="7.5" cy="17" r="1" fill="currentColor"></circle>
+      <circle cx="16.5" cy="17" r="1" fill="currentColor"></circle>
+      <line x1="6" y1="21" x2="6" y2="23" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></line>
+      <line x1="18" y1="21" x2="18" y2="23" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></line>
+    </svg>
     <p>STEP</p>
     <span>TRAINS</span>
-</div>
+  </div>
 
-<nav>
-    <ul class="nav-list">
-        <li ><a [routerLink]="['/']" routerLinkActive="active" class="nav-items"  [routerLinkActiveOptions]="{exact:true}" >Home</a></li>
-        <li ><a [routerLink]="['/trains']"  routerLinkActive="active" class="nav-items"  >Trains</a></li>
-    </ul>
-</nav>
-<div class="btn-wrapper">
-    <a routerLink="/login" class="btn-signin">Sign In</a>
-  <a routerLink="/register" class="btn-signup">Get Started</a>
-</div>
+  <!--  ბურგერ-ღილაკი — მხოლოდ მობილურზე ჩანს (CSS-ით) -->
+  <button
+    class="burger-btn"
+    [class.burger-btn--open]="isMenuOpen()"
+    (click)="toggleMenu()"
+    [attr.aria-expanded]="isMenuOpen()"
+    aria-label="Toggle menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!--  nav და auth-ღილაკები ერთ "მობილურ პანელში" გავაერთიანეთ -->
+  <div class="mobile-panel" [class.mobile-panel--open]="isMenuOpen()">
+
+    <nav>
+      <ul class="nav-list">
+        <li>
+          <a [routerLink]="['/']" routerLinkActive="active" class="nav-items"
+             [routerLinkActiveOptions]="{exact:true}" (click)="closeMenu()">Home</a>
+        </li>
+        <li>
+          <a [routerLink]="['/trains']" routerLinkActive="active" class="nav-items"
+             (click)="closeMenu()">Trains</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="btn-wrapper">
+      @if (authState.isLoggedIn()) {
+        <!-- 🔧 ავტორიზებული მომხმარებლის ღილაკები -->
+        <a routerLink="/profile" class="btn-signin" (click)="closeMenu()">
+          <div class="auth-wrapper">
+          <svg height="64px" width="64px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-256 -256 1024.00 1024.00" xml:space="preserve" fill="#cdad0e" stroke="#cdad0e"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path style="fill:#FFFFFF;" d="M256,508C117.04,508,4,394.96,4,256S117.04,4,256,4s252,113.04,252,252S394.96,508,256,508z"></path> <path style="fill:#D6D6D6;" d="M256,8c136.752,0,248,111.248,248,248S392.752,504,256,504S8,392.752,8,256S119.248,8,256,8 M256,0 C114.608,0,0,114.608,0,256s114.608,256,256,256s256-114.608,256-256S397.392,0,256,0L256,0z"></path> <g> <ellipse style="fill:#ddbd64;" cx="256" cy="175.648" rx="61.712" ry="60.48"></ellipse> <path style="fill:#ddbd64;" d="M362.592,360.624c0-57.696-47.728-104.464-106.592-104.464s-106.592,46.768-106.592,104.464H362.592 z"></path> </g> </g></svg>
+           <p>   Profile</p>
+          </div>
+        
+        </a>
+        <button class="btn-signup" (click)="logout()">Logout</button>
+      } @else {
+        <!--  არაავტორიზებული მომხმარებლის ღილაკები -->
+        <a routerLink="/login" class="btn-signin" (click)="closeMenu()">Sign In</a>
+        <a routerLink="/register" class="btn-signup" (click)="closeMenu()">Get Started</a>
+      }
+    </div>
+
+  </div>
+
 </fieldset>
