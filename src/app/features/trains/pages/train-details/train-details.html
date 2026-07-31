@@ -58,7 +58,13 @@
                 <p>{{schedule.departureTime}}</p>
             
             </span>
-            <button class="book-btn" routerLink="/login">Sign in to book</button>
+            @if (authState.isLoggedIn()) {
+              <button class="book-btn" (click)="goToBooking(schedule.id)">Book</button>
+
+            }@else {
+             <button class="book-btn" routerLink="/login">Sign in to book</button>
+ 
+            }
           </div>
         }
       </div>

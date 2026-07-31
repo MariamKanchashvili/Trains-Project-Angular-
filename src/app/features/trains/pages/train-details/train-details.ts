@@ -2,6 +2,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { ServicesTrainsService } from '../../services/services.trains.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Location } from '@angular/common';
+import { AuthState } from '../../../../core/services/auth-state';
 @Component({
   selector: 'app-train-details',
   imports: [RouterLink],
@@ -12,6 +13,10 @@ export class TrainDetails  implements OnInit{
 private trainsService = inject(ServicesTrainsService);
 private route = inject(ActivatedRoute);
 private location=inject(Location);
+
+ private router = inject(Router); // 🔧 ახალი — booking-გვერდზე navigate-ისთვის
+
+  public authState = inject(AuthState); // 🔧 ახალი — public, რომ HTML-მა პირდაპირ წაიკითხოს
 
   //  signal() 
   public train = signal<any>(null);
@@ -56,4 +61,6 @@ setActiveTab(tab:'schedules'|'coaches'):void{
   goBack(): void {
     this.location.back();
   }
-}
+  goToBooking(scheduleId:number):void{
+    this.router.navigate(['/booking',scheduleId])
+  }}
