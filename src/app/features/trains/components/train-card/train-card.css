@@ -24,4 +24,10 @@
 }
 .train-card p {
   color: #b8a882;
+}
+
+@media screen and (max-width: 700px) {
+  .train-card-container {
+    grid-template-columns: 1fr;
+  }
 }/*# sourceMappingURL=train-card.css.map */
