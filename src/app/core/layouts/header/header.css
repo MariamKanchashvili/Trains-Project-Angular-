@@ -1,9 +1,48 @@
+@charset "UTF-8";
 .header-wrapper {
   background-color: #121933;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding: 20px;
+  padding: 10px;
+  position: relative;
+}
+
+/* 🔧 ბურგერ-ღილაკი — default-ად დამალულია, მხოლოდ მობილურზე ჩნდება */
+.burger-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 20;
+}
+.burger-btn span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #4a4535;
+  transition: transform 0.3s, opacity 0.3s;
+}
+.burger-btn.burger-btn--open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.burger-btn.burger-btn--open span:nth-child(2) {
+  opacity: 0;
+}
+.burger-btn.burger-btn--open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.mobile-panel {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  justify-content: space-evenly;
 }
 
 .logo {
@@ -51,12 +90,23 @@
 }
 
 .btn-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
   font-size: 13px;
 }
 
 .btn-signin {
   color: #b8a882;
   margin-right: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  max-width: 60px;
+  width: 100%;
 }
 
 .btn-signup {
@@ -69,4 +119,46 @@
   max-width: 400px;
   width: 100%;
   text-align: center;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.auth-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .burger-btn {
+    display: flex;
+  }
+  .mobile-panel {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    padding: 20px;
+    background-color: whitesmoke;
+    z-index: 99999;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+  }
+  .mobile-panel.mobile-panel--open {
+    max-height: 400px;
+    opacity: 1;
+  }
+  .nav-list {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .btn-wrapper {
+    flex-direction: column;
+    gap: 10px;
+  }
 }/*# sourceMappingURL=header.css.map */

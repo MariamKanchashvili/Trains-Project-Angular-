@@ -4,4 +4,26 @@
   box-sizing: border-box;
   text-decoration: none;
   list-style: none;
+}
+
+@font-face {
+  font-family: "zeroFont";
+  src: url(../public/fonts/zero-cool/ZeroCool.otf);
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "nol";
+  src: url(../public/fonts/nor-belsior-font/NorbelsiortrialRegular-V4aD0.otf);
+}
+body {
+  font-family: "zeroFont", monospace;
+}
+
+input,
+select,
+textarea,
+button {
+  font-family: monospace;
 }/*# sourceMappingURL=styles.css.map */

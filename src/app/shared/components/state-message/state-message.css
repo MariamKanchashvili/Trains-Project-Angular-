@@ -1,0 +1,27 @@
+/* ==========================================================
+   VARIABLES
+========================================================== */
+.state-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 60px 20px;
+  color: #8d856f;
+}
+.state-message .state-icon {
+  font-size: 40px;
+}
+.state-message h3 {
+  color: #f0e6c8;
+  font-size: 20px;
+  margin: 0;
+}
+.state-message p {
+  margin: 0;
+  max-width: 400px;
+}
+.state-message.error h3 {
+  color: #ff6b6b;
+}/*# sourceMappingURL=state-message.css.map */

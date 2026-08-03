@@ -9,10 +9,12 @@
 }
 
 .booking-page {
-  max-width: 1100px;
+  max-width: 1600px;
   margin: 0 auto;
   padding: 30px 20px;
   color: vars.$text-main;
+  background-color: vars.$bg-right;
+  min-height: 100vh;
 }
 
 .back-link {
@@ -27,19 +29,50 @@
 
 /* STEPPER */
 .stepper {
-  display: flex;
-  align-items: center;
+  position: relative;
   margin-bottom: 40px;
 }
 
-.stepper__item {
+/* 🔧 ფონური ხაზი — position: absolute, წრეების უკან */
+.stepper-track {
+  position: absolute;
+  top: 20px;               // 🔧 წრის ცენტრთან გასწორება (წრის სიმაღლე/2)
+  left: 20px;
+  right: 20px;
+  height: 2px;
+  background: vars.$border;
+  border-radius: 1px;
+}
+
+.stepper-track__fill {
+  height: 100%;
+  background: vars.$gold;
+  border-radius: 1px;
+  transition: width .4s ease;   // 🔧 გლუვი ანიმაცია, სტეპის ცვლილებისას
+}
+
+.stepper-circles {
+  position: relative;   // 🔧 ხაზის ზემოთ "ტივის" ეფექტისთვის
+  display: flex;
+  justify-content: space-between;
+}
+
+.stepper-item {
+  cursor: default;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
+  background: vars.$bg-right; // 🔧 წრის ფონი ისეთივეა, რაც გვერდის ფონი — "წყვეტს" ხაზს ვიზუალურად
+  &.clickable{
+    cursor: pointer;
+    .stepper-item__circle:hover {
+      border-color: vars.$gold-dark;
+    }
+  }
 }
 
-.stepper__circle {
+.stepper-item__circle {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -49,37 +82,28 @@
   justify-content: center;
   font-weight: 700;
   color: vars.$text-muted;
+  background: vars.$bg-right;
   transition: .3s;
 }
 
-.stepper__label {
+.stepper-item__label {
   font-size: 12px;
   letter-spacing: 1px;
   color: vars.$text-muted;
 }
 
-.stepper__item.active {
-  .stepper__circle {
-    border-color: vars.$gold;
-    color: vars.$gold;
-  }
-  .stepper__label { color: vars.$gold; }
+.stepper-item.active .stepper-item__circle {
+  border-color: vars.$gold;
+  color: vars.$gold;
+}
+.stepper-item.active .stepper-item__label {
+  color: vars.$gold;
 }
 
-.stepper__item.done .stepper__circle {
+.stepper-item.done .stepper-item__circle {
   background: vars.$gold;
   border-color: vars.$gold;
   color: vars.$bg-left;
-}
-
-.stepper__line {
-  flex: 1;
-  height: 2px;
-  background: vars.$border;
-  margin: 0 8px;
-  margin-bottom: 24px; // circle-ის სიმაღლის გასათანაბრებლად
-
-  &.done { background: vars.$gold; }
 }
 
 /* ROUTE SUMMARY */
@@ -109,96 +133,116 @@
 
 .train-scroll {
   display: flex;
-  align-items: center;
-  gap: 4px;
-  overflow-x: auto;       // 🔧 ჰორიზონტალური სქროლი
-  padding: 20px 10px 30px;
-  scroll-snap-type: x proximity; // 🔧 რბილი "მიწებება" ვაგონებზე სქროლისას
+  align-items: flex-end;   // 🔧 ცვლილება: stretch → flex-end — ყველა ვაგონი "იატაკზე" დგას, სხვადასხვა სიმაღლის შემთხვევაშიც
+  gap: 0;
+  overflow-x: auto;
+  padding: 60px 10px 30px;  // 🔧 ზედა padding გაზრდილია — რომ badge-ს ჰქონდეს ადგილი, ვაგონს რომ არ გადაეფაროს
+  scroll-snap-type: x proximity;
 
-  &::-webkit-scrollbar {
-    height: 6px;
-  }
+  &::-webkit-scrollbar { height: 6px; }
   &::-webkit-scrollbar-thumb {
     background: vars.$border;
     border-radius: 3px;
   }
 }
 
-.locomotive {
+
+.train-piece {
   flex-shrink: 0;
-  width: 140px;
-  height: 90px;
-  background: linear-gradient(135deg, vars.$bg-right, vars.$bg-left);
-  border: 1px solid vars.$border;
-  border-radius: 45px 20px 20px 45px; // 🔧 ასიმეტრიული — "ცხვირიანი" ლოკომოტივის ფორმა
+  max-width: 400px;      
+  width: 100%;             //  საშუალებას აძლევს, პატარა ეკრანზეც პროპორციულად შემცირდეს
+  height: auto;             //  height აღარ არის ფიქსირებული — სიგანეზე დაყრდნობით თავად გამოითვლება
+  object-fit: contain;
   scroll-snap-align: start;
+}
+
+
+.train-piece--nose {
+  margin-right: -1px;
+}
+.train-piece--tail {
+  margin-left: -1px;
 }
 
 .coach-car {
+  position: relative;        //  საჭირო — badge-ის absolute-პოზიციისთვის
   flex-shrink: 0;
-  width: 180px;
-  height: 90px;
-  background: vars.$bg-right;
-  border: 1px solid vars.$border;
-  border-radius: 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
   cursor: pointer;
   scroll-snap-align: start;
-  transition: border-color .3s, transform .3s;
+  transition: transform .3s;
 
   &:hover {
-    border-color: vars.$gold-dark;
-  }
-
-  &.selected {
-    border-color: vars.$gold;
-    box-shadow: 0 0 20px rgba(212, 175, 90, .3);
     transform: translateY(-4px);
   }
 
-  &__badge {
-    font-size: 12px;
-    font-weight: 700;
-    padding: 3px 10px;
-    border-radius: 6px;
-    background: rgba(212, 175, 90, .15);
-    color: vars.$gold;
-  }
-
-  &__seats {
-    font-size: 13px;
-    color: vars.$text-muted;
-  }
-
-  &__price {
-    font-size: 16px;
-    font-weight: 700;
-    color: vars.$text-main;
+  &.selected {
+    .coach-car__img {
+      filter: drop-shadow(0 0 12px rgba(212, 175, 90, .5)); // 🔧 ოქროსფერი "ნათება" არჩეულ ვაგონზე
+    }
+    .coach-car__info {
+      border-color: vars.$gold;
+    }
   }
 }
 
-.continue-btn {
-  margin-top: 30px;
-  background: vars.$gold;
-  color: vars.$bg-left;
-  border: none;
-  padding: 14px 32px;
-  border-radius: 10px;
+// 🔧 ვაგონის სურათი — სრულად ხილული, გამჭვირვალობის გარეშე
+.coach-car__img {
+  display: block;
+  max-width: 400px;      //  ახალი — იგივე შეზღუდვა, თანმიმდევრულობისთვის
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  // mix-blend-mode: multiply;   წაშლილია
+}
+
+// 🔧 მცურავი ბარათი — position: absolute, სურათის თავზე, ჰორიზონტალურად ცენტრირებული
+.coach-car__info {
+  position: absolute;
+  top: -55px;                  //  სურათის ზემოთ "დაწევა"
+  left: 50%;
+  transform: translateX(-50%); //  ზუსტი ჰორიზონტალური ცენტრირება
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+
+  background: vars.$bg-left;
+  border: 1px solid vars.$border;
+  border-radius: 12px;
+  padding: 10px 16px;
+  min-width: 90px;
+  transition: border-color .3s;
+
+  // 🔧 პატარა "ისარი" ბარათის ქვემოთ, სურათისკენ მიმართული (ვიზუალური კავშირი)
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 10px;
+    height: 10px;
+    background: vars.$bg-left;
+    border-right: 1px solid vars.$border;
+    border-bottom: 1px solid vars.$border;
+  }
+}
+
+.coach-car__badge {
+  font-size: 13px;
   font-weight: 700;
-  cursor: pointer;
-  transition: .3s;
+  color: vars.$gold;
+}
 
-  &:disabled {
-    background: vars.$border;
-    color: vars.$text-muted;
-    cursor: not-allowed;
-  }
+.coach-car__seats {
+  font-size: 12px;
+  color: vars.$text-muted;
+}
 
-  &:not(:disabled):hover {
-    background: vars.$gold-dark;
-  }
+.coach-car__price {
+  font-size: 15px;
+  font-weight: 700;
+  color: vars.$text-main;
 }

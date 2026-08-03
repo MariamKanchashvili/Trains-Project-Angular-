@@ -1,0 +1,245 @@
+@charset "UTF-8";
+/* ==========================================================
+   VARIABLES
+========================================================== */
+.status-msg {
+  text-align: center;
+  padding: 60px;
+  color: #f0e6c8;
+}
+.status-msg.error {
+  color: #ff6b6b;
+}
+
+.booking-page {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  color: #f0e6c8;
+  background-color: #121933;
+  min-height: 100vh;
+}
+
+.back-link {
+  color: #8d856f;
+  text-decoration: none;
+  font-size: 14px;
+  display: inline-block;
+  margin-bottom: 30px;
+}
+.back-link:hover {
+  color: #d4af5a;
+}
+
+/* STEPPER */
+.stepper {
+  position: relative;
+  margin-bottom: 40px;
+}
+
+/* 🔧 ფონური ხაზი — position: absolute, წრეების უკან */
+.stepper-track {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  height: 2px;
+  background: rgba(212, 175, 90, 0.25);
+  border-radius: 1px;
+}
+
+.stepper-track__fill {
+  height: 100%;
+  background: #d4af5a;
+  border-radius: 1px;
+  transition: width 0.4s ease;
+}
+
+.stepper-circles {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+}
+
+.stepper-item {
+  cursor: default;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: #121933;
+}
+.stepper-item.clickable {
+  cursor: pointer;
+}
+.stepper-item.clickable .stepper-item__circle:hover {
+  border-color: #b79234;
+}
+
+.stepper-item__circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid rgba(212, 175, 90, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #8d856f;
+  background: #121933;
+  transition: 0.3s;
+}
+
+.stepper-item__label {
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #8d856f;
+}
+
+.stepper-item.active .stepper-item__circle {
+  border-color: #d4af5a;
+  color: #d4af5a;
+}
+
+.stepper-item.active .stepper-item__label {
+  color: #d4af5a;
+}
+
+.stepper-item.done .stepper-item__circle {
+  background: #d4af5a;
+  border-color: #d4af5a;
+  color: #0b0f1c;
+}
+
+/* ROUTE SUMMARY */
+.route-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  background: #121933;
+  border: 1px solid rgba(212, 175, 90, 0.25);
+  border-radius: 14px;
+  margin-bottom: 30px;
+}
+.route-summary__time {
+  color: #d4af5a;
+}
+
+/* STEP 1 — COACH SELECTION */
+.step-coach h2 {
+  color: #d4af5a;
+  margin-bottom: 6px;
+}
+
+.step-subtitle {
+  color: #8d856f;
+  margin-bottom: 30px;
+}
+
+.train-scroll {
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+  overflow-x: auto;
+  padding: 60px 10px 30px;
+  scroll-snap-type: x proximity;
+}
+.train-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+.train-scroll::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 90, 0.25);
+  border-radius: 3px;
+}
+
+.train-piece {
+  flex-shrink: 0;
+  max-width: 400px;
+  width: 100%;
+  height: auto;
+  -o-object-fit: contain;
+     object-fit: contain;
+  scroll-snap-align: start;
+}
+
+.train-piece--nose {
+  margin-right: -1px;
+}
+
+.train-piece--tail {
+  margin-left: -1px;
+}
+
+.coach-car {
+  position: relative;
+  flex-shrink: 0;
+  cursor: pointer;
+  scroll-snap-align: start;
+  transition: transform 0.3s;
+}
+.coach-car:hover {
+  transform: translateY(-4px);
+}
+.coach-car.selected .coach-car__img {
+  filter: drop-shadow(0 0 12px rgba(212, 175, 90, 0.5));
+}
+.coach-car.selected .coach-car__info {
+  border-color: #d4af5a;
+}
+
+.coach-car__img {
+  display: block;
+  max-width: 400px;
+  width: 100%;
+  height: auto;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.coach-car__info {
+  position: absolute;
+  top: -55px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: #0b0f1c;
+  border: 1px solid rgba(212, 175, 90, 0.25);
+  border-radius: 12px;
+  padding: 10px 16px;
+  min-width: 90px;
+  transition: border-color 0.3s;
+}
+.coach-car__info::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 10px;
+  height: 10px;
+  background: #0b0f1c;
+  border-right: 1px solid rgba(212, 175, 90, 0.25);
+  border-bottom: 1px solid rgba(212, 175, 90, 0.25);
+}
+
+.coach-car__badge {
+  font-size: 13px;
+  font-weight: 700;
+  color: #d4af5a;
+}
+
+.coach-car__seats {
+  font-size: 12px;
+  color: #8d856f;
+}
+
+.coach-car__price {
+  font-size: 15px;
+  font-weight: 700;
+  color: #f0e6c8;
+}/*# sourceMappingURL=booking.css.map */

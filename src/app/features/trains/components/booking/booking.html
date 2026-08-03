@@ -12,18 +12,25 @@
 
     <!-- 🔧 STEPPER — 4 სტეპის ვიზუალური ინდიკატორი -->
     <div class="stepper">
-      @for (step of [1, 2, 3, 4]; track step) {
-        <div class="stepper__item" [class.active]="currentStep() === step" [class.done]="currentStep() > step">
-          <div class="stepper__circle">{{ step }}</div>
-          <span class="stepper__label">
-            {{ step === 1 ? 'COACH' : step === 2 ? 'DATE' : step === 3 ? 'SEATS' : 'CONFIRM' }}
-          </span>
-        </div>
-        @if (step < 4) {
-          <div class="stepper__line" [class.done]="currentStep() > step"></div>
-        }
-      }
-    </div>
+
+  <!-- 🔧 ფონური, უწყვეტი ხაზი + შევსებული ნაწილი -->
+  <div class="stepper-track">
+    <div class="stepper-track__fill" [style.width.%]="progressPercent()"></div>
+  </div>
+
+  <!-- 🔧 წრეები და ლეიბლები, ხაზის ზემოთ დაფენილი -->
+  <div class="stepper-circles">
+    @for (step of steps; track step.number) {
+      <div class="stepper-item" [class.active]="currentStep() === step.number" [class.done]="currentStep() > step.number"
+      [class.clickable]="step.number <= currentStep()"
+      (click)="goToStep(step.number)">
+        <div class="stepper-item__circle">{{ step.number }}</div>
+        <span class="stepper-item__label">{{ step.label }}</span>
+      </div>
+    }
+  </div>
+
+</div>
 
     <!-- 🔧 მარშრუტის შემაჯამებელი ზოლი -->
     <div class="route-summary">
@@ -34,41 +41,47 @@
     </div>
 
     <!-- 🔧 STEP 1 — Coach-ის არჩევა -->
-    @if (currentStep() === 1) {
-      <div class="step-coach">
-        <h2>Select a Coach</h2>
-        <p class="step-subtitle">Choose the class of coach you'd like to travel in.</p>
+@if (currentStep() === 1) {
+  <div class="step-coach">
+    <h2>Select a Coach</h2>
+    <p class="step-subtitle">Choose the class of coach you'd like to travel in.</p>
 
-        <div class="train-scroll">
-          <!-- ლოკომოტივი -->
-          <div class="locomotive"></div>
+    <div class="train-scroll" (wheel)="onWheelScroll($event)">
 
-          <!-- ვაგონები, დინამიურად, coach-ების მიხედვით -->
-          @for (coach of train().coaches; track coach.id) {
-            <div
-              class="coach-car"
-              [class.selected]="selectedCoachId() === coach.id"
-              (click)="selectCoach(coach.id)">
-              <span class="coach-car__badge">{{ coach.class }}</span>
-              <span class="coach-car__seats">{{ coach.seatCount }} seats</span>
-              <span class="coach-car__price">${{ coach.price }}</span>
-            </div>
-          }
-        </div>
+      <!-- 🔧 ძველი <div class="locomotive"></div> შეიცვალა სურათით -->
+      <img src="/images/1-locomotive.png" alt="Train front" class="train-piece train-piece--nose">
 
-        <button
-          class="continue-btn"
-          [disabled]="!selectedCoachId()"
-          (click)="goToNextStep()">
-          Continue
-        </button>
-      </div>
-    }
+      <!-- ვაგონები, დინამიურად, coach-ების მიხედვით -->
+     @for (coach of train().coaches; track coach.id) {
+  <div
+    class="coach-car"
+    [class.selected]="selectedCoachId() === coach.id"
+    (click)="selectCoachAndContinue(coach.id)">
 
-    <!-- Step 2-4 მომავალი ეტაპებისთვის -->
-    @if (currentStep() === 2) {
-      <p>Date selection — მომავალი ეტაპი</p>
-    }
+    <img src="/images/2-locomotive.png" alt="Train coach" class="coach-car__img">
+
+    <div class="coach-car__info">
+      <span class="coach-car__badge">{{ coach.class }}</span>
+      <span class="coach-car__seats">{{ coach.seatCount }} seats</span>
+      <span class="coach-car__price">${{ coach.price }}</span>
+    </div>
+
+  </div>
+}
+
+      <!-- 🔧 ახალი — მატარებლის ბოლო -->
+      <img src="/images/3-locomotive.png" alt="Train rear" class="train-piece train-piece--tail">
+
+    </div>
+
+    <!-- 🔧 "Continue" ღილაკი წაშლილია — coach-ზე დაკლიკვა თავად გადადის შემდეგ სტეპზე -->
+  </div>
+}
+
+<!-- Step 2-4 მომავალი ეტაპებისთვის -->
+@if (currentStep() === 2) {
+  <p>Date selection — მომავალი ეტაპი</p>
+}
 
   </div>
 }

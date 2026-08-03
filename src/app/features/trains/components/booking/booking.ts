@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ServicesTrainsService } from '../../services/services.trains.service';
 
@@ -23,6 +23,15 @@ public train = signal<any>(null);
   // 🔧 Step 1-ის არჩევანი — რომელი coach-ია მონიშნული
   public selectedCoachId = signal<number | null>(null);
 
+  public steps=[
+    { number: 1, label: 'COACH' },
+    { number: 2, label: 'DATE' },
+    { number: 3, label: 'SEATS' },
+    { number: 4, label: 'CONFIRM' }
+  ]
+public progressPercent=computed(()=>{
+  return ((this.currentStep()-1)/(this.steps.length-1)*100);
+})
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -71,4 +80,22 @@ public train = signal<any>(null);
     this.currentStep.update(step => step + 1);
   
   }
+   selectCoachAndContinue(coachId:number):void{
+    this.selectedCoachId.set(coachId);
+    this.goToNextStep();
+   }
+
+   goToStep(stepNumber:number):void{
+    if(stepNumber<=this.currentStep()){
+      this.currentStep.set(stepNumber)
+    }
+   }
+   onWheelScroll(event: WheelEvent): void {
+  event.preventDefault(); // 🔧 აჩერებს ბრაუზერის default ვერტიკალურ სქროლს
+  const container = event.currentTarget as HTMLElement;
+  container.scrollBy({
+    left: event.deltaY,
+    behavior: 'smooth' //  გლუვი ანიმაცია, მყისიერი "ხტუნვის" ნაცვლად
+  });
+}
 }
