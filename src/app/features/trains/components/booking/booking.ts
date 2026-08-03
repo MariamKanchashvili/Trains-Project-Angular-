@@ -65,7 +65,7 @@ export class Booking implements OnInit {
   });
 
   // ============================================
-  // STEP 3 — სეატების არჩევა
+  // STEP 3 — ადგილების არჩევა
   // ============================================
   public seats = signal<any[]>([]);
   public isLoadingSeats = signal<boolean>(false);
@@ -87,6 +87,25 @@ export class Booking implements OnInit {
     }
     return rows;
   });
+
+// ===============================================
+// STEP 4- CONFIRM
+// ===============================================
+public selectedSeatNumbers = computed(() => {
+
+  return this.seats()
+    .filter(seat => this.selectedSeatIds().includes(seat.id))
+    .map(seat => seat.number)
+    .join(', ');
+
+});
+
+public totalPrice = computed(() => {
+
+  return (this.selectedCoach()?.price ?? 0) *
+         this.selectedSeatIds().length;
+
+});
 
   // ============================================
   // ინიციალიზაცია
@@ -174,7 +193,7 @@ export class Booking implements OnInit {
     });
   }
 
-  // 🔧 სეატის მონიშვნა/მოხსნა — toggle-ლოგიკა, დაჯავშნილზე დაცვით
+  // ადგილის მონიშვნა/მოხსნა — toggle-ლოგიკა, დაჯავშნილზე დაცვით
   toggleSeat(seat: any): void {
     if (!seat.isAvailable) return;
 
@@ -185,6 +204,21 @@ export class Booking implements OnInit {
         : [...ids, seat.id];                  // 🔧 თუ არ არის — დავამატოთ
     });
   }
+  //===================================================
+  // STEP 4 ის მოქმედებები 
+  // =================================================
+  confirmBooking(): void {
+
+  console.log('Booking confirmed');
+
+  console.log({
+    scheduleId: this.schedule()?.id,
+    coachId: this.selectedCoachId(),
+    date: this.selectedDate(),
+    seats: this.selectedSeatIds()
+  });
+
+}
 
   // ============================================
   // WIZARD-ის ნავიგაცია
