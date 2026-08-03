@@ -1,5 +1,5 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Component, inject, OnInit, signal, computed } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ServicesTrainsService } from '../../services/services.trains.service';
 
 @Component({
@@ -8,46 +8,89 @@ import { ServicesTrainsService } from '../../services/services.trains.service';
   templateUrl: './booking.html',
   styleUrl: './booking.scss',
 })
-export class Booking  implements OnInit{
-  private trainsService=inject(ServicesTrainsService);
-  private route= inject (ActivatedRoute);
-public train = signal<any>(null);
+export class Booking implements OnInit {
+  private trainsService = inject(ServicesTrainsService);
+  private route = inject(ActivatedRoute);
+
+  // ============================================
+  // საწყისი მონაცემები — მატარებელი და schedule
+  // ============================================
+  public train = signal<any>(null);
   public schedule = signal<any>(null);
   public isLoading = signal<boolean>(true);
   public errorMessage = signal<string>('');
 
-
-   // 🔧 Wizard-ის მდგომარეობა — რომელ სტეპზე ვართ ახლა (1-4)
+  // ============================================
+  // WIZARD-ის ზოგადი მდგომარეობა
+  // ============================================
   public currentStep = signal<number>(1);
 
-  // 🔧 Step 1-ის არჩევანი — რომელი coach-ია მონიშნული
-  public selectedCoachId = signal<number | null>(null);
-
-  public steps=[
+  public steps = [
     { number: 1, label: 'COACH' },
     { number: 2, label: 'DATE' },
     { number: 3, label: 'SEATS' },
-    { number: 4, label: 'CONFIRM' }
-  ]
-public progressPercent=computed(()=>{
-  return ((this.currentStep()-1)/(this.steps.length-1)*100);
-})
+    { number: 4, label: 'CONFIRM' },
+  ];
 
-// step2 (თარიღი)
-public selectedDate=signal<string |null>(null);
+  // 🔧 პროგრესის ხაზის შევსების პროცენტი, currentStep-ზე დამოკიდებული
+  public progressPercent = computed(() => {
+    return ((this.currentStep() - 1) / (this.steps.length - 1)) * 100;
+  });
 
-//  Step 3 (ადგილები)
+  // 🔧 წინა სტეპის ლეიბლი — "Back to Date" ტიპის ტექსტისთვის
+  public previousStepLabel = computed(() => {
+    const prevStep = this.steps.find(s => s.number === this.currentStep() - 1);
+    return prevStep ? prevStep.label.toLowerCase() : null;
+  });
+
+  // ============================================
+  // STEP 1 — Coach-ის არჩევა
+  // ============================================
+  public selectedCoachId = signal<number | null>(null);
+
+  // 🔧 არჩეული coach-ის სრული ობიექტი (class, price და ა.შ.) — header-ებში საჩვენებლად
+  public selectedCoach = computed(() => {
+    return this.train()?.coaches.find((c: any) => c.id === this.selectedCoachId()) ?? null;
+  });
+
+  // ============================================
+  // STEP 2 — თარიღის არჩევა
+  // ============================================
+  public selectedDate = signal<string | null>(null);
+
+  // 🔧 დღევანდელი თარიღი, calendar-ის "min"-ისთვის — წარსული თარიღი არჩევადი არ იყოს
+  public today = computed(() => {
+    const now = new Date();
+    return now.toISOString().split('T')[0];
+  });
+
+  // ============================================
+  // STEP 3 — სეატების არჩევა
+  // ============================================
   public seats = signal<any[]>([]);
   public isLoadingSeats = signal<boolean>(false);
   public seatsError = signal<string>('');
-  public selectedSeatId = signal<number | null>(null);
 
-  public today=computed(()=>{
-    const now=new Date();
-    return now.toISOString().split('T')[0];
-  })
+  // 🔧 მასივი, არა ერთი მნიშვნელობა — მომხმარებელს შეუძლია ერთზე მეტი სეატის არჩევა
+  public selectedSeatIds = signal<number[]>([]);
 
+  // 🔧 სეატები, 4-ეულებად დაჯგუფებული ვიზუალური "მწკრივებისთვის" (2 მარცხნივ + გასასვლელი + 2 მარჯვნივ)
+  public seatRows = computed(() => {
+    const allSeats = this.seats();
+    const rows: { left: any[]; right: any[] }[] = [];
 
+    for (let i = 0; i < allSeats.length; i += 4) {
+      rows.push({
+        left: allSeats.slice(i, i + 2),
+        right: allSeats.slice(i + 2, i + 4),
+      });
+    }
+    return rows;
+  });
+
+  // ============================================
+  // ინიციალიზაცია
+  // ============================================
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const trainId = params.get('trainId');
@@ -71,7 +114,6 @@ public selectedDate=signal<string |null>(null);
         const trainData = response.data;
         this.train.set(trainData);
 
-        // 🔧 კონკრეტული schedule-ის მოძებნა train-ის schedules მასივში
         const matchedSchedule = trainData.schedules.find((s: any) => s.id === scheduleId);
         this.schedule.set(matchedSchedule ?? null);
 
@@ -85,27 +127,27 @@ public selectedDate=signal<string |null>(null);
     });
   }
 
-  // 🔧 Coach-ის არჩევა — single-select პატერნი
-  selectCoach(coachId: number): void {
-    this.selectedCoachId.set(coachId);
-  }
-
-  goToNextStep(): void {
-    if (!this.selectedCoachId()) return; // დაცვა — coach არჩეული უნდა იყოს
-    this.currentStep.update(step => step + 1);
-  
-  }
-   selectCoachAndContinue(coachId:number):void{
+  // ============================================
+  // STEP 1 — მოქმედებები
+  // ============================================
+  selectCoachAndContinue(coachId: number): void {
     this.selectedCoachId.set(coachId);
     this.goToNextStep();
-   }
-// თარიღის არჩევ და შემდეგ ადგილების გვერდზე გადასვლა :
-selectDateAndContinue(date:string):void{
-  this.selectedDate.set(date);
-  this.goToNextStep();
-  this.isLoadingSeats();
-}
- private loadSeats(): void {
+  }
+
+  // ============================================
+  // STEP 2 — მოქმედებები
+  // ============================================
+  selectDateAndContinue(date: string): void {
+    this.selectedDate.set(date);
+    this.goToNextStep();
+    this.loadSeats();
+  }
+
+  // ============================================
+  // STEP 3 — მოქმედებები
+  // ============================================
+  private loadSeats(): void {
     const scheduleId = this.schedule()?.id;
     const coachId = this.selectedCoachId();
     const travelDate = this.selectedDate();
@@ -117,7 +159,7 @@ selectDateAndContinue(date:string):void{
 
     this.isLoadingSeats.set(true);
     this.seatsError.set('');
-    this.selectedSeatId.set(null);
+    this.selectedSeatIds.set([]);
 
     this.trainsService.getSeatsAvailability(scheduleId, coachId, travelDate).subscribe({
       next: (response: any) => {
@@ -131,28 +173,38 @@ selectDateAndContinue(date:string):void{
       }
     });
   }
-   // ადგილის  არჩევა (მხოლოდ თუ isAvailable === true)
-  selectSeat(seat: any): void {
+
+  // 🔧 სეატის მონიშვნა/მოხსნა — toggle-ლოგიკა, დაჯავშნილზე დაცვით
+  toggleSeat(seat: any): void {
     if (!seat.isAvailable) return;
-    this.selectedSeatId.set(seat.id);
+
+    this.selectedSeatIds.update(ids => {
+      const alreadySelected = ids.includes(seat.id);
+      return alreadySelected
+        ? ids.filter(id => id !== seat.id)   // 🔧 თუ უკვე არჩეულია — მოვხსნათ
+        : [...ids, seat.id];                  // 🔧 თუ არ არის — დავამატოთ
+    });
   }
 
+  // ============================================
+  // WIZARD-ის ნავიგაცია
+  // ============================================
+  goToNextStep(): void {
+    this.currentStep.update(step => step + 1);
+  }
 
-
-   goToStep(stepNumber:number):void{
-    if(stepNumber<=this.currentStep()){
-      this.currentStep.set(stepNumber)
+  goToStep(stepNumber: number): void {
+    if (stepNumber <= this.currentStep()) {
+      this.currentStep.set(stepNumber);
     }
-   }
-   onWheelScroll(event: WheelEvent): void {
-  event.preventDefault(); // 🔧 აჩერებს ბრაუზერის default ვერტიკალურ სქროლს
-  const container = event.currentTarget as HTMLElement;
-  container.scrollBy({
-    left: event.deltaY,
-    behavior: 'smooth' //  გლუვი ანიმაცია, მყისიერი "ხტუნვის" ნაცვლად
-  });
-}
+  }
 
-
-
+  // ============================================
+  // UI დამხმარეები
+  // ============================================
+  onWheelScroll(event: WheelEvent): void {
+    event.preventDefault();
+    const container = event.currentTarget as HTMLElement;
+    container.scrollLeft += event.deltaY;
+  }
 }

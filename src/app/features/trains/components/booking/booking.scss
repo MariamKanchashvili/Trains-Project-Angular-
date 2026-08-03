@@ -312,3 +312,153 @@
     color: vars.$bg-left;
   }
 }
+/* STEP 3 — SEATS */
+.back-step-link {
+  background: none;
+  border: none;
+  color: vars.$text-muted;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 20px;
+  display: block;
+
+  &:hover { color: vars.$gold; }
+}
+
+.seat-map-card {
+  max-width: 500px;
+  margin-top: 24px;
+  border: 1px solid vars.$border;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.seat-map-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: rgba(255, 255, 255, .03);
+  border-bottom: 1px solid vars.$border;
+
+  span:first-child {
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: vars.$text-main;
+  }
+}
+
+.seat-map-card__class {
+  color: vars.$gold;
+  font-weight: 600;
+}
+
+.seat-map-card__body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.seat-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.seat-row__side {
+  display: flex;
+  gap: 10px;
+}
+
+// 🔧 გასასვლელის ხაზი — ვაგონის ცენტრალური დერეფანი
+.aisle {
+  width: 1px;
+  height: 40px;
+  background: vars.$border;
+}
+
+.seat {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px 10px 4px 4px; // 🔧 ზედა კუთხეები უფრო მომრგვალებული — სავარძლის ზურგის ილუზია
+  border: 1px solid vars.$border;
+  background: linear-gradient(180deg, #2a3358, #1c2340); // 🔧 ღია → მუქი გრადიენტი, "სავარძლის" მოცულობის ეფექტისთვის
+  color: vars.$text-main;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .25s;
+
+  &:hover:not(:disabled) {
+    border-color: vars.$gold-dark;
+  }
+
+  &--taken {
+    background: rgba(255, 255, 255, .03);
+    color: vars.$text-muted;
+    cursor: not-allowed;
+  }
+
+  &--selected {
+    background: vars.$gold;
+    border-color: vars.$gold;
+    color: vars.$bg-left;
+  }
+}
+
+.seat-map-card__legend {
+  display: flex;
+  gap: 24px;
+  padding: 16px 24px;
+  border-top: 1px solid vars.$border;
+  background: rgba(255, 255, 255, .02);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: vars.$text-muted;
+}
+
+.legend-swatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  display: inline-block;
+
+  &--available {
+    background: linear-gradient(180deg, #2a3358, #1c2340);
+    border: 1px solid vars.$border;
+  }
+  &--selected {
+    background: vars.$gold;
+  }
+  &--taken {
+    background: rgba(255, 255, 255, .03);
+    border: 1px solid vars.$border;
+  }
+}
+
+.seat-hint {
+  margin-top: 20px;
+  color: vars.$text-muted;
+  font-size: 14px;
+}
+
+.continue-btn {
+  margin-top: 20px;
+  background: vars.$gold;
+  color: vars.$bg-left;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .3s;
+
+  &:hover { background: vars.$gold-dark; }
+}

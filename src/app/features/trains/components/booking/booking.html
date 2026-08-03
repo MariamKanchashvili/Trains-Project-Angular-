@@ -83,34 +83,96 @@
       </div>
     }
 
-    <!-- STEP 3 — სეატების არჩევა -->
-    @if (currentStep() === 3) {
-      <div class="step-seats">
-        <h2>Select a Seat</h2>
-        <p class="step-subtitle">Coach {{ selectedCoachId() }} — {{ selectedDate() }}</p>
+  
+   <!-- STEP 3 — ადგილების არჩევა -->
+@if (currentStep() === 3) {
+  <div class="step-seats">
 
-        @if (isLoadingSeats()) {
-          <p class="status-msg">Loading seats...</p>
-        }
-        @else if (seatsError()) {
-          <p class="status-msg error">{{ seatsError() }}</p>
-        }
-        @else {
-          <div class="seat-grid">
-            @for (seat of seats(); track seat.id) {
-              <button
-                class="seat"
-                [class.seat--taken]="!seat.isAvailable"
-                [class.seat--selected]="selectedSeatId() === seat.id"
-                [disabled]="!seat.isAvailable"
-                (click)="selectSeat(seat)">
-                {{ seat.number }}
-              </button>
-            }
-          </div>
-        }
-      </div>
+    <button class="back-step-link" (click)="goToStep(currentStep() - 1)">
+      ← Back to {{ previousStepLabel() }}
+    </button>
+
+    <h2>Select Seats</h2>
+    <p class="step-subtitle">
+      Coach {{ selectedCoach()?.number }} — {{ selectedCoach()?.class }} class • {{ selectedDate() }}
+    </p>
+
+    @if (isLoadingSeats()) {
+      <p class="status-msg">Loading seats...</p>
     }
+    @else if (seatsError()) {
+      <p class="status-msg error">{{ seatsError() }}</p>
+    }
+    @else {
+
+      <div class="seat-map-card">
+
+        <div class="seat-map-card__header">
+          <span class="seat-map-card__coach">COACH {{ selectedCoach()?.number }}</span>
+          <span class="seat-map-card__class">{{ selectedCoach()?.class }}</span>
+        </div>
+
+        <div class="seat-map-card__body">
+          @for (row of seatRows(); track $index) {
+            <div class="seat-row">
+
+              <div class="seat-row__side">
+                @for (seat of row.left; track seat.id) {
+                  <button
+                    class="seat"
+                    [class.seat--taken]="!seat.isAvailable"
+                    [class.seat--selected]="selectedSeatIds().includes(seat.id)"
+                    [disabled]="!seat.isAvailable"
+                    (click)="toggleSeat(seat)">
+                    {{ seat.number }}
+                  </button>
+                }
+              </div>
+
+              <div class="aisle"></div>
+
+              <div class="seat-row__side">
+                @for (seat of row.right; track seat.id) {
+                  <button
+                    class="seat"
+                    [class.seat--taken]="!seat.isAvailable"
+                    [class.seat--selected]="selectedSeatIds().includes(seat.id)"
+                    [disabled]="!seat.isAvailable"
+                    (click)="toggleSeat(seat)">
+                    {{ seat.number }}
+                  </button>
+                }
+              </div>
+
+            </div>
+          }
+        </div>
+
+        <div class="seat-map-card__legend">
+          <div class="legend-item">
+            <span class="legend-swatch legend-swatch--available"></span> Available
+          </div>
+          <div class="legend-item">
+            <span class="legend-swatch legend-swatch--selected"></span> Selected
+          </div>
+          <div class="legend-item">
+            <span class="legend-swatch legend-swatch--taken"></span> Booked
+          </div>
+        </div>
+
+      </div>
+
+      @if (selectedSeatIds().length === 0) {
+        <p class="seat-hint">Select at least one seat</p>
+      } @else {
+        <button class="continue-btn" (click)="goToNextStep()">
+          Continue with {{ selectedSeatIds().length }} seat{{ selectedSeatIds().length > 1 ? 's' : '' }}
+        </button>
+      }
+
+    }
+  </div>
+}
 
   </div>
 
