@@ -246,3 +246,69 @@
   font-weight: 700;
   color: vars.$text-main;
 }
+/* STEP 2 — DATE */
+.step-date h2,
+.step-seats h2 {
+  color: vars.$gold;
+  margin-bottom: 6px;
+}
+
+.date-input {
+  margin-top: 20px;
+  padding: 14px 18px;
+  border-radius: 10px;
+  border: 1px solid vars.$border;
+  background: vars.$bg-left;
+  color: vars.$text-main;
+  font-size: 15px;
+  outline: none;
+  transition: .3s;
+
+  &:focus {
+    border-color: vars.$gold;
+  }
+
+  // 🔧 Chrome/Edge-ის calendar-ხატის ფერის შეცვლა, მუქ ფონზე ხილვადობისთვის
+  &::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+  }
+}
+
+/* STEP 3 — SEATS */
+.seat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
+  gap: 12px;
+  max-width: 500px;
+  margin-top: 24px;
+}
+
+.seat {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  border: 1px solid vars.$border;
+  background: vars.$bg-left;
+  color: vars.$text-main;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .3s;
+
+  &:hover:not(:disabled) {
+    border-color: vars.$gold-dark;
+  }
+
+  &--taken {
+    background: rgba(255, 255, 255, .03);
+    color: vars.$text-muted;
+    cursor: not-allowed;
+    text-decoration: line-through;
+  }
+
+  &--selected {
+    background: vars.$gold;
+    border-color: vars.$gold;
+    color: vars.$bg-left;
+  }
+}

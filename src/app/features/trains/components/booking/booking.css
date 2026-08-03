@@ -242,4 +242,65 @@
   font-size: 15px;
   font-weight: 700;
   color: #f0e6c8;
+}
+
+/* STEP 2 — DATE */
+.step-date h2,
+.step-seats h2 {
+  color: #d4af5a;
+  margin-bottom: 6px;
+}
+
+.date-input {
+  margin-top: 20px;
+  padding: 14px 18px;
+  border-radius: 10px;
+  border: 1px solid rgba(212, 175, 90, 0.25);
+  background: #0b0f1c;
+  color: #f0e6c8;
+  font-size: 15px;
+  outline: none;
+  transition: 0.3s;
+}
+.date-input:focus {
+  border-color: #d4af5a;
+}
+.date-input::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+}
+
+/* STEP 3 — SEATS */
+.seat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
+  gap: 12px;
+  max-width: 500px;
+  margin-top: 24px;
+}
+
+.seat {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  border: 1px solid rgba(212, 175, 90, 0.25);
+  background: #0b0f1c;
+  color: #f0e6c8;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.seat:hover:not(:disabled) {
+  border-color: #b79234;
+}
+.seat--taken {
+  background: rgba(255, 255, 255, 0.03);
+  color: #8d856f;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+.seat--selected {
+  background: #d4af5a;
+  border-color: #d4af5a;
+  color: #0b0f1c;
 }/*# sourceMappingURL=booking.css.map */

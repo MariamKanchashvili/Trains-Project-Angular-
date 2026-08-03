@@ -38,4 +38,9 @@ export class ServicesTrainsService {
 getTrainById(id:number){
 return this.http.get(`${API_URL}/trains/${id}`)
 }
+
+getSeatsAvailability(scheduleId:number,coachId:number,travelDate:string){
+    const params={scheduleId,coachId,travelDate}
+    return this.http.get(`${API_URL}/seats/availability`,{params})
+}
 }
