@@ -240,6 +240,8 @@
   }
   .coach-item {
     display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .coach-seats {
     margin-left: 0;

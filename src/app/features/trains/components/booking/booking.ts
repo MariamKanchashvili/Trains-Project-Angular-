@@ -71,10 +71,10 @@ export class Booking implements OnInit {
   public isLoadingSeats = signal<boolean>(false);
   public seatsError = signal<string>('');
 
-  // 🔧 მასივი, არა ერთი მნიშვნელობა — მომხმარებელს შეუძლია ერთზე მეტი სეატის არჩევა
+  //  მასივი, არა ერთი მნიშვნელობა — მომხმარებელს შეუძლია ერთზე მეტი ადგილის არჩევა
   public selectedSeatIds = signal<number[]>([]);
 
-  // 🔧 სეატები, 4-ეულებად დაჯგუფებული ვიზუალური "მწკრივებისთვის" (2 მარცხნივ + გასასვლელი + 2 მარჯვნივ)
+  // ადგილები, 4-ეულებად დაჯგუფებული ვიზუალური "მწკრივებისთვის" (2 მარცხნივ + გასასვლელი + 2 მარჯვნივ)
   public seatRows = computed(() => {
     const allSeats = this.seats();
     const rows: { left: any[]; right: any[] }[] = [];
@@ -200,8 +200,8 @@ public totalPrice = computed(() => {
     this.selectedSeatIds.update(ids => {
       const alreadySelected = ids.includes(seat.id);
       return alreadySelected
-        ? ids.filter(id => id !== seat.id)   // 🔧 თუ უკვე არჩეულია — მოვხსნათ
-        : [...ids, seat.id];                  // 🔧 თუ არ არის — დავამატოთ
+        ? ids.filter(id => id !== seat.id)   //  თუ უკვე არჩეულია — მოხსნა
+        : [...ids, seat.id];                  // თუ არ არის — დამატება
     });
   }
   //===================================================

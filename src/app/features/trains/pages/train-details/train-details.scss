@@ -257,6 +257,8 @@
 
   .coach-item {
     display: flex; // 🔧 პატარა ეკრანზე grid-ი აღარ არის საჭირო, სვეტები ერთმანეთს დაემეჩხერება
+            align-items: center;
+        justify-content: center
   }
 
   .coach-seats {

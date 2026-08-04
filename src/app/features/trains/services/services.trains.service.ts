@@ -7,9 +7,7 @@ export class ServicesTrainsService {
     private http=inject(HttpClient)
     
     getAllTrains(){
-        
-
-        return this.http.get(`${API_URL}/trains`)
+ return this.http.get(`${API_URL}/trains`)
     }
 
     getTrainsByQuery(query:string,page:number,take:number){

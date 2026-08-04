@@ -28,7 +28,7 @@ export class Login {
     this.service.signin(this.loginFormInfo.value).subscribe((data:any)=>{
       console.log("login ფუნქცია ",data);
       alert('Logged in SucessFully!')
-      this.router.navigate(["/profile"])
+      this.router.navigate(["/home"])
     })
     }
 }
