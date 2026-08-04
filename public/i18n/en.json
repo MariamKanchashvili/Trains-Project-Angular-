@@ -202,5 +202,18 @@
 
   "REMEMBER_PASSWORD": "Remember your password?",
   "LOGIN": "Login"
+},
+
+"RESEND_EMAIL":{
+    
+  "ALMOST_THERE": "Almost There",
+  "BRAND_SUBTITLE": "Just one more step to start booking your train",
+  "SECURE_ACCOUNT": "Secure Account",
+  "SECURE_ACCOUNT_DESC": "Your account security is our priority",
+  "QUICK_PROCESS": "Quick Process",
+  "QUICK_PROCESS_DESC": "Verification takes less than a minute",
+  "JOIN_COMMUNITY": "Join the Community",
+  "COMMUNITY_DESC": "50 000+ verified travelers"
+
 }
 }
