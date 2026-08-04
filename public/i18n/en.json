@@ -82,5 +82,40 @@
 
   "GO_BACK": "Go Back",
   "CONFIRM_BOOKING": "Confirm Booking"
+},
+
+"HOME": {
+  "TITLE": "STEP TRAINS",
+  "SUBTITLE": "Travel Smarter, Journey Farther",
+  "DESCRIPTION": "Search thousands of train routes and book your seats in seconds.",
+
+  "FROM": "From",
+  "TO": "To",
+
+  "SELECT_ORIGIN": "Select origin station",
+  "SELECT_DESTINATION": "Select destination city",
+
+  "FROM_REQUIRED": "Please select departure city",
+  "TO_REQUIRED": "Please select destination city",
+
+  "SEARCH": "Search",
+
+  "CARD1_TITLE": "Multiple Classes",
+  "CARD1_DESCRIPTION": "Choose from First, Business, or Second class coaches on every train.",
+
+  "CARD2_TITLE": "Flexible Dates",
+  "CARD2_DESCRIPTION": "Pick any future travel date when booking — change it anytime before departure.",
+
+  "CARD3_TITLE": "Choose Your Seat",
+  "CARD3_DESCRIPTION": "Pick the exact seat you want from a live map of available seats.",
+
+  "CARD4_TITLE": "Instant Confirmation",
+  "CARD4_DESCRIPTION": "Your booking is confirmed immediately. View and manage all trips in your profile.",
+
+  "READY_TITLE": "Ready to book your journey?",
+  "READY_DESCRIPTION": "Browse all available trains and schedules, then choose your seat.",
+
+  "BROWSE_TRAINS": "Browse Trains",
+  "CREATE_ACCOUNT": "Create Account"
 }
 }
