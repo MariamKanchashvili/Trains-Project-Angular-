@@ -175,5 +175,32 @@
 
   "ALREADY_HAVE_ACCOUNT": "Already have an account?",
   "SIGN_IN": "Sign in here"
+},
+
+"FORGOT_PASSWORD": {
+  "BRAND_TITLE": "Reset Your Password",
+  "BRAND_SUBTITLE": "Don't worry! We'll help you get back into your account in no time.",
+
+  "FEATURE_1_TITLE": "Email Confirmation",
+  "FEATURE_1_TEXT": "We'll send a reset link to your email.",
+
+  "FEATURE_2_TITLE": "Secure Process",
+  "FEATURE_2_TEXT": "Your account security is our priority.",
+
+  "FEATURE_3_TITLE": "Quick Recovery",
+  "FEATURE_3_TEXT": "Reset your password in just a few minutes.",
+
+  "TITLE": "Forgot Password?",
+  "SUBTITLE": "Enter your email and we'll send you a reset link.",
+
+  "EMAIL_PLACEHOLDER": "Email address",
+  "EMAIL_ERROR": "Invalid email address",
+
+  "SEND_BUTTON": "Send Reset Link",
+
+  "OR": "or",
+
+  "REMEMBER_PASSWORD": "Remember your password?",
+  "LOGIN": "Login"
 }
 }
