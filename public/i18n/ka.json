@@ -1,0 +1,85 @@
+{
+    "HEADER": {
+        "NAVIGATION1": "მთავარი",
+        "NAVIGATION2": "მატარებლები",
+        "LANGUAGES": "ქართული",
+        "SIGN": "შესვლა",
+        "SIGNUP": "რეგისტრაცია",
+        "PROFILE": "პროფილი",
+        "LOGOUT": "გასვლა"
+    },
+
+    "TRAIN_FILTER": {
+        "SEARCH_TITLE": "მატარებლის ძებნა",
+        "SEARCH_PLACEHOLDER": "მაგ: ნომერი ან ქალაქი",
+        "SEARCH_BTN": "ძებნა",
+        "FILTER_TITLE": "ფილტრი მარშრუტით",
+        "FROM_LABEL": "საიდან",
+        "TO_LABEL": "სად",
+        "FROM_PLACEHOLDER": "აირჩიე სადგური",
+        "TO_PLACEHOLDER": "აირჩიე სადგური",
+        "APPLY_BTN": "ფილტრის გამოყენება",
+        "CLEAR_BTN": "ფილტრის გასუფთავება"
+    },
+
+    "STATE_MESSAGE": {
+        "EMPTY_TITLE": "მატარებლები არ მოიძებნა",
+        "EMPTY_MESSAGE": "გთხოვთ, მოგვიანებით შეამოწმოთ.",
+        "ERROR_TITLE": "შედეგები ვერ მოიძებნა"
+    },
+
+    "TRAIN_CARD": {
+        "TRAIN_NUMBER": "მატარებლის ნომერი",
+        "SEATS": "ადგილები"
+    },
+    "TRAIN_DETAILS": {
+  "STATUS-MSG": "მატარებლის დეტალები იტვირთება...",
+  "TRAIN-NUMBER": "მატარებელი",
+  "COACHES": "ვაგონი",
+  "SEATS": "ადგილი",
+  "SCHEDULES": "განრიგი",
+  "BOOK": "დაჯავშნა",
+  "SIGN_BOOK": "დაჯავშნისთვის გაიარეთ ავტორიზაცია"
+},
+"BOOKING": {
+  "LOADING": "ჯავშნის დეტალები იტვირთება...",
+  "ERROR": "ჯავშნის დეტალები მიუწვდომელია.",
+  "BACK_TO_TRAINS": "მატარებლების სიაში დაბრუნება",
+
+  "STEP1_TITLE": "აირჩიეთ ვაგონი",
+  "STEP1_SUBTITLE": "აირჩიეთ სასურველი ვაგონის კლასი.",
+  "SEATS": "ადგილი",
+
+  "STEP2_TITLE": "აირჩიეთ თარიღი",
+  "STEP2_SUBTITLE": "აირჩიეთ მოგზაურობის თარიღი.",
+
+  "BACK_TO": "დაბრუნება",
+  "STEP3_TITLE": "აირჩიეთ ადგილები",
+  "CLASS": "კლასი",
+
+  "LOADING_SEATS": "ადგილები იტვირთება...",
+  "COACH": "ვაგონი",
+
+  "AVAILABLE": "თავისუფალი",
+  "SELECTED": "არჩეული",
+  "BOOKED": "დაჯავშნილი",
+
+  "SELECT_ONE_SEAT": "აირჩიეთ მინიმუმ ერთი ადგილი",
+  "CONTINUE_WITH": "გაგრძელება",
+  "SEAT": "ადგილით",
+  "SEATS_PLURAL": "ადგილით",
+
+  "STEP4_TITLE": "დაადასტურეთ თქვენი ჯავშანი",
+
+  "ROUTE": "მარშრუტი",
+  "DEPARTURE": "გასვლა",
+  "COACH_LABEL": "ვაგონი",
+  "SEATS_LABEL": "ადგილები",
+  "TRAVEL_DATE": "მოგზაურობის თარიღი",
+  "PRICE_PER_SEAT": "ერთი ადგილის ფასი",
+  "TOTAL_PRICE": "საერთო ღირებულება",
+
+  "GO_BACK": "დაბრუნება",
+  "CONFIRM_BOOKING": "ჯავშნის დადასტურება"
+}
+}

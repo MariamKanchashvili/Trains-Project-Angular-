@@ -147,10 +147,32 @@ max-width: 60px;
     justify-content: center;
 }
 
+.language-wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;   //ღილაკიც წრიულია
+    overflow: hidden;      //  შიგნით სურათის კუთხეები "იჭრება"
+    padding: 0;
+    border: 1px solid $border;
+    cursor: pointer;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;   //  დროშა ავსებს მთელ წრეს, პროპორციის დარღვევის გარეშე
+      display: block;
+    }
+  }
+}
 
 @media (max-width: 768px) {
   .burger-btn {
-    display: flex; // 🔧 მობილურზე ჩნდება
+    display: flex; //  მობილურზე ჩნდება
   }
 
   .mobile-panel {
@@ -165,7 +187,7 @@ max-width: 60px;
   background-color: whitesmoke;
   z-index: 99999;
 
-    // 🔧 default-ად დამალული — slide-down ანიმაციით
+    //  default-ად დამალული — slide-down ანიმაციით
     max-height: 0;
     overflow: hidden;
     opacity: 0;

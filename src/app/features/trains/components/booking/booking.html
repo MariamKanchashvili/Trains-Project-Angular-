@@ -1,5 +1,5 @@
 @if (isLoading()) {
-  <p class="status-msg">Loading booking details...</p>
+  <p class="status-msg">{{ 'BOOKING.LOADING' | translate }}</p>
 }
 @else if (errorMessage()) {
   <p class="status-msg error">{{ errorMessage() }}</p>
@@ -8,7 +8,7 @@
 
   <div class="booking-page">
 
-    <a routerLink="/trains" class="back-link">← Back to trains</a>
+    <a routerLink="/trains" class="back-link">← {{ 'BOOKING.BACK_TO_TRAINS' | translate }}</a>
 
     <div class="stepper">
 
@@ -39,8 +39,8 @@
     <!-- STEP 1 — Coach-ის არჩევა -->
     @if (currentStep() === 1) {
       <div class="step-coach">
-        <h2>Select a Coach</h2>
-        <p class="step-subtitle">Choose the class of coach you'd like to travel in.</p>
+        <h2>{{ 'BOOKING.STEP1_TITLE' | translate }}</h2>
+        <p class="step-subtitle">{{ 'BOOKING.STEP1_SUBTITLE' | translate }}</p>
 
         <div class="train-scroll" (wheel)="onWheelScroll($event)">
 
@@ -56,7 +56,7 @@
 
               <div class="coach-car__info">
                 <span class="coach-car__badge">{{ coach.class }}</span>
-                <span class="coach-car__seats">{{ coach.seatCount }} seats</span>
+                <span class="coach-car__seats">{{ coach.seatCount }} {{ 'BOOKING.SEATS_LABEL' | translate }}</span>
                 <span class="coach-car__price">${{ coach.price }}</span>
               </div>
 
@@ -72,8 +72,8 @@
     <!-- STEP 2 — თარიღის არჩევა -->
     @if (currentStep() === 2) {
       <div class="step-date">
-        <h2>Select a Date</h2>
-        <p class="step-subtitle">Choose the date you'd like to travel.</p>
+        <h2>{{ 'BOOKING.STEP2_TITLE' | translate }}</h2>
+        <p class="step-subtitle">{{ 'BOOKING.STEP2_SUBTITLE' | translate }}</p>
 
         <input
           type="date"
@@ -89,16 +89,16 @@
   <div class="step-seats">
 
     <button class="back-step-link" (click)="goToStep(currentStep() - 1)">
-      ← Back to {{ previousStepLabel() }}
+      ← {{ 'BOOKING.BACK_TO' | translate }}{{ previousStepLabel() }}
     </button>
 
-    <h2>Select Seats</h2>
+    <h2>{{ 'BOOKING.STEP3_TITLE' | translate }}</h2>
     <p class="step-subtitle">
-      Coach {{ selectedCoach()?.number }} — {{ selectedCoach()?.class }} class • {{ selectedDate() }}
+     {{ 'BOOKING.COACH_LABEL' | translate }} {{ selectedCoach()?.number }} — {{ selectedCoach()?.class }} class • {{ selectedDate() }}
     </p>
 
     @if (isLoadingSeats()) {
-      <p class="status-msg">Loading seats...</p>
+      <p class="status-msg">{{ 'BOOKING.LOADING_SEATS' | translate }}</p>
     }
     @else if (seatsError()) {
       <p class="status-msg error">{{ seatsError() }}</p>
@@ -108,7 +108,7 @@
       <div class="seat-map-card">
 
         <div class="seat-map-card__header">
-          <span class="seat-map-card__coach">COACH {{ selectedCoach()?.number }}</span>
+          <span class="seat-map-card__coach">{{ 'BOOKING.COACH' | translate }} {{ selectedCoach()?.number }}</span>
           <span class="seat-map-card__class">{{ selectedCoach()?.class }}</span>
         </div>
 
@@ -150,23 +150,23 @@
 
         <div class="seat-map-card__legend">
           <div class="legend-item">
-            <span class="legend-swatch legend-swatch--available"></span> Available
+            <span class="legend-swatch legend-swatch--available"></span> {{ 'BOOKING.AVAILABLE' | translate }}
           </div>
           <div class="legend-item">
-            <span class="legend-swatch legend-swatch--selected"></span> Selected
+            <span class="legend-swatch legend-swatch--selected"></span>{{ 'BOOKING.SELECTED' | translate }}
           </div>
           <div class="legend-item">
-            <span class="legend-swatch legend-swatch--taken"></span> Booked
+            <span class="legend-swatch legend-swatch--taken"></span>{{ 'BOOKING.BOOKED' | translate }}
           </div>
         </div>
 
       </div>
 
       @if (selectedSeatIds().length === 0) {
-        <p class="seat-hint">Select at least one seat</p>
+        <p class="seat-hint">{{ 'BOOKING.SELECT_ONE_SEAT' | translate }}</p>
       } @else {
         <button class="continue-btn" (click)="goToNextStep()">
-          Continue with {{ selectedSeatIds().length }} seat{{ selectedSeatIds().length > 1 ? 's' : '' }}
+         {{ 'BOOKING.CONTINUE_WITH' | translate }} {{ selectedSeatIds().length }}  {{ 'BOOKING.SEAT' | translate }}{{ selectedSeatIds().length > 1 ? 's' : '' }}
         </button>
       }
 
@@ -182,10 +182,10 @@
 
   <button class="back-step-link"
           (click)="goToStep(currentStep() - 1)">
-    ← Back to {{ previousStepLabel() }}
+    ← {{ 'BOOKING.BACK_TO' | translate }} {{ previousStepLabel() }} {{ previousStepLabel() }}
   </button>
 
-  <h2>Confirm Your Booking</h2>
+  <h2>{{ 'BOOKING.STEP4_TITLE' | translate }}</h2>
 
 <div class="page-wrapper">
 
@@ -193,17 +193,17 @@
   <div class="confirm-card">
 
     <div class="confirm-row">
-      <span>Route</span>
+      <span>{{ 'BOOKING.ROUTE' | translate }}</span>
       <strong>{{ schedule().origin }} → {{ schedule().destination }}</strong>
     </div>
 
     <div class="confirm-row">
-      <span>Departure</span>
+      <span>{{ 'BOOKING.DEPARTURE' | translate }}</span>
       <strong>{{ schedule().departureTime }}</strong>
     </div>
 
     <div class="confirm-row">
-      <span>Coach</span>
+      <span>{{ 'BOOKING.COACH_LABEL' | translate }}</span>
       <strong>
         {{ selectedCoach()?.number }}
         — {{ selectedCoach()?.class }}
@@ -211,22 +211,22 @@
     </div>
 
     <div class="confirm-row">
-      <span>Seats</span>
+      <span>{{ 'BOOKING.SEATS_LABEL' | translate }}</span>
       <strong>{{ selectedSeatNumbers() }}</strong>
     </div>
 
     <div class="confirm-row">
-      <span>Travel Date</span>
+      <span>{{ 'BOOKING.TRAVEL_DATE' | translate }}</span>
       <strong>{{ selectedDate() }}</strong>
     </div>
 
     <div class="confirm-row">
-      <span>Price per seat</span>
+      <span>{{ 'BOOKING.PRICE_PER_SEAT' | translate }}</span>
       <strong>${{ selectedCoach()?.price }}</strong>
     </div>
 
     <div class="confirm-row confirm-total">
-      <span>Total price</span>
+      <span>{{ 'BOOKING.TOTAL_PRICE' | translate }}</span>
       <strong>${{ totalPrice() }}</strong>
     </div>
 
@@ -237,13 +237,13 @@
     <button
       class="secondary-btn"
       (click)="goToStep(3)">
-      Go Back
+      {{ 'BOOKING.GO_BACK' | translate }}
     </button>
 
     <button
       class="continue-btn"
       (click)="confirmBooking()">
-      Confirm Booking
+   {{ 'BOOKING.CONFIRM_BOOKING' | translate }}
     </button>
 
   </div>
@@ -260,5 +260,5 @@
 
 }
 @else {
-  <p class="status-msg">Booking details are unavailable.</p>
+  <p class="status-msg"> {{ 'BOOKING.ERROR' | translate }}</p>
 }

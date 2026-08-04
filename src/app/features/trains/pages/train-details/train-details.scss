@@ -4,6 +4,7 @@
   color: vars.$text-main;
   text-align: center;
   padding: 40px;
+  background-color: vars.$bg-right;
 
   &.error {
     color: vars.$error;

@@ -1,0 +1,86 @@
+{
+    "HEADER": {
+        "NAVIGATION1": "Home",
+        "NAVIGATION2": "Trains",
+        "LANGUAGES": "English",
+        "SIGN": "Sign In",
+        "SIGNUP": "Get Started",
+        "PROFILE": "Profile",
+        "LOGOUT": "Logout"
+    },
+
+    "TRAIN_FILTER": {
+        "SEARCH_TITLE": "TRAIN SEARCH",
+        "SEARCH_PLACEHOLDER": "e.g. : Number or City",
+        "SEARCH_BTN": "Search",
+        "FILTER_TITLE": "FILTER BY ROUTE",
+        "FROM_LABEL": "From",
+        "TO_LABEL": "To",
+        "FROM_PLACEHOLDER": "Select origin station",
+        "TO_PLACEHOLDER": "Select destination city",
+        "APPLY_BTN": "Apply Filters",
+        "CLEAR_BTN": "Clear Filters"
+    },
+
+    "STATE_MESSAGE": {
+        "EMPTY_TITLE": "No trains available",
+        "EMPTY_MESSAGE": "Please check back later.",
+        "ERROR_TITLE": "No results"
+    },
+
+    "TRAIN_CARD": {
+        "TRAIN_NUMBER": "Train number",
+        "SEATS": "Seats"
+    },
+    "TRAIN_DETAILS":{
+        "STATUS-MSG":"Loading train details...",
+        "TRAIN-NUMBER": "Train",
+        "COACHES": "Coaches",
+        "SEATS" : "Total seats",
+        "SCHEDULES" : "Schedules",
+        "BOOK": "Book",
+        "SIGN_BOOK":"Sign in to book"
+
+    },
+    "BOOKING": {
+  "LOADING": "Loading booking details...",
+  "ERROR": "Booking details are unavailable.",
+  "BACK_TO_TRAINS": "Back to trains",
+
+  "STEP1_TITLE": "Select a Coach",
+  "STEP1_SUBTITLE": "Choose the class of coach you'd like to travel in.",
+  "SEATS": "seats",
+
+  "STEP2_TITLE": "Select a Date",
+  "STEP2_SUBTITLE": "Choose the date you'd like to travel.",
+
+  "BACK_TO": "Back to",
+  "STEP3_TITLE": "Select Seats",
+  "CLASS": "class",
+
+  "LOADING_SEATS": "Loading seats...",
+  "COACH": "COACH",
+
+  "AVAILABLE": "Available",
+  "SELECTED": "Selected",
+  "BOOKED": "Booked",
+
+  "SELECT_ONE_SEAT": "Select at least one seat",
+  "CONTINUE_WITH": "Continue with",
+  "SEAT": "seat",
+  "SEATS_PLURAL": "seats",
+
+  "STEP4_TITLE": "Confirm Your Booking",
+
+  "ROUTE": "Route",
+  "DEPARTURE": "Departure",
+  "COACH_LABEL": "Coach",
+  "SEATS_LABEL": "Seats",
+  "TRAVEL_DATE": "Travel Date",
+  "PRICE_PER_SEAT": "Price per seat",
+  "TOTAL_PRICE": "Total price",
+
+  "GO_BACK": "Go Back",
+  "CONFIRM_BOOKING": "Confirm Booking"
+}
+}

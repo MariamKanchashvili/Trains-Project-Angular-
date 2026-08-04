@@ -1,10 +1,11 @@
 import { Component, inject, OnInit, signal, computed } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ServicesTrainsService } from '../../services/services.trains.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-booking',
-  imports: [RouterLink],
+  imports: [RouterLink,TranslatePipe],
   templateUrl: './booking.html',
   styleUrl: './booking.scss',
 })

@@ -3,8 +3,8 @@
   <div class="train-card" (click)="goToDetails(train.id)">
     <img [src]="train.thumbnail" [alt]="train.name">
     <h3>{{train.name}}</h3>
-    <p>Train number: {{train.number}}</p>
-    <p>Seats: {{train.totalSeats}}</p>
+    <p>{{'TRAIN_CARD.TRAIN_NUMBER'| translate}}: {{train.number}}</p>
+    <p>{{'TRAIN_CARD.SEATS' | translate}}: {{train.totalSeats}}</p>
   </div>
 }
 </div>

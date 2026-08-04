@@ -3,10 +3,11 @@ import { TrainFilter } from '../../components/train-filter/train-filter';
 import { TrainCard } from '../../components/train-card/train-card';
 import { ServicesTrainsService } from '../../services/services.trains.service';
 import { StateMessage } from '../../../../shared/components/state-message/state-message';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-trains',
-  imports: [TrainFilter, TrainCard,StateMessage],
+  imports: [TrainFilter, TrainCard,StateMessage,TranslatePipe],
   templateUrl: './trains.html',
   styleUrl: './trains.scss',
 })

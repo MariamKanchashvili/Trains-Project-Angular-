@@ -1,30 +1,31 @@
 <fieldset class="trains-page">
 
-<aside class="filters">
+  <aside class="filters">
+    <app-train-filter
+      (trainsFound)="updateTrains($event)"
+      (filtersCleared)="onFiltersCleared()"
+      (searchError)="onSearchError($event)">
+    </app-train-filter>
+  </aside>
 
-<app-train-filter
-  (trainsFound)="updateTrains($event)"
-   (filtersCleared)="onFiltersCleared()"
-   (searchError)="onSearchError($event)">
-</app-train-filter>
-
-</aside>
-
-
-<section class="trains-list">
-@if (errorMessage()) {
-  <app-state-message type="error" title="No results" [message]="errorMessage ()"></app-state-message>
-}@else if (trains().length === 0) {
-  <app-state-message type="empty" title="No trains avaliable" message="Please check back later."></app-state-message>
- 
-} @else {
- <app-train-card 
-[items]="trains()">
-</app-train-card> 
-}
-
-
-</section>
-
+  <section class="trains-list">
+    @if (errorMessage()) {
+      <app-state-message
+        type="error"
+        [title]="'STATE_MESSAGE.ERROR_TITLE' | translate"
+        [message]="errorMessage()">
+      </app-state-message>
+    }
+    @else if (trains().length === 0) {
+      <app-state-message
+        type="empty"
+        [title]="'STATE_MESSAGE.EMPTY_TITLE' | translate"
+        [message]="'STATE_MESSAGE.EMPTY_MESSAGE' | translate">
+      </app-state-message>
+    }
+    @else {
+      <app-train-card [items]="trains()"></app-train-card>
+    }
+  </section>
 
 </fieldset>

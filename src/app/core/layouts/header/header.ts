@@ -2,10 +2,11 @@ import { Component, inject, Injector, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from "@angular/router";
 import { AuthState } from '../../services/auth-state';
 import { AuthService } from '../../../features/auth/services/auth.service';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink,RouterLinkActive],
+  imports: [RouterLink,RouterLinkActive,TranslatePipe],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
@@ -13,6 +14,23 @@ export class Header {
   public authState=inject(AuthState);
   private authService=inject(AuthService);
   private router=inject(Router);
+private translateService =inject(TranslateService)
+  
+ public selectedLanguage:string='ka';
+
+
+ constructor(){
+  this.translateService.setFallbackLang('ka')
+  this.translateService.use('ka')
+ }
+ switchLanguage(language:string){
+  this.translateService.use(language);
+  this.selectedLanguage = language;
+ }
+
+
+
+
 
   //  ბურგერ-მენიუს მდგომარეობა — ღიაა თუ დახურული
   public isMenuOpen = signal(false);

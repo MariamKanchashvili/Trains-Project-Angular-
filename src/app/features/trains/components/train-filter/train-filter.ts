@@ -2,10 +2,11 @@ import { Component, EventEmitter, inject, OnInit, Output, signal } from '@angula
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServicesTrainsService } from '../../services/services.trains.service';
 import { HomeService } from '../../../home-component/service/home-service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-train-filter',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule,TranslatePipe],
   templateUrl: './train-filter.html',
   styleUrl: './train-filter.scss',
 })

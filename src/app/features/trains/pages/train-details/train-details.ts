@@ -3,9 +3,10 @@ import { ServicesTrainsService } from '../../services/services.trains.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Location } from '@angular/common';
 import { AuthState } from '../../../../core/services/auth-state';
+import { TranslatePipe } from '@ngx-translate/core';
 @Component({
   selector: 'app-train-details',
-  imports: [RouterLink],
+  imports: [RouterLink,TranslatePipe],
   templateUrl: './train-details.html',
   styleUrl: './train-details.scss',
 })

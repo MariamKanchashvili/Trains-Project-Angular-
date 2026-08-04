@@ -1,18 +1,22 @@
 <fieldset>
     <form class="searchByNumber" [formGroup]="searchByIdForm" (ngSubmit)="searchTrainQuery()">
-        <h4>TRAIN SEARCH</h4>
+        <h4>{{ 'TRAIN_FILTER.SEARCH_TITLE' | translate }}</h4>
         <label for="train-number"></label>
-        <input type="text" name="train-number" placeholder="e.g. : Number or City" formControlName="trainNumber">
-        <button type="submit">Search</button>
+        <input
+          type="text"
+          name="train-number"
+          [placeholder]="'TRAIN_FILTER.SEARCH_PLACEHOLDER' | translate"
+          formControlName="trainNumber">
+        <button type="submit">{{ 'TRAIN_FILTER.SEARCH_BTN' | translate }}</button>
     </form>
 
     <form class="filterBy" [formGroup]="searchForm" (ngSubmit)="search()">
-        <h4>FILTER BY ROUTE</h4>
+        <h4>{{ 'TRAIN_FILTER.FILTER_TITLE' | translate }}</h4>
 
         <div class="search-field">
-            <label for="from">From</label>
+            <label for="from">{{ 'TRAIN_FILTER.FROM_LABEL' | translate }}</label>
             <select id="from" formControlName="from">
-                <option value="" disabled>Select origin station</option>
+                <option value="" disabled>{{ 'TRAIN_FILTER.FROM_PLACEHOLDER' | translate }}</option>
                 @for (station of stations(); track station.id) {
                   <option [value]="station.name">{{station.name}}</option>
                 }
@@ -20,17 +24,17 @@
         </div>
 
         <div class="search-field">
-            <label for="to">To</label>
+            <label for="to">{{ 'TRAIN_FILTER.TO_LABEL' | translate }}</label>
             <select id="to" formControlName="to">
-                <option value="" disabled>Select destination city</option>
+                <option value="" disabled>{{ 'TRAIN_FILTER.TO_PLACEHOLDER' | translate }}</option>
                 @for (station of stations(); track station.id) {
                   <option [value]="station.name">{{station.name}}</option>
                 }
             </select>
         </div>
 
-        <button type="submit">Apply Filters</button>
-        <button class="clearBtn" type="button" (click)="clearFilters()">Clear Filters</button>
+        <button type="submit">{{ 'TRAIN_FILTER.APPLY_BTN' | translate }}</button>
+        <button class="clearBtn" type="button" (click)="clearFilters()">{{ 'TRAIN_FILTER.CLEAR_BTN' | translate }}</button>
     </form>
 
     @if (showAlert()) {
