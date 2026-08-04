@@ -117,5 +117,32 @@
 
   "BROWSE_TRAINS": "Browse Trains",
   "CREATE_ACCOUNT": "Create Account"
+},
+"LOGIN": {
+  "BRAND_TITLE": "STEP TRAINS",
+  "BRAND_SUBTITLE": "Book train tickets and manage your trips with your account.",
+
+  "ROUTES": "Routes",
+  "STATIONS": "Stations",
+  "SUPPORT": "Support",
+
+  "WELCOME": "Welcome Back",
+  "SUBTITLE": "Sign in to book your next trip",
+
+  "EMAIL_PLACEHOLDER": "Email address",
+  "EMAIL_ERROR": "Invalid email address",
+
+  "PASSWORD_PLACEHOLDER": "Password",
+  "PASSWORD_REQUIRED": "Password is required",
+
+  "REMEMBER_ME": "Remember me",
+  "FORGOT_PASSWORD": "Forgot password?",
+
+  "SIGN_IN": "Sign In",
+
+  "OR": "or",
+
+  "NO_ACCOUNT": "Don't have an account?",
+  "CREATE_ACCOUNT": "Create one now"
 }
 }
