@@ -6,6 +6,7 @@
   color: #f0e6c8;
   text-align: center;
   padding: 40px;
+  background-color: #121933;
 }
 .status-msg.error {
   color: #ff6b6b;

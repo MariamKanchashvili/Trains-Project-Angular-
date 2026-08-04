@@ -29,13 +29,13 @@
 
 
       <h2 class="brand-title">
-        STEP TRAINS
+    {{'REGISTER.BRAND_TITLE' |translate}}
       </h2>
 
 
 
       <p class="brand-subtitle">
-        Your trusted platform for booking train tickets across the country.
+          {{'REGISTER.BRAND_SUBTITLE' |translate}}
       </p>
 
 
@@ -66,12 +66,12 @@
 
 
           <span class="brand-stats__value">
-            Easy Booking
+             {{'REGISTER.FEATURE1_TITLE' |translate}}
           </span>
 
 
           <span class="brand-stats__label">
-            Book your train tickets in just a few clicks
+             {{'REGISTER.FEATURE1_DESCRIPTION' |translate}}
           </span>
 
 
@@ -105,12 +105,12 @@
 
 
           <span class="brand-stats__value">
-            Instant Confirmation
+           {{'REGISTER.FEATURE2_TITLE' |translate}}
           </span>
 
 
           <span class="brand-stats__label">
-            Get your tickets confirmed right away
+           {{'REGISTER.FEATURE2_DESCRIPTION' |translate}}
           </span>
 
 
@@ -147,13 +147,13 @@
 
 
           <span class="brand-stats__value">
-            Secure Payments
+           {{'REGISTER.FEATURE3_TITLE' |translate}}
           </span>
 
 
 
           <span class="brand-stats__label">
-            Your payment information is always protected
+           {{'REGISTER.FEATURE3_DESCRIPTION' |translate}}
           </span>
 
 
@@ -207,13 +207,13 @@
 
 
       <h1 class="auth-card__title">
-        Create Account
+        {{'REGISTER.TITLE' |translate}}
       </h1>
 
 
 
       <p class="auth-card__subtitle">
-        Join us and start booking your trips
+        {{'REGISTER.SUBTITLE' |translate}}
       </p>
 
 
@@ -257,7 +257,7 @@
             <input
               type="text"
               formControlName="firstName"
-              placeholder="First name"
+              placeholder="{{'REGISTER.FIRST_NAME' |translate}}"
               class="auth-field__input">
 
           </div>
@@ -290,7 +290,7 @@
             <input
               type="text"
               formControlName="lastName"
-              placeholder="Last name"
+              placeholder="{{'REGISTER.LAST_NAME' |translate}}"
               class="auth-field__input">
 
           </div>
@@ -326,8 +326,8 @@
 
           <input
             type="email"
-            formControlName="email"
-            placeholder="Email address"
+            formControlName="{{'REGISTER.EMAIL' |translate}}"
+            placeholder=" {{'REGISTER.EMAIL' |translate}}"
             class="auth-field__input">
 
         </div>
@@ -338,7 +338,7 @@
         @if(formInfo.get('email')?.touched && formInfo.get('email')?.invalid){
 
           <p class="auth-field__error">
-            Invalid email address
+           {{'REGISTER.EMAIL_ERROR' |translate}}
           </p>
 
         }
@@ -373,7 +373,7 @@
           <input
             type="password"
             formControlName="password"
-            placeholder="Password"
+            placeholder="{{'REGISTER.PASSWORD' |translate}}"
             class="auth-field__input">
 
 
@@ -386,7 +386,7 @@
         @if(formInfo.get('password')?.touched && formInfo.get('password')?.hasError('minlength')){
 
           <p class="auth-field__error">
-            Password must be at least 8 characters
+           {{'REGISTER.PASSWORD_ERROR' |translate}}
           </p>
 
         }
@@ -400,7 +400,7 @@
           type="submit"
           class="auth-btn">
 
-          Create Account
+        {{'REGISTER.CREATE_ACCOUNT' |translate}}
 
         </button>
 
@@ -416,7 +416,7 @@
       <div class="auth-divider">
 
         <span>
-          or
+        {{'REGISTER.OR' |translate}}
         </span>
 
       </div>
@@ -430,13 +430,13 @@
 
         <p>
 
-          Already have an account?
+          {{'REGISTER.ALREADY_HAVE_ACCOUNT' |translate}}
 
           <a 
             routerLink="/login"
             class="auth-link auth-link--strong">
 
-            Sign in here
+         {{'REGISTER.SIGN_IN' |translate}}
 
           </a>
 

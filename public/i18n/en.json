@@ -144,5 +144,36 @@
 
   "NO_ACCOUNT": "Don't have an account?",
   "CREATE_ACCOUNT": "Create one now"
+},
+"REGISTER": {
+  "BRAND_TITLE": "STEP TRAINS",
+  "BRAND_SUBTITLE": "Your trusted platform for booking train tickets across the country.",
+
+  "FEATURE1_TITLE": "Easy Booking",
+  "FEATURE1_DESCRIPTION": "Book your train tickets in just a few clicks.",
+
+  "FEATURE2_TITLE": "Instant Confirmation",
+  "FEATURE2_DESCRIPTION": "Get your tickets confirmed right away.",
+
+  "FEATURE3_TITLE": "Secure Payments",
+  "FEATURE3_DESCRIPTION": "Your payment information is always protected.",
+
+  "TITLE": "Create Account",
+  "SUBTITLE": "Join us and start booking your trips.",
+
+  "FIRST_NAME": "First name",
+  "LAST_NAME": "Last name",
+  "EMAIL": "Email address",
+  "PASSWORD": "Password",
+
+  "EMAIL_ERROR": "Invalid email address",
+  "PASSWORD_ERROR": "Password must be at least 8 characters.",
+
+  "CREATE_ACCOUNT": "Create Account",
+
+  "OR": "or",
+
+  "ALREADY_HAVE_ACCOUNT": "Already have an account?",
+  "SIGN_IN": "Sign in here"
 }
 }

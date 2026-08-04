@@ -130,6 +130,29 @@
   justify-content: center;
 }
 
+.language-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.language-wrapper button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid rgba(212, 175, 90, 0.15);
+  cursor: pointer;
+}
+.language-wrapper button img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  display: block;
+}
+
 @media (max-width: 768px) {
   .burger-btn {
     display: flex;
