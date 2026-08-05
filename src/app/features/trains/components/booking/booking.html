@@ -89,7 +89,7 @@
   <div class="step-seats">
 
     <button class="back-step-link" (click)="goToStep(currentStep() - 1)">
-      ← {{ 'BOOKING.BACK_TO' | translate }}{{ previousStepLabel() }}
+      ← {{ 'BOOKING.BACK_TO' | translate }} {{ previousStepLabel() }}
     </button>
 
     <h2>{{ 'BOOKING.STEP3_TITLE' | translate }}</h2>
@@ -182,7 +182,7 @@
 
   <button class="back-step-link"
           (click)="goToStep(currentStep() - 1)">
-    ← {{ 'BOOKING.BACK_TO' | translate }} {{ previousStepLabel() }} {{ previousStepLabel() }}
+    ← {{ 'BOOKING.BACK_TO' | translate }} {{ previousStepLabel() }} 
   </button>
 
   <h2>{{ 'BOOKING.STEP4_TITLE' | translate }}</h2>

@@ -2,6 +2,8 @@ import { Service } from '@angular/core';
 
 @Service()
 export class StorageService {
+
+  
     set(key:string,value:any){
         sessionStorage.setItem(key,JSON.stringify(value));
 

@@ -4,6 +4,7 @@ import { API_URL } from '../../../core/config/api.config';
 import { UserResponse } from '../interfaces/user';
 import { PaginatedResponse } from '../interfaces/paginated-response.interface';
 import { Booking } from '../interfaces/booking-interface';
+import { TokenService } from '../../../core/services/token.service';
 
 export interface UpdateUserRequest {
   firstName: string;
@@ -18,9 +19,10 @@ export interface UpdateUserRequest {
 @Service()
 export class UserService {
     private http = inject(HttpClient);
-
+    private token=inject(TokenService);
     getCurrentUser() {
         return this.http.get<{ data: UserResponse }>(`${API_URL}/users/me`);
+        
     }
 
     getUserBookings(page: number, take: number) {
