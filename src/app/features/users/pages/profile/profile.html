@@ -1,1 +1,157 @@
-<p>profile works!</p>
+@if (isLoading()) {
+  <p class="status-msg">Loading profile...</p>
+}
+@else if (errorMessage()) {
+  <p class="status-msg error">{{ errorMessage() }}</p>
+}
+@else if (user()) {
+
+  <div class="profile-page">
+
+    <!-- SIDEBAR -->
+    <aside class="profile-sidebar">
+
+      <div class="sidebar-user">
+        <img
+          [src]="user()!.details.pictureUrl || '/images/default-avatar.png'"
+          alt="Profile picture"
+          class="sidebar-user__avatar">
+        <p class="sidebar-user__name">{{ user()!.firstName }} {{ user()!.lastName }}</p>
+        <p class="sidebar-user__email">{{ user()!.email }}</p>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button
+          class="sidebar-nav__item"
+          [class.active]="activeTab() === 'profile'"
+          (click)="setActiveTab('profile')">
+          Profile
+        </button>
+
+        <button
+          class="sidebar-nav__item"
+          [class.active]="activeTab() === 'bookings'"
+          (click)="setActiveTab('bookings')">
+          Bookings
+        </button>
+
+        <button
+          class="sidebar-nav__item"
+          [class.active]="activeTab() === 'settings'"
+          (click)="setActiveTab('settings')">
+          Settings
+        </button>
+      </nav>
+
+      <button class="sidebar-logout" (click)="logout()">Logout</button>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="profile-content">
+
+      <!-- TAB: PROFILE — რეაქტიული ფორმა -->
+      @if (activeTab() === 'profile') {
+        <div class="tab-profile">
+          <h2>Personal Information</h2>
+
+          <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class="profile-form">
+
+            <div class="form-row">
+              <div class="form-field">
+                <label for="firstName">First name</label>
+                <input id="firstName" type="text" formControlName="firstName">
+                @if (profileForm.get('firstName')?.touched && profileForm.get('firstName')?.invalid) {
+                  <p class="field-error">First name is required</p>
+                }
+              </div>
+
+              <div class="form-field">
+                <label for="lastName">Last name</label>
+                <input id="lastName" type="text" formControlName="lastName">
+                @if (profileForm.get('lastName')?.touched && profileForm.get('lastName')?.invalid) {
+                  <p class="field-error">Last name is required</p>
+                }
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label for="email">Email</label>
+              <input id="email" type="email" [value]="user()!.email" disabled>
+            </div>
+
+            <div class="form-field">
+              <label for="phoneNumber">Phone number</label>
+              <input id="phoneNumber" type="text" formControlName="phoneNumber" placeholder="Optional">
+            </div>
+
+            <div class="form-field">
+              <label for="address">Address</label>
+              <input id="address" type="text" formControlName="address" placeholder="Optional">
+            </div>
+
+            <div class="form-field">
+              <label for="dob">Date of birth</label>
+              <input id="dob" type="date" formControlName="dob">
+            </div>
+
+            @if (saveMessage()) {
+              <p class="save-message">{{ saveMessage() }}</p>
+            }
+
+            <button type="submit" class="save-btn" [disabled]="isSaving()">
+              {{ isSaving() ? 'Saving...' : 'Save Changes' }}
+            </button>
+
+          </form>
+        </div>
+      }
+
+      <!-- TAB: BOOKINGS -->
+      @if (activeTab() === 'bookings') {
+        <div class="tab-bookings">
+          <h2>My Bookings</h2>
+
+          @if (isLoadingBookings()) {
+            <p class="status-msg">Loading bookings...</p>
+          }
+          @else if (bookingsError()) {
+            <p class="status-msg error">{{ bookingsError() }}</p>
+          }
+          @else if (bookings().length === 0) {
+            <p class="status-msg">You have no bookings yet.</p>
+          }
+          @else {
+            <div class="booking-list">
+              @for (booking of bookings(); track booking.id) {
+                <div class="booking-item">
+                  <div class="booking-item__route">
+                    <strong>{{ booking.origin }} → {{ booking.destination }}</strong>
+                    <span>{{ booking.trainName }} · #{{ booking.trainNumber }}</span>
+                  </div>
+                  <div class="booking-item__details">
+                    <span>{{ booking.travelDate | date:'mediumDate' }}</span>
+                    <span>{{ booking.departureTime }}</span>
+                    <span>Coach {{ booking.coachNumber }} — {{ booking.coachClass }}</span>
+                    <span>Seat {{ booking.seatNumber }}</span>
+                  </div>
+                  <div class="booking-item__price">${{ booking.price }}</div>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      }
+
+      <!-- TAB: SETTINGS -->
+      @if (activeTab() === 'settings') {
+        <div class="tab-settings">
+          <h2>Settings</h2>
+          <p>Password change form </p>
+        </div>
+      }
+
+    </main>
+
+  </div>
+}

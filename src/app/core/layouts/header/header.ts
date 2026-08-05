@@ -14,14 +14,14 @@ export class Header {
   public authState=inject(AuthState);
   private authService=inject(AuthService);
   private router=inject(Router);
-private translateService =inject(TranslateService)
+  private translateService =inject(TranslateService);
   
- public selectedLanguage:string='ka';
+ public selectedLanguage:string='en';
 
 
  constructor(){
-  this.translateService.setFallbackLang('ka')
-  this.translateService.use('ka')
+  this.translateService.setFallbackLang('en')
+  this.translateService.use('en')
  }
  switchLanguage(language:string){
   this.translateService.use(language);
