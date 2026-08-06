@@ -41,4 +41,9 @@ getSeatsAvailability(scheduleId:number,coachId:number,travelDate:string){
     const params={scheduleId,coachId,travelDate}
     return this.http.get(`${API_URL}/seats/availability`,{params})
 }
+
+postNewBookig(scheduleId:number,seatId:number[],travelDate:string){
+    const body={scheduleId,seatId,travelDate}
+    return this.http.post(`${API_URL}/bookings`,body)
+}
 }

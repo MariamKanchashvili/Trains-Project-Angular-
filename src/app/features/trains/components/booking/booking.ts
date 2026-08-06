@@ -12,6 +12,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 export class Booking implements OnInit {
   private trainsService = inject(ServicesTrainsService);
   private route = inject(ActivatedRoute);
+  private router=inject(Router);
 
   // ============================================
   // საწყისი მონაცემები — მატარებელი და schedule
@@ -209,16 +210,76 @@ public totalPrice = computed(() => {
   // STEP 4 ის მოქმედებები 
   // =================================================
   confirmBooking(): void {
+const scheduleId = this.schedule()?.id;
+const seatIds = this.selectedSeatIds();
+const travelDate = this.selectedDate();
+
 
   console.log('Booking confirmed');
 
   console.log({
     scheduleId: this.schedule()?.id,
-    coachId: this.selectedCoachId(),
     date: this.selectedDate(),
     seats: this.selectedSeatIds()
   });
+    // ვალიდაცია
+  if (!scheduleId) {
+    alert('Schedule not found.');
+    return;
+  }
 
+  if (!travelDate) {
+    alert('Please select travel date.');
+    return;
+  }
+
+  if (seatIds.length === 0) {
+    alert('Please select at least one seat.');
+    return;
+  }
+
+  console.log('Booking request:', {
+    scheduleId,
+    seatIds,
+    travelDate
+  });
+
+  this.trainsService
+    .postNewBookig(scheduleId, seatIds, travelDate)
+    .subscribe({
+
+      next: (response) => {
+
+        console.log('Booking created successfully', response);
+
+        alert('Booking completed successfully!');
+
+        // ადგილები თავიდან ჩაიტვირთოს,
+        // რათა დაჯავშნილი ადგილი გახდეს unavailable
+        this.loadSeats();
+
+        // სურვილის შემთხვევაში მონიშვნაც გაასუფთავე
+        this.selectedSeatIds.set([]);
+      },
+
+      error: (err) => {
+
+        console.log(err);
+
+        if (err.status === 409) {
+          alert('This seat has already been booked.');
+          return;
+        }
+
+        alert('Booking failed. Please try again.');
+      }
+ 
+    });
+this.router.navigate(['/profile'], {
+  queryParams: {
+    tab: 'bookings'
+  }
+});
 }
 
   // ============================================

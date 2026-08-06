@@ -2,7 +2,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../auth/services/auth.service';
 import { UserService, UpdateUserRequest } from '../../services/user.service';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UserResponse } from '../../interfaces/user';
 import { Booking } from '../../interfaces/booking-interface';
 import { DatePipe } from '@angular/common';
@@ -17,7 +17,7 @@ export class Profile implements OnInit {
   private userService = inject(UserService);
   private authService = inject(AuthService);
   private router = inject(Router);
-
+  private route = inject(ActivatedRoute);
   // ============================================
   // მენიუს მდგომარეობა
   // ============================================
@@ -63,6 +63,20 @@ export class Profile implements OnInit {
 
   ngOnInit(): void {
     this.loadUser();
+
+   this.route.queryParams.subscribe(params => {
+
+  if (params['tab'] === 'bookings') {
+
+    this.activeTab.set('bookings');
+
+    if (!this.bookingsLoaded) {
+      this.loadBookings();
+    }
+
+  }
+
+});
   }
 
   private loadUser(): void {
