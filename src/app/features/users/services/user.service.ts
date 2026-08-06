@@ -1,10 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
 import { API_URL } from '../../../core/config/api.config';
 import { UserResponse } from '../interfaces/user';
 import { PaginatedResponse } from '../interfaces/paginated-response.interface';
 import { Booking } from '../interfaces/booking-interface';
 import { TokenService } from '../../../core/services/token.service';
+import { StorageService } from '../../../core/services/storage.service';
 
 export interface UpdateUserRequest {
   firstName: string;
@@ -19,9 +20,16 @@ export interface UpdateUserRequest {
 @Service()
 export class UserService {
     private http = inject(HttpClient);
-    private token=inject(TokenService);
+    private storageService = inject(StorageService);
+
     getCurrentUser() {
-        return this.http.get<{ data: UserResponse }>(`${API_URL}/users/me`);
+        const token = this.storageService.get('accessToken') || '';
+        console.log('Storage-დან ამოღებული ტოკენი:', token);
+        if (!token) {
+      console.warn('ტოკენი SessionStorage-ში ვერ მოიძებნა!');
+    }
+        const params = {accessToken:token}
+    return this.http.get<{ data: UserResponse }>(`${API_URL}/users/me`, { params });
         
     }
 

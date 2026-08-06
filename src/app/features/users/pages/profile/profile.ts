@@ -54,12 +54,15 @@ export class Profile implements OnInit {
 
   ngOnInit(): void {
     this.loadUser();
+  
+
   }
 
   private loadUser(): void {
     this.isLoading.set(true);
 
     this.userService.getCurrentUser().subscribe({
+
       next: (response) => {
         const userData = response.data;
         this.user.set(userData);
@@ -67,9 +70,9 @@ export class Profile implements OnInit {
         this.profileForm.patchValue({
           firstName: userData.firstName,
           lastName: userData.lastName,
-          phoneNumber: userData.details.phoneNumber,
-          address: userData.details.address,
-          dob: userData.details.dob,
+          phoneNumber: userData.details.phoneNumber ?? '',
+          address: userData.details.address ?? '',
+          dob: userData.details.dob ?? '',
         });
 
         this.isLoading.set(false);
