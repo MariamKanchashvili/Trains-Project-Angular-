@@ -108,40 +108,105 @@
       }
 
       <!-- TAB: BOOKINGS -->
-      @if (activeTab() === 'bookings') {
-        <div class="tab-bookings">
-          <h2>My Bookings</h2>
+     @if (activeTab() === 'bookings') {
+  <div class="tab-bookings">
 
-          @if (isLoadingBookings()) {
-            <p class="status-msg">Loading bookings...</p>
-          }
-          @else if (bookingsError()) {
-            <p class="status-msg error">{{ bookingsError() }}</p>
-          }
-          @else if (bookings().length === 0) {
-            <p class="status-msg">You have no bookings yet.</p>
-          }
-          @else {
-            <div class="booking-list">
-              @for (booking of bookings(); track booking.id) {
-                <div class="booking-item">
-                  <div class="booking-item__route">
-                    <strong>{{ booking.origin }} → {{ booking.destination }}</strong>
-                    <span>{{ booking.trainName }} · #{{ booking.trainNumber }}</span>
-                  </div>
-                  <div class="booking-item__details">
-                    <span>{{ booking.travelDate | date:'mediumDate' }}</span>
-                    <span>{{ booking.departureTime }}</span>
-                    <span>Coach {{ booking.coachNumber }} — {{ booking.coachClass }}</span>
-                    <span>Seat {{ booking.seatNumber }}</span>
-                  </div>
-                  <div class="booking-item__price">${{ booking.price }}</div>
-                </div>
-              }
+    @if (selectedBooking(); as booking) {
+
+      <!-- დეტალების ხედი -->
+      <button class="back-step-link" (click)="closeBookingDetails()">← Back to bookings</button>
+
+      <div class="booking-detail-card">
+        <h2>{{ booking.origin }} → {{ booking.destination }}</h2>
+
+        <div class="confirm-row">
+          <span>Train</span>
+          <strong>{{ booking.trainName }} · #{{ booking.trainNumber }}</strong>
+        </div>
+        <div class="confirm-row">
+          <span>Departure</span>
+          <strong>{{ booking.departureTime }}</strong>
+        </div>
+        <div class="confirm-row">
+          <span>Travel Date</span>
+          <strong>{{ booking.travelDate | date:'mediumDate' }}</strong>
+        </div>
+        <div class="confirm-row">
+          <span>Coach</span>
+          <strong>{{ booking.coachNumber }} — {{ booking.coachClass }}</strong>
+        </div>
+        <div class="confirm-row">
+          <span>Seat</span>
+          <strong>{{ booking.seatNumber }}</strong>
+        </div>
+        <div class="confirm-row confirm-total">
+          <span>Price</span>
+          <strong>${{ booking.price }}</strong>
+        </div>
+
+        @if (deleteError()) {
+          <p class="field-error">{{ deleteError() }}</p>
+        }
+
+        <button
+          class="delete-btn"
+          [disabled]="isDeletingBooking()"
+          (click)="deleteBooking(booking.id)">
+          {{ isDeletingBooking() ? 'Cancelling...' : 'Cancel Booking' }}
+        </button>
+      </div>
+
+    } @else {
+
+      <!-- სიის ხედი -->
+      <h2>My Bookings</h2>
+
+      <!-- ფილტრი -->
+      <form [formGroup]="bookingFilterForm" (ngSubmit)="applyBookingFilter()" class="booking-filter">
+        <div class="form-field">
+          <label for="from">From</label>
+          <input id="from" type="date" formControlName="from">
+        </div>
+        <div class="form-field">
+          <label for="to">To</label>
+          <input id="to" type="date" formControlName="to">
+        </div>
+        <button type="submit">Apply Filter</button>
+        <button type="button" (click)="clearBookingFilter()">Clear</button>
+      </form>
+
+      @if (isLoadingBookings()) {
+        <p class="status-msg">Loading bookings...</p>
+      }
+      @else if (bookingsError()) {
+        <p class="status-msg error">{{ bookingsError() }}</p>
+      }
+      @else if (bookings().length === 0) {
+        <p class="status-msg">You have no bookings yet.</p>
+      }
+      @else {
+        <div class="booking-list">
+          @for (booking of bookings(); track booking.id) {
+            <div class="booking-item" (click)="viewBookingDetails(booking)">
+              <div class="booking-item__route">
+                <strong>{{ booking.origin }} → {{ booking.destination }}</strong>
+                <span>{{ booking.trainName }} · #{{ booking.trainNumber }}</span>
+              </div>
+              <div class="booking-item__details">
+                <span>{{ booking.travelDate | date:'mediumDate' }}</span>
+                <span>{{ booking.departureTime }}</span>
+                <span>Coach {{ booking.coachNumber }} — {{ booking.coachClass }}</span>
+                <span>Seat {{ booking.seatNumber }}</span>
+              </div>
+              <div class="booking-item__price">${{ booking.price }}</div>
             </div>
           }
         </div>
       }
+
+    }
+  </div>
+}
 
       <!-- TAB: SETTINGS -->
       @if (activeTab() === 'settings') {

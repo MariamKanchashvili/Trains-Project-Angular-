@@ -45,24 +45,30 @@ export class Profile implements OnInit {
   });
 
   // ============================================
-  // Bookings — Lazy Loaded, მხოლოდ ტაბზე გადასვლისას
+  // Bookings — Lazy Loaded, ფილტრი და დეტალები
   // ============================================
   public bookings = signal<Booking[]>([]);
   public isLoadingBookings = signal<boolean>(false);
   public bookingsError = signal<string>('');
   private bookingsLoaded = false;
 
+  public bookingFilterForm: FormGroup = new FormGroup({
+    from: new FormControl(''),
+    to: new FormControl(''),
+  });
+
+  public selectedBooking = signal<Booking | null>(null);
+  public isDeletingBooking = signal<boolean>(false);
+  public deleteError = signal<string>('');
+
   ngOnInit(): void {
     this.loadUser();
-  
-
   }
 
   private loadUser(): void {
     this.isLoading.set(true);
 
     this.userService.getCurrentUser().subscribe({
-
       next: (response) => {
         const userData = response.data;
         this.user.set(userData);
@@ -79,7 +85,8 @@ export class Profile implements OnInit {
       },
       error: (err) => {
         console.log(err);
-        this.errorMessage.set('Failed to load profile');
+        const message = err?.error?.detail || 'Failed to load profile.';
+        this.errorMessage.set(message);
         this.isLoading.set(false);
       }
     });
@@ -115,17 +122,23 @@ export class Profile implements OnInit {
       },
       error: (err) => {
         console.log(err);
+        const message = err?.error?.detail || 'Failed to update profile.';
         this.isSaving.set(false);
-        this.saveMessage.set('Failed to update profile.');
+        this.saveMessage.set(message);
       }
     });
   }
 
+  // ============================================
+  // Bookings — ჩატვირთვა (ფილტრის მხარდაჭერით)
+  // ============================================
   private loadBookings(): void {
     this.isLoadingBookings.set(true);
     this.bookingsError.set('');
 
-    this.userService.getUserBookings(1, 10).subscribe({
+    const { from, to } = this.bookingFilterForm.value;
+
+    this.userService.getUserBookings(1, 10, from || undefined, to || undefined).subscribe({
       next: (response) => {
         this.bookings.set(response.data.items);
         this.isLoadingBookings.set(false);
@@ -133,8 +146,45 @@ export class Profile implements OnInit {
       },
       error: (err) => {
         console.log(err);
-        this.bookingsError.set('Failed to load bookings');
+        const message = err?.error?.detail || 'Failed to load bookings';
+        this.bookingsError.set(message);
         this.isLoadingBookings.set(false);
+      }
+    });
+  }
+
+  applyBookingFilter(): void {
+    this.loadBookings();
+  }
+
+  clearBookingFilter(): void {
+    this.bookingFilterForm.reset();
+    this.loadBookings();
+  }
+
+  viewBookingDetails(booking: Booking): void {
+    this.selectedBooking.set(booking);
+  }
+
+  closeBookingDetails(): void {
+    this.selectedBooking.set(null);
+  }
+
+  deleteBooking(id: number): void {
+    this.isDeletingBooking.set(true);
+    this.deleteError.set('');
+
+    this.userService.deleteBooking(id).subscribe({
+      next: () => {
+        this.bookings.update(list => list.filter(b => b.id !== id));
+        this.selectedBooking.set(null);
+        this.isDeletingBooking.set(false);
+      },
+      error: (err) => {
+        console.log(err);
+        const message = err?.error?.detail || 'Failed to delete booking.';
+        this.deleteError.set(message);
+        this.isDeletingBooking.set(false);
       }
     });
   }

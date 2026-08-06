@@ -23,21 +23,23 @@ export class UserService {
     private storageService = inject(StorageService);
 
     getCurrentUser() {
-        const token = this.storageService.get('accessToken') || '';
-        console.log('Storage-დან ამოღებული ტოკენი:', token);
-        if (!token) {
-      console.warn('ტოკენი SessionStorage-ში ვერ მოიძებნა!');
-    }
-        const params = {accessToken:token}
-    return this.http.get<{ data: UserResponse }>(`${API_URL}/users/me`, { params });
+ 
+    
+    return this.http.get<{ data: UserResponse }>(`${API_URL}/users/me`);
         
     }
 
-    getUserBookings(page: number, take: number) {
-        const params = { Page: page, Take: take };
+    getUserBookings(page: number, take: number,from?:string,to?:string) {
+        const params:any={ Page: page, Take: take };
+        if(from) params.from=from;
+        if(to)params.to=to;
+
         return this.http.get<{ data: PaginatedResponse<Booking> }>(`${API_URL}/bookings`, { params });
     }
     updateUser(playload: UpdateUserRequest){
         return this.http.put<{data: UserResponse}>(`${API_URL}/users`,playload)
+    }
+    deleteBooking(id:number){
+        return this.http.delete(`${API_URL}/bookings/${id}`);
     }
 }
