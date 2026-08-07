@@ -267,8 +267,48 @@ From date cannot be later than To date.
       @if (activeTab() === 'settings') {
         <div class="tab-settings">
           <h2>Settings</h2>
-          <p>Password change form </p>
-        </div>
+          <p class="settings-title">Password change form </p>
+        
+
+        <form  [formGroup]="passwordForm" (ngSubmit)="setNewPassword()" class="settings-form">
+          <div class="form-field">
+          <label for="currentPassword">Current Password</label>
+          <input type="text" formControlName="currentPassword" name="currentPassword"> 
+         @if (
+  passwordForm.get('currentPassword')?.touched && passwordForm.get('currentPassword')?.invalid
+) {
+ <p class="field-error">Current password is requred !</p>
+} 
+          
+          </div>
+
+          <div class="form-field">
+          <label for="newPassword">New Password</label>
+          <input type="text" formControlName="newPassword" name="newPassword">
+     @if (
+  passwordForm.get('newPassword')?.touched && passwordForm.get('newPassword')?.hasError('required')
+) {
+  <p class="field-error">
+    New password is required!
+  </p>
+}     
+          </div>
+
+          <div class="form-field">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="text" formControlName="confirmPassword" name="confirmPassword">  
+    @if (
+  passwordForm.get('confirmPassword')?.touched && passwordForm.get('confirmPassword')?.invalid
+) {
+  <p class="field-error">
+    Please confirm your new password
+  </p>
+}             
+          </div>
+   
+          <button type="submit" class="save-btn" [disabled]="passwordForm.invalid">Change Password</button>
+        </form>
+      </div>
       }
 
     </main>

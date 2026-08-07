@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormControlName, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../auth/services/auth.service';
 import { UserService, UpdateUserRequest } from '../../services/user.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -44,6 +44,15 @@ export class Profile implements OnInit {
     address: new FormControl(''),
     dob: new FormControl(''),
   });
+  // ============================================
+  // Profile setting ,password change form
+  // ===========================================
+ public passwordForm:FormGroup=new FormGroup({
+   currentPassword:new FormControl('',Validators.required),
+   newPassword:new FormControl('',[Validators.required,Validators.minLength(6)]),
+   confirmPassword:new FormControl('',Validators.required)
+ })
+
 
   // ============================================
   // Bookings — Lazy Loaded, ფილტრი და დეტალები
@@ -288,4 +297,54 @@ this.loadBookings();
     this.authService.logout();
     this.router.navigate(['/login']);
   }
+// ========================================
+  // Settings- change password
+// =======================================
+
+setNewPassword():void{
+
+  if(this.passwordForm.invalid){
+    this.passwordForm.markAllAsTouched();
+    return
+  }
+  const formValue=this.passwordForm.value;
+  console.log('password form',formValue)
+
+if(formValue.newPassword!==formValue.confirmPassword){
+
+      alert('New password and confirm password do not match.');
+       return
+      }
+
+
+  const playload={
+    currentPassword:formValue.currentPassword,
+    newPassword:formValue.newPassword
+  }
+  
+
+  this.userService.changePassword(playload).subscribe({
+
+    next: (response)=>{
+      console.log('Password changed sucessfully',response);
+      alert('Password changed successfully! Please log in again.');
+
+      // წარმატების შემდეგ ფორმა უნდა გასუფთავდეს:
+
+      this.passwordForm.reset();
+      setTimeout(()=>{
+        this.authService.logout();
+        this.router.navigate(['/login'])
+      },2000);
+        
+      
+      
+    },
+    error:(err)=>{
+      console.log('Change password error:', err);
+      const message=err?.error?.detail ||'Failed to change password';
+      alert(message)
+    }
+  })
+}
 }

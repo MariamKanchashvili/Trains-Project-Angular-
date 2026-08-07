@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { inject, Service } from '@angular/core';
+import { APP_ID, inject, Service } from '@angular/core';
 import { API_URL } from '../../../core/config/api.config';
 import { UserResponse } from '../interfaces/user';
 import { PaginatedResponse } from '../interfaces/paginated-response.interface';
@@ -69,6 +69,11 @@ export class UserService {
     `${API_URL}/bookings/filter`,
     { params }
   );
+}
+changePassword(playload:{currentPassword:string,newPassword:string}){
+
+  console.log('CHANGE PASSWORD CLICKED');
+  return this.http.put(`${API_URL}/users/change-password`,playload)
 }
 
 }
