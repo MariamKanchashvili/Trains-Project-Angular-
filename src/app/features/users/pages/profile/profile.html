@@ -165,28 +165,56 @@
       <form [formGroup]="bookingFilterForm" (ngSubmit)="applyBookingFilter()" class="booking-filter">
         <div class="form-field">
           <label for="from">From</label>
-          <input id="from" type="date" formControlName="from">
+          <input id="from" type="date" formControlName="from" [max]="bookingFilterForm.value.to">
         </div>
         <div class="form-field">
           <label for="to">To</label>
-          <input id="to" type="date" formControlName="to">
+          <input id="to" type="date" formControlName="to" [min]="bookingFilterForm.value.from">
         </div>
-        <button type="submit">Apply Filter</button>
+        <button type="submit"  [disabled]="bookingFilterForm.invalid" >Apply Filter</button>
         <button type="button" (click)="clearBookingFilter()">Clear</button>
+@if (bookingFilterForm.errors?.['invalidRange']) {
+
+<p class="field-error">
+
+From date cannot be later than To date.
+
+</p>
+
+}
+
+
       </form>
 
       @if (isLoadingBookings()) {
         <p class="status-msg">Loading bookings...</p>
       }
       @else if (bookingsError()) {
-        <p class="status-msg error">{{ bookingsError() }}</p>
+         <app-state-message
+    type="error"
+    title="Something went wrong"
+    [message]="bookingsError()">
+  </app-state-message>
       }
       @else if (bookings().length === 0) {
-        <p class="status-msg">You have no bookings yet.</p>
+       <app-state-message
+    type="empty"
+    title="No bookings yet"
+    message="You haven't made any bookings. Start by searching for a train.">
+  </app-state-message>
       }
+   @else if (filteredBookings().length === 0) {
+  <!-- 🔧 ახალი — ცალკე შემთხვევა, როცა ფილტრმა "დაცარიელა" სია -->
+  <app-state-message
+    type="empty"
+    title="No bookings match this filter"
+    message="Try adjusting the date range, or clear the filter to see all bookings.">
+  </app-state-message>
+}   
+      
       @else {
         <div class="booking-list">
-          @for (booking of bookings(); track booking.id) {
+          @for (booking of filteredBookings(); track booking.id) {
             <div class="booking-item" (click)="viewBookingDetails(booking)">
               <div class="booking-item__route">
                 <strong>{{ booking.origin }} → {{ booking.destination }}</strong>
@@ -199,13 +227,40 @@
                 <span>Seat {{ booking.seatNumber }}</span>
               </div>
               <div class="booking-item__price">${{ booking.price }}</div>
+
+              <!--  delete ღილაკი, თითოეულ item-ზე -->
+    <button
+      class="booking-item__delete"
+      [disabled]="isDeletingBooking()"
+      (click)="deleteBooking(booking.id); $event.stopPropagation()">
+      ✕
+    </button>
             </div>
           }
         </div>
       }
+ @if (bookings().length > 0 && totalPages() > 1) {
+  <div class="pagination">
+    <button
+      [disabled]="currentPage() === 1"
+      (click)="goTopage(currentPage() - 1)">
+      ← Previous
+    </button>
 
+    <span class="pagination__info">
+      Page {{ currentPage() }} of {{ totalPages() }}
+    </span>
+
+    <button
+      [disabled]="currentPage() === totalPages()"
+      (click)="goTopage(currentPage() + 1)">
+      Next →
+    </button>
+  </div>
+}
     }
   </div>
+ 
 }
 
       <!-- TAB: SETTINGS -->

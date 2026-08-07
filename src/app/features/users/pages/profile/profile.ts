@@ -1,15 +1,16 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../auth/services/auth.service';
 import { UserService, UpdateUserRequest } from '../../services/user.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UserResponse } from '../../interfaces/user';
 import { Booking } from '../../interfaces/booking-interface';
 import { DatePipe } from '@angular/common';
+import { StateMessage } from '../../../../shared/components/state-message/state-message';
 
 @Component({
   selector: 'app-profile',
-  imports: [ReactiveFormsModule, DatePipe],
+  imports: [ReactiveFormsModule, DatePipe,StateMessage],
   templateUrl: './profile.html',
   styleUrl: './profile.scss',
 })
@@ -51,11 +52,24 @@ export class Profile implements OnInit {
   public isLoadingBookings = signal<boolean>(false);
   public bookingsError = signal<string>('');
   private bookingsLoaded = false;
+  // ფილტრაცისთვის
+public filteredBookings = signal<Booking[]>([]);
+// =============================================
+// Bookings -პაგინაცია 
+// =============================================
+public currentPage=signal<number>(1);
+public totalPages=signal<number>(1);
+public pageSize=5;
 
   public bookingFilterForm: FormGroup = new FormGroup({
     from: new FormControl(''),
     to: new FormControl(''),
-  });
+  },
+{
+     validators: this.dateRangeValidator
+
+  
+});
 
   public selectedBooking = signal<Booking | null>(null);
   public isDeletingBooking = signal<boolean>(false);
@@ -77,6 +91,21 @@ export class Profile implements OnInit {
   }
 
 });
+  }
+   private dateRangeValidator(group: AbstractControl) {
+
+    const from = group.get('from')?.value;
+    const to = group.get('to')?.value;
+
+    if (!from || !to) {
+      return null;
+    }
+
+    if (from>to) {
+      return { invalidRange: true };
+    }
+
+    return null;
   }
 
   private loadUser(): void {
@@ -152,9 +181,11 @@ export class Profile implements OnInit {
 
     const { from, to } = this.bookingFilterForm.value;
 
-    this.userService.getUserBookings(1, 10, from || undefined, to || undefined).subscribe({
+    this.userService.getFilteredBookings(this.currentPage(), this.pageSize, from || undefined, to || undefined).subscribe({
       next: (response) => {
         this.bookings.set(response.data.items);
+          this.filteredBookings.set(response.data.items);
+          this.totalPages.set(response.data.totalPages)
         this.isLoadingBookings.set(false);
         this.bookingsLoaded = true;
       },
@@ -166,14 +197,52 @@ export class Profile implements OnInit {
       }
     });
   }
-
+goTopage(page:number):void{
+  if(page<1 || page>this.totalPages()) return
+  this.currentPage.set(page);
+  this.loadBookings();
+}
   applyBookingFilter(): void {
-    this.loadBookings();
+  console.log('FILTER BUTTON CLICKED');
+
+  console.log('ALL BOOKINGS:', this.bookings());
+
+  const from = this.bookingFilterForm.value.from;
+  const to = this.bookingFilterForm.value.to;
+console.log({ from,to});
+
+
+  let filtered = this.bookings();
+console.log(filtered);
+
+  if (from) {
+
+    filtered = filtered.filter(booking =>
+     booking.travelDate.split('T')[0] >= from
+    );
+
   }
 
+  if (to) {
+
+    filtered = filtered.filter(booking =>
+       booking.travelDate.split('T')[0] <= to
+    );
+
+  }
+
+  this.filteredBookings.set(filtered);
+this.currentPage.set(1);
+this.loadBookings();
+
+
+}
+
   clearBookingFilter(): void {
-    this.bookingFilterForm.reset();
-    this.loadBookings();
+   this.bookingFilterForm.reset();
+   this.currentPage.set(1)
+   this.loadBookings()
+  // this.filteredBookings.set(this.bookings());
   }
 
   viewBookingDetails(booking: Booking): void {
@@ -191,6 +260,7 @@ export class Profile implements OnInit {
     this.userService.deleteBooking(id).subscribe({
       next: () => {
         this.bookings.update(list => list.filter(b => b.id !== id));
+         this.filteredBookings.update(list => list.filter(b => b.id !== id));
         this.selectedBooking.set(null);
         this.isDeletingBooking.set(false);
       },

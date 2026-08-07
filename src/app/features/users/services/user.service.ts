@@ -42,4 +42,33 @@ export class UserService {
     deleteBooking(id:number){
         return this.http.delete(`${API_URL}/bookings/${id}`);
     }
+
+
+    
+    getFilteredBookings(
+  page: number,
+  take: number,
+  from?: string,
+  to?: string
+) {
+
+  const params: any = {
+    Page: page,
+    Take: take
+  };
+
+  if (from) {
+    params.from = from;
+  }
+
+  if (to) {
+    params.to = to;
+  }
+
+  return this.http.get<{data: PaginatedResponse<Booking>}>(
+    `${API_URL}/bookings/filter`,
+    { params }
+  );
+}
+
 }

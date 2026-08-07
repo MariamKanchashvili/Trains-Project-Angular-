@@ -512,7 +512,7 @@
   align-items:center;
 
   gap:1.5rem;
-
+  position: relative;
 
   padding:1.5rem;
 
@@ -543,7 +543,16 @@
 
 
 }
+.booking-item__delete{
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  max-width: 40px;
+  width: 100%;;
+  height: 3vh;
+  background-color: #d4af5ac4;
 
+}
 
 
 /* ==========================================================
@@ -916,6 +925,40 @@ input {
 
   font-family:inherit;
 
+}
+// pagination
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 24px;
+
+  button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid $border;
+    background: $bg-left;
+    color: $text-main;
+    cursor: pointer;
+    transition: .3s;
+
+    &:hover:not(:disabled) {
+      border-color: $gold;
+      color:$gold;
+    }
+
+    &:disabled {
+      opacity: .4;
+      cursor: not-allowed;
+    }
+  }
+
+  &__info {
+    color: $text-muted;
+    font-size: 14px;
+  }
 }
 
 
