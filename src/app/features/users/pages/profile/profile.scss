@@ -444,7 +444,7 @@
     
     input {
 
-      background:$bg-left;
+      background:#b29741b5;
 
     }
 
@@ -966,7 +966,32 @@ input {
   font-size: 25px;
   margin: 10px 0;
 }
+// DELETE ACCOUNT
+.delete-wrapper{
+  border: 1px solid red;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color:#040c279e;
+}
+.detele-account-btn {
+  color:red;
+  border:1px solid red;
+  background-color: $bg-right;
+  height: 5vh;
+  border-radius: 8px;
+  padding: 10px;
 
+}
+.setting-title-delete{
+  color: red !important;
+  margin-top: 30px;
+ 
+}
 /* ==========================================================
    LARGE TABLET
 ========================================================== */

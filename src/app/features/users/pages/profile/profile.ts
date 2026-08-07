@@ -130,7 +130,7 @@ public pageSize=5;
           lastName: userData.lastName,
           phoneNumber: userData.details.phoneNumber ?? '',
           address: userData.details.address ?? '',
-          dob: userData.details.dob ?? '',
+          dob: userData.details.dob ? userData.details.dob.substring(0, 10): '',
         });
 
         this.isLoading.set(false);
@@ -162,7 +162,9 @@ public pageSize=5;
       phoneNumber: formValue.phoneNumber ?? '',
       address: formValue.address ?? '',
       pictureUrl: this.user()?.details.pictureUrl ?? '',
-      dateOfBirth: formValue.dob || null,
+      dateOfBirth: formValue.dob
+        ? new Date(formValue.dob).toISOString()
+        : '',
     };
 
     this.userService.updateUser(payload).subscribe({
@@ -346,5 +348,33 @@ if(formValue.newPassword!==formValue.confirmPassword){
       alert(message)
     }
   })
+}
+// =====================================
+// Delete account
+// =====================================
+
+deleteAccount():void{
+  const confirmDelete=confirm('Are you sure you want to delete your account? This action cannot be undone')
+
+  if(confirmDelete){
+    return
+  }
+
+  this.userService.deleteAccount().subscribe({
+    next:()=>{
+      alert('Your account has been deleted successfully.');
+      setTimeout(()=>{
+          this.authService.logout();
+
+        this.router.navigate(['/login']);
+      })
+    },
+    error:(err)=>{
+
+      console.log('Delete profile error:', err);
+
+        alert(err?.error?.detail ||  'Failed to delete account');
+    }
+    })
 }
 }

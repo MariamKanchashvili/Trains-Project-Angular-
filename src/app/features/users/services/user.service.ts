@@ -76,4 +76,7 @@ changePassword(playload:{currentPassword:string,newPassword:string}){
   return this.http.put(`${API_URL}/users/change-password`,playload)
 }
 
+deleteAccount(){
+  return this.http.delete(`${API_URL}/users/delete-profile`)
+}
 }

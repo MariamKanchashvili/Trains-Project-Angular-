@@ -308,6 +308,12 @@ From date cannot be later than To date.
    
           <button type="submit" class="save-btn" [disabled]="passwordForm.invalid">Change Password</button>
         </form>
+
+      <div class="delete-wrapper">
+         <h2 class="setting-title-delete">Danger zone ⚠️</h2>
+        <button (click)="deleteAccount()" class="detele-account-btn">Delete Account</button>
+      </div>
+       
       </div>
       }
 
