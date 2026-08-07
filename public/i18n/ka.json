@@ -213,4 +213,88 @@
   "COMMUNITY_DESC": "50,000+ ვერიფიცირებული მოგზაური"
 
 }
+,
+
+"PROFILE":{
+  "PROFILE_SIDEBAR_PROFILE": "პროფილი",
+  "PROFILE_SIDEBAR_BOOKINGS": "ჯავშნები",
+  "PROFILE_SIDEBAR_SETTINGS": "პარამეტრები",
+  "PROFILE_SIDEBAR_LOGOUT": "გასვლა",
+
+  "PROFILE_PERSONAL_INFORMATION": "პირადი ინფორმაცია",
+
+  "PROFILE_FIRST_NAME": "სახელი",
+  "PROFILE_LAST_NAME": "გვარი",
+  "PROFILE_EMAIL": "ელფოსტა",
+  "PROFILE_PHONE_NUMBER": "ტელეფონის ნომერი",
+  "PROFILE_ADDRESS": "მისამართი",
+  "PROFILE_DATE_OF_BIRTH": "დაბადების თარიღი",
+
+  "PROFILE_OPTIONAL": "არასავალდებულო",
+
+  "PROFILE_SAVE_CHANGES": "შენახვა",
+  "PROFILE_SAVING": "ინახება...",
+
+  "VALIDATION_FIRST_NAME_REQUIRED": "სახელი აუცილებელია",
+  "VALIDATION_LAST_NAME_REQUIRED": "გვარი აუცილებელია"
+},
+
+
+"BOOKING-USER":{
+  "BOOKING_BACK_TO_BOOKINGS": "ჯავშნებზე დაბრუნება",
+
+  "BOOKING_TRAIN": "მატარებელი",
+  "BOOKING_DEPARTURE": "გასვლა",
+  "BOOKING_TRAVEL_DATE": "მგზავრობის თარიღი",
+  "BOOKING_COACH": "ვაგონი",
+  "BOOKING_SEAT": "ადგილი",
+  "BOOKING_PRICE": "ფასი",
+
+  "BOOKING_CANCELLING": "უქმდება...",
+  "BOOKING_CANCEL": "ჯავშნის გაუქმება",
+
+  "BOOKING_MY_BOOKINGS": "ჩემი ჯავშნები",
+
+  "BOOKING_FROM": "დან",
+  "BOOKING_TO": "მდე",
+
+  "BOOKING_APPLY_FILTER": "ფილტრის გამოყენება",
+  "BOOKING_CLEAR": "გასუფთავება",
+
+  "BOOKING_INVALID_DATE_RANGE": "დაწყების თარიღი არ შეიძლება იყოს დასრულების თარიღზე გვიანი.",
+
+  "BOOKING_LOADING": "ჯავშნები იტვირთება...",
+
+  "BOOKING_ERROR_TITLE": "რაღაც შეცდომა მოხდა",
+  "BOOKING_PREVIOUS":"წინა",
+  "BOOKING_PAGE": "გვერდი",
+  "BOOKING_OF": "-დან",
+  "BOOKING_NEXT": "შემდეგი "
+},
+"SETTINGS":
+{
+  "SETTINGS_TITLE": "პარამეტრები",
+
+  "SETTINGS_PASSWORD_CHANGE_FORM": "პაროლის შეცვლის ფორმა",
+
+  "SETTINGS_CURRENT_PASSWORD": "მიმდინარე პაროლი",
+  "SETTINGS_NEW_PASSWORD": "ახალი პაროლი",
+  "SETTINGS_CONFIRM_PASSWORD": "დაადასტურეთ პაროლი",
+
+  "SETTINGS_CHANGE_PASSWORD": "პაროლის შეცვლა",
+
+  "SETTINGS_DANGER_ZONE": "საფრთხის ზონა",
+
+  "SETTINGS_DELETE_ACCOUNT": "ანგარიშის წაშლა",
+
+
+  "VALIDATION_CURRENT_PASSWORD_REQUIRED": "მიმდინარე პაროლი აუცილებელია",
+
+  "VALIDATION_NEW_PASSWORD_REQUIRED": "ახალი პაროლი აუცილებელია",
+
+  "VALIDATION_CONFIRM_PASSWORD_REQUIRED": "პაროლის დადასტურება აუცილებელია"
+}
+
+
+
 }

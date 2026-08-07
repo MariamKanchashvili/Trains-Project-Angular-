@@ -25,25 +25,26 @@
           class="sidebar-nav__item"
           [class.active]="activeTab() === 'profile'"
           (click)="setActiveTab('profile')">
-          Profile
+          {{ 'PROFILE.PROFILE_SIDEBAR_PROFILE' | translate }}
         </button>
 
         <button
           class="sidebar-nav__item"
           [class.active]="activeTab() === 'bookings'"
           (click)="setActiveTab('bookings')">
-          Bookings
+             {{ 'PROFILE.PROFILE_SIDEBAR_BOOKINGS' | translate }}
         </button>
 
         <button
           class="sidebar-nav__item"
           [class.active]="activeTab() === 'settings'"
           (click)="setActiveTab('settings')">
-          Settings
+             {{ 'PROFILE.PROFILE_SIDEBAR_SETTINGS' | translate }}
         </button>
       </nav>
 
-      <button class="sidebar-logout" (click)="logout()">Logout</button>
+      <button class="sidebar-logout" (click)="logout()"> {{ 'PROFILE.PROFILE_SIDEBAR_LOGOUT' | translate }}
+</button>
 
     </aside>
 
@@ -53,45 +54,46 @@
       <!-- TAB: PROFILE — რეაქტიული ფორმა -->
       @if (activeTab() === 'profile') {
         <div class="tab-profile">
-          <h2>Personal Information</h2>
+          <h2>{{ 'PROFILE.PROFILE_PERSONAL_INFORMATION' | translate }}</h2>
 
           <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class="profile-form">
 
             <div class="form-row">
               <div class="form-field">
-                <label for="firstName">First name</label>
+                <label for="firstName">{{ 'PROFILE.PROFILE_FIRST_NAME' | translate }}</label>
                 <input id="firstName" type="text" formControlName="firstName">
                 @if (profileForm.get('firstName')?.touched && profileForm.get('firstName')?.invalid) {
-                  <p class="field-error">First name is required</p>
+                  <p class="field-error">{{ 'PROFILE.VALIDATION_FIRST_NAME_REQUIRED' | translate }}</p>
                 }
               </div>
 
               <div class="form-field">
-                <label for="lastName">Last name</label>
+                <label for="lastName">{{ 'PROFILE.PROFILE_LAST_NAME' | translate }}
+</label>
                 <input id="lastName" type="text" formControlName="lastName">
                 @if (profileForm.get('lastName')?.touched && profileForm.get('lastName')?.invalid) {
-                  <p class="field-error">Last name is required</p>
+                  <p class="field-error">{{ 'PROFILE.VALIDATION_LAST_NAME_REQUIRED' | translate }}</p>
                 }
               </div>
             </div>
 
             <div class="form-field">
-              <label for="email">Email</label>
+              <label for="email">{{ 'PROFILE.PROFILE_EMAIL' | translate }}</label>
               <input id="email" type="email" [value]="user()!.email" disabled>
             </div>
 
             <div class="form-field">
-              <label for="phoneNumber">Phone number</label>
+              <label for="phoneNumber">{{ 'PROFILE.PROFILE_PHONE_NUMBER' | translate }}</label>
               <input id="phoneNumber" type="text" formControlName="phoneNumber" placeholder="Optional">
             </div>
 
             <div class="form-field">
-              <label for="address">Address</label>
+              <label for="address">{{ 'PROFILE.PROFILE_ADDRESS' | translate }}</label>
               <input id="address" type="text" formControlName="address" placeholder="Optional">
             </div>
 
             <div class="form-field">
-              <label for="dob">Date of birth</label>
+              <label for="dob">{{ 'PROFILE.PROFILE_DATE_OF_BIRTH' | translate }}</label>
               <input id="dob" type="date" formControlName="dob">
             </div>
 
@@ -100,7 +102,9 @@
             }
 
             <button type="submit" class="save-btn" [disabled]="isSaving()">
-              {{ isSaving() ? 'Saving...' : 'Save Changes' }}
+             @if (isSaving()) {{{ 'PROFILE.PROFILE_SAVING' | translate }}}
+             @else {{{ 'PROFILE.PROFILE_SAVE_CHANGES' | translate }}
+              }
             </button>
 
           </form>
@@ -114,33 +118,33 @@
     @if (selectedBooking(); as booking) {
 
       <!-- დეტალების ხედი -->
-      <button class="back-step-link" (click)="closeBookingDetails()">← Back to bookings</button>
+      <button class="back-step-link" (click)="closeBookingDetails()"> ← {{ 'BOOKING-USER.BOOKING_BACK_TO_BOOKINGS' | translate }}</button>
 
       <div class="booking-detail-card">
         <h2>{{ booking.origin }} → {{ booking.destination }}</h2>
 
         <div class="confirm-row">
-          <span>Train</span>
+          <span>{{ 'BOOKING-USER.BOOKING_TRAIN' | translate }}</span>
           <strong>{{ booking.trainName }} · #{{ booking.trainNumber }}</strong>
         </div>
         <div class="confirm-row">
-          <span>Departure</span>
+          <span>{{ 'BOOKING-USER.BOOKING_DEPARTURE' | translate }}</span>
           <strong>{{ booking.departureTime }}</strong>
         </div>
         <div class="confirm-row">
-          <span>Travel Date</span>
+          <span>{{ 'BOOKING-USER.BOOKING_TRAVEL_DATE' | translate }}</span>
           <strong>{{ booking.travelDate | date:'mediumDate' }}</strong>
         </div>
         <div class="confirm-row">
-          <span>Coach</span>
+          <span>{{ 'BOOKING-USER.BOOKING_COACH' | translate }}</span>
           <strong>{{ booking.coachNumber }} — {{ booking.coachClass }}</strong>
         </div>
         <div class="confirm-row">
-          <span>Seat</span>
+          <span>{{ 'BOOKING-USER.BOOKING_SEAT' | translate }}</span>
           <strong>{{ booking.seatNumber }}</strong>
         </div>
         <div class="confirm-row confirm-total">
-          <span>Price</span>
+          <span>{{ 'BOOKING-USER.BOOKING_PRICE' | translate }}</span>
           <strong>${{ booking.price }}</strong>
         </div>
 
@@ -152,32 +156,34 @@
           class="delete-btn"
           [disabled]="isDeletingBooking()"
           (click)="deleteBooking(booking.id)">
-          {{ isDeletingBooking() ? 'Cancelling...' : 'Cancel Booking' }}
+        @if (isDeletingBooking()) { {{ 'BOOKING-USER.BOOKING_CANCELLING' | translate }}}
+@else { {{ 'BOOKING-USER.BOOKING_CANCEL' | translate }} }
         </button>
       </div>
 
     } @else {
 
       <!-- სიის ხედი -->
-      <h2>My Bookings</h2>
+      <h2>{{ 'BOOKING-USER.BOOKING_MY_BOOKINGS' | translate }}</h2>
 
       <!-- ფილტრი -->
       <form [formGroup]="bookingFilterForm" (ngSubmit)="applyBookingFilter()" class="booking-filter">
         <div class="form-field">
-          <label for="from">From</label>
+          <label for="from"> {{ 'BOOKING-USER.BOOKING_FROM' | translate }}</label>
           <input id="from" type="date" formControlName="from" [max]="bookingFilterForm.value.to">
         </div>
         <div class="form-field">
-          <label for="to">To</label>
+          <label for="to">{{ 'BOOKING-USER.BOOKING_TO' | translate }}</label>
           <input id="to" type="date" formControlName="to" [min]="bookingFilterForm.value.from">
         </div>
-        <button type="submit"  [disabled]="bookingFilterForm.invalid" >Apply Filter</button>
-        <button type="button" (click)="clearBookingFilter()">Clear</button>
+        <button type="submit"  [disabled]="bookingFilterForm.invalid" >{{ 'BOOKING-USER.BOOKING_APPLY_FILTER' | translate }}</button>
+        <button type="button" (click)="clearBookingFilter()">{{ 'BOOKING-USER.BOOKING_CLEAR' | translate }}</button>
 @if (bookingFilterForm.errors?.['invalidRange']) {
 
 <p class="field-error">
 
-From date cannot be later than To date.
+{{ 'BOOKING-USER.BOOKING_INVALID_DATE_RANGE' | translate }}
+
 
 </p>
 
@@ -187,7 +193,7 @@ From date cannot be later than To date.
       </form>
 
       @if (isLoadingBookings()) {
-        <p class="status-msg">Loading bookings...</p>
+        <p class="status-msg">{{ 'BOOKING-USER.BOOKING_LOADING' | translate }}</p>
       }
       @else if (bookingsError()) {
          <app-state-message
@@ -204,7 +210,7 @@ From date cannot be later than To date.
   </app-state-message>
       }
    @else if (filteredBookings().length === 0) {
-  <!-- 🔧 ახალი — ცალკე შემთხვევა, როცა ფილტრმა "დაცარიელა" სია -->
+  <!--   ცალკე შემთხვევა, როცა ფილტრმა "დაცარიელა" სია -->
   <app-state-message
     type="empty"
     title="No bookings match this filter"
@@ -223,8 +229,8 @@ From date cannot be later than To date.
               <div class="booking-item__details">
                 <span>{{ booking.travelDate | date:'mediumDate' }}</span>
                 <span>{{ booking.departureTime }}</span>
-                <span>Coach {{ booking.coachNumber }} — {{ booking.coachClass }}</span>
-                <span>Seat {{ booking.seatNumber }}</span>
+                <span>{{ 'BOOKING-USER.BOOKING_COACH' | translate }} {{ booking.coachNumber }} — {{ booking.coachClass }}</span>
+                <span>{{ 'BOOKING-USER.BOOKING_SEAT' | translate }} {{ booking.seatNumber }}</span>
               </div>
               <div class="booking-item__price">${{ booking.price }}</div>
 
@@ -244,17 +250,17 @@ From date cannot be later than To date.
     <button
       [disabled]="currentPage() === 1"
       (click)="goTopage(currentPage() - 1)">
-      ← Previous
+      ←  {{ 'BOOKING-USER.BOOKING_PREVIOUS' | translate }}
     </button>
 
     <span class="pagination__info">
-      Page {{ currentPage() }} of {{ totalPages() }}
+     {{ 'BOOKING-USER.BOOKING_PAGE' | translate }}{{ currentPage() }} {{ 'BOOKING-USER.BOOKING_OF' | translate }}{{ totalPages() }}
     </span>
 
     <button
       [disabled]="currentPage() === totalPages()"
       (click)="goTopage(currentPage() + 1)">
-      Next →
+      {{ 'BOOKING-USER.BOOKING_NEXT' | translate }} →
     </button>
   </div>
 }
@@ -266,52 +272,52 @@ From date cannot be later than To date.
       <!-- TAB: SETTINGS -->
       @if (activeTab() === 'settings') {
         <div class="tab-settings">
-          <h2>Settings</h2>
-          <p class="settings-title">Password change form </p>
+          <h2>{{ 'SETTINGS.SETTINGS_TITLE' | translate }}</h2>
+          <p class="settings-title">{{ 'SETTINGS.SETTINGS_PASSWORD_CHANGE_FORM' | translate }}</p>
         
 
         <form  [formGroup]="passwordForm" (ngSubmit)="setNewPassword()" class="settings-form">
           <div class="form-field">
-          <label for="currentPassword">Current Password</label>
+          <label for="currentPassword">{{ 'SETTINGS.SETTINGS_CURRENT_PASSWORD' | translate }}</label>
           <input type="text" formControlName="currentPassword" name="currentPassword"> 
          @if (
   passwordForm.get('currentPassword')?.touched && passwordForm.get('currentPassword')?.invalid
 ) {
- <p class="field-error">Current password is requred !</p>
+ <p class="field-error">{{ 'SETTINGS.VALIDATION_CURRENT_PASSWORD_REQUIRED' | translate }}</p>
 } 
           
           </div>
 
           <div class="form-field">
-          <label for="newPassword">New Password</label>
+          <label for="newPassword">{{ 'SETTINGS.SETTINGS_NEW_PASSWORD' | translate }}</label>
           <input type="text" formControlName="newPassword" name="newPassword">
      @if (
   passwordForm.get('newPassword')?.touched && passwordForm.get('newPassword')?.hasError('required')
 ) {
   <p class="field-error">
-    New password is required!
+{{ 'SETTINGS.VALIDATION_NEW_PASSWORD_REQUIRED' | translate }}
   </p>
 }     
           </div>
 
           <div class="form-field">
-          <label for="confirmPassword">Confirm Password</label>
+          <label for="confirmPassword">{{ 'SETTINGS.SETTINGS_CONFIRM_PASSWORD' | translate }}</label>
           <input type="text" formControlName="confirmPassword" name="confirmPassword">  
     @if (
   passwordForm.get('confirmPassword')?.touched && passwordForm.get('confirmPassword')?.invalid
 ) {
   <p class="field-error">
-    Please confirm your new password
+{{ 'SETTINGS.VALIDATION_CONFIRM_PASSWORD_REQUIRED' | translate }}
   </p>
 }             
           </div>
    
-          <button type="submit" class="save-btn" [disabled]="passwordForm.invalid">Change Password</button>
+          <button type="submit" class="save-btn" [disabled]="passwordForm.invalid">{{ 'SETTINGS.SETTINGS_CHANGE_PASSWORD' | translate }}</button>
         </form>
 
       <div class="delete-wrapper">
-         <h2 class="setting-title-delete">Danger zone ⚠️</h2>
-        <button (click)="deleteAccount()" class="detele-account-btn">Delete Account</button>
+         <h2 class="setting-title-delete">{{ 'SETTINGS.SETTINGS_DANGER_ZONE' | translate }} ⚠️</h2>
+        <button (click)="deleteAccount()" class="detele-account-btn">{{ 'SETTINGS.SETTINGS_DELETE_ACCOUNT' | translate }}</button>
       </div>
        
       </div>

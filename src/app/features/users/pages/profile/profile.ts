@@ -7,10 +7,11 @@ import { UserResponse } from '../../interfaces/user';
 import { Booking } from '../../interfaces/booking-interface';
 import { DatePipe } from '@angular/common';
 import { StateMessage } from '../../../../shared/components/state-message/state-message';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-profile',
-  imports: [ReactiveFormsModule, DatePipe,StateMessage],
+  imports: [ReactiveFormsModule, DatePipe,StateMessage,TranslatePipe],
   templateUrl: './profile.html',
   styleUrl: './profile.scss',
 })
