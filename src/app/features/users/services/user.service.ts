@@ -78,5 +78,10 @@ changePassword(playload:{currentPassword:string,newPassword:string}){
 
 deleteAccount(){
   return this.http.delete(`${API_URL}/users/delete-profile`)
+};
+
+createBooking(payload: { scheduleId: number; seatId: number[]; travelDate: string }) {
+    return this.http.post<{ data: any }>(`${API_URL}/bookings`, payload);
 }
+
 }
