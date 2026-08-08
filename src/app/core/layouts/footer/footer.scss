@@ -1,0 +1,753 @@
+/* =====================================================
+   TRAIN FOOTER
+===================================================== */
+
+.train-footer {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+
+  background: linear-gradient(
+    180deg,
+    #071a3d 0%,
+    #0a2854 100%
+  );
+
+  color: #ffffff;
+}
+
+
+/* =====================================================
+   INFORMATION CONTENT
+===================================================== */
+
+.train-footer__content {
+  width: min(1200px, calc(100% - 48px));
+  margin: 0 auto;
+
+  padding: 70px 0 60px;
+
+  display: grid;
+  grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.5fr);
+
+  gap: clamp(40px, 7vw, 90px);
+}
+
+
+/* =====================================================
+   INTRO
+===================================================== */
+
+.train-footer__intro {
+  max-width: 440px;
+}
+
+.train-footer__eyebrow {
+  display: inline-block;
+
+  margin-bottom: 14px;
+
+  color: #ffd83d;
+
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+}
+
+.train-footer__intro h2 {
+  margin: 0 0 18px;
+
+  font-size: clamp(28px, 3vw, 40px);
+  line-height: 1.1;
+  font-weight: 700;
+}
+
+.train-footer__intro p {
+  max-width: 400px;
+  margin: 0;
+
+  color: #aebfd7;
+
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+
+/* =====================================================
+   INFORMATION COLUMNS
+===================================================== */
+
+.train-footer__columns {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: clamp(25px, 4vw, 55px);
+}
+
+.train-footer__column {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 11px;
+}
+
+.train-footer__column h3 {
+  margin: 0 0 10px;
+
+  color: #ffd83d;
+
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.train-footer__column span {
+  color: #c1d0e2;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+
+/* =====================================================
+   ROUTES
+===================================================== */
+
+.route-link {
+  cursor: default;
+
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.route-link:hover {
+  color: #ffffff;
+
+  transform: translateX(5px);
+}
+
+
+/* =====================================================
+   DESTINATIONS
+===================================================== */
+
+.destination {
+  position: relative;
+
+  padding-left: 14px;
+}
+
+.destination::before {
+  content: '';
+
+  position: absolute;
+
+  left: 0;
+  top: 50%;
+
+  width: 4px;
+  height: 4px;
+
+  transform: translateY(-50%);
+
+  border-radius: 50%;
+
+  background: #ffd83d;
+}
+
+
+/* =====================================================
+   ROUTE AREA
+===================================================== */
+
+.train-route {
+  position: relative;
+
+  width: 100%;
+  height: 230px;
+
+  overflow: hidden;
+
+  background: linear-gradient(
+    180deg,
+    #0a2b5c 0%,
+    #0c346c 100%
+  );
+}
+
+
+/* =====================================================
+   STATIONS
+===================================================== */
+
+.train-route__stations {
+  position: absolute;
+
+  top: 25px;
+  left: 5%;
+  right: 5%;
+
+  z-index: 10;
+
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+
+  align-items: start;
+}
+
+.station {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 10px;
+}
+
+.station__dot {
+  position: relative;
+
+  width: 13px;
+  height: 13px;
+
+  flex: 0 0 auto;
+
+  border-radius: 50%;
+
+  background: #ffd83d;
+
+  box-shadow:
+    0 0 0 5px rgba(255, 216, 61, 0.15),
+    0 0 18px rgba(255, 216, 61, 0.55);
+}
+
+.station__dot::after {
+  content: '';
+
+  position: absolute;
+
+  inset: -5px;
+
+  border: 1px solid rgba(255, 216, 61, 0.35);
+
+  border-radius: 50%;
+}
+
+.station__name {
+  max-width: 100%;
+
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  text-align: center;
+
+  white-space: nowrap;
+}
+
+
+/* =====================================================
+   ROUTE LINE
+===================================================== */
+
+.train-route__line {
+  position: absolute;
+
+  top: 31px;
+  left: 7%;
+  right: 7%;
+
+  height: 2px;
+
+  background: rgba(190, 213, 238, 0.35);
+}
+
+
+/* =====================================================
+   MOVING TRAIN
+===================================================== */
+
+.moving-train {
+  position: absolute;
+
+  left: 0;
+  bottom: 57px;
+
+  z-index: 5;
+
+  height: 92px;
+
+  display: flex;
+  align-items: flex-end;
+
+  width: max-content;
+
+  will-change: transform;
+
+  animation:
+    trainTravel 18s linear infinite;
+}
+
+.moving-train img {
+  display: block;
+
+  flex: 0 0 auto;
+
+  height: 92px;
+  width: auto;
+
+  object-fit: contain;
+}
+
+
+/* =====================================================
+   TRAIN MOTION
+===================================================== */
+
+@keyframes trainTravel {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100vw);
+  }
+}
+
+
+/* =====================================================
+   TRAIN LIGHT / MOTION
+===================================================== */
+
+.moving-train::after {
+  content: '';
+
+  position: absolute;
+
+  right: 0;
+  bottom: 8px;
+
+  width: 180px;
+  height: 35px;
+
+  pointer-events: none;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.08)
+  );
+
+  filter: blur(8px);
+}
+
+
+/* =====================================================
+   RAILS
+===================================================== */
+
+.train-route__rails {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 34px;
+
+  z-index: 2;
+
+  height: 12px;
+
+  background: repeating-linear-gradient(
+    90deg,
+    #c6d4e3 0,
+    #c6d4e3 5px,
+    transparent 5px,
+    transparent 48px
+  );
+
+  animation:
+    railsMove 0.55s linear infinite;
+}
+
+.train-route::after {
+  content: '';
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 26px;
+
+  height: 4px;
+
+  background: #788ba5;
+}
+
+@keyframes railsMove {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: -53px 0;
+  }
+}
+
+
+/* =====================================================
+   BOTTOM
+===================================================== */
+
+.train-footer__bottom {
+  width: min(1200px, calc(100% - 48px));
+
+  min-height: 65px;
+
+  margin: 0 auto;
+
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 20px;
+
+  border-top:
+    1px solid rgba(255, 255, 255, 0.1);
+
+  color: #8fa6c2;
+
+  font-size: 12px;
+}
+
+
+/* =====================================================
+   LARGE TABLET
+   <= 1000px
+===================================================== */
+
+@media (max-width: 1000px) {
+
+  .train-footer__content {
+    grid-template-columns: 1fr;
+
+    gap: 45px;
+
+    padding-top: 55px;
+    padding-bottom: 50px;
+  }
+
+  .train-footer__intro {
+    max-width: 650px;
+  }
+
+  .train-footer__intro p {
+    max-width: 600px;
+  }
+
+}
+
+
+/* =====================================================
+   TABLET
+   <= 760px
+===================================================== */
+
+@media (max-width: 760px) {
+
+  .train-footer__content {
+    width: min(100% - 36px, 600px);
+  }
+
+  .train-footer__columns {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 35px 30px;
+  }
+
+  .train-footer__column:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .train-footer__column:last-child {
+    display: grid;
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .train-footer__column:last-child h3 {
+    grid-column: 1 / -1;
+  }
+
+  .train-route {
+    height: 210px;
+  }
+
+  .moving-train {
+    height: 78px;
+    bottom: 53px;
+  }
+
+  .moving-train img {
+    height: 78px;
+  }
+
+}
+
+
+/* =====================================================
+   MOBILE
+   <= 600px
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .train-footer__content {
+    width: calc(100% - 32px);
+
+    padding:
+      45px 0
+      40px;
+
+    gap: 35px;
+  }
+
+  .train-footer__intro h2 {
+    font-size: clamp(26px, 8vw, 34px);
+  }
+
+  .train-footer__intro p {
+    font-size: 14px;
+  }
+
+  .train-footer__columns {
+    grid-template-columns: 1fr;
+
+    gap: 28px;
+  }
+
+  .train-footer__column:last-child {
+    grid-column: auto;
+
+    display: flex;
+  }
+
+  .train-footer__column:last-child h3 {
+    grid-column: auto;
+  }
+
+
+  /* ROUTE */
+
+  .train-route {
+    height: 190px;
+  }
+
+  .train-route__stations {
+    left: 3%;
+    right: 3%;
+
+    grid-template-columns:
+      repeat(5, minmax(0, 1fr));
+  }
+
+  .train-route__line {
+    left: 8%;
+    right: 8%;
+  }
+
+  .station {
+    gap: 8px;
+  }
+
+  .station__dot {
+    width: 10px;
+    height: 10px;
+
+    box-shadow:
+      0 0 0 4px rgba(255, 216, 61, 0.15),
+      0 0 12px rgba(255, 216, 61, 0.5);
+  }
+
+  .station__dot::after {
+    inset: -4px;
+  }
+
+  .station__name {
+    font-size: clamp(8px, 2.7vw, 11px);
+  }
+
+
+  /* TRAIN */
+
+  .moving-train {
+    height: 65px;
+
+    bottom: 48px;
+  }
+
+  .moving-train img {
+    height: 65px;
+  }
+
+  .train-route__rails {
+    bottom: 31px;
+  }
+
+  .train-route::after {
+    bottom: 24px;
+  }
+
+
+  /* BOTTOM */
+
+  .train-footer__bottom {
+    width: calc(100% - 32px);
+
+    min-height: auto;
+
+    padding:
+      18px 0;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 8px;
+
+    line-height: 1.5;
+  }
+
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+   <= 430px
+===================================================== */
+
+@media (max-width: 430px) {
+
+  .train-footer__content {
+    width: calc(100% - 28px);
+  }
+
+  .train-footer__columns {
+    gap: 25px;
+  }
+
+  .train-footer__column span {
+    font-size: 12px;
+  }
+
+  .train-route {
+    height: 175px;
+  }
+
+  .train-route__stations {
+    top: 22px;
+
+    left: 2%;
+    right: 2%;
+  }
+
+  .train-route__line {
+    left: 7%;
+    right: 7%;
+  }
+
+  .station__name {
+    font-size: 8px;
+  }
+
+  .moving-train {
+    height: 58px;
+
+    bottom: 44px;
+  }
+
+  .moving-train img {
+    height: 58px;
+  }
+
+}
+
+
+/* =====================================================
+   VERY SMALL DEVICES
+   <= 360px
+===================================================== */
+
+@media (max-width: 360px) {
+
+  .train-footer__content {
+    width: calc(100% - 24px);
+
+    padding-top: 38px;
+  }
+
+  .train-footer__eyebrow {
+    font-size: 10px;
+    letter-spacing: 1.8px;
+  }
+
+  .train-footer__intro h2 {
+    font-size: 25px;
+  }
+
+  .train-footer__intro p {
+    font-size: 13px;
+  }
+
+  .train-footer__column h3 {
+    font-size: 13px;
+  }
+
+  .train-footer__column span {
+    font-size: 11px;
+  }
+
+  .station__name {
+    font-size: 7px;
+  }
+
+  .station__dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .moving-train {
+    height: 50px;
+    bottom: 42px;
+  }
+
+  .moving-train img {
+    height: 50px;
+  }
+
+}
+
+
+/* =====================================================
+   ACCESSIBILITY
+===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .moving-train,
+  .train-route__rails {
+
+    animation: none;
+  }
+
+}

@@ -299,8 +299,30 @@
 
   "VALIDATION_CONFIRM_PASSWORD_REQUIRED": "Confirm password is required"
 
-}
+},
+"FOOTER": {
+  "FOOTER_EYEBROW": "YOUR JOURNEY STARTS HERE",
+  "FOOTER_TITLE": "Ready for your next journey?",
+  "FOOTER_DESCRIPTION": "Find your train, choose your seat and enjoy the journey.",
 
+  "POPULAR_ROUTES": "Popular Routes",
+  "DESTINATIONS": "Destinations",
+  "INFORMATION": "Information",
+
+  "BOOKING_INFO": "Booking information",
+  "TRAIN_SCHEDULES": "Train schedules",
+  "SEAT_SELECTION": "Seat selection",
+  "TRAVEL_PLANNING": "Travel planning",
+
+  "CITY_TBILISI": "Tbilisi",
+  "CITY_BORJOMI": "Borjomi",
+  "CITY_KUTAISI": "Kutaisi",
+  "CITY_BATUMI": "Batumi",
+  "CITY_ZUGDIDI": "Zugdidi",
+
+  "COPYRIGHT": "© 2026 Railway. All rights reserved.",
+  "JOURNEY_MESSAGE": "Every journey starts with a destination."
+}
 
 }
 

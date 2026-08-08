@@ -1,1 +1,272 @@
-<p>footer works!</p>
+<footer class="train-footer">
+
+  <!-- =========================
+       INFORMATION SECTION
+  ========================== -->
+
+  <div class="train-footer__content">
+
+    <!-- INTRO -->
+    <div class="train-footer__intro">
+
+      <span class="train-footer__eyebrow">
+        {{ 'FOOTER.FOOTER_EYEBROW' | translate }}
+      </span>
+
+      <h2>
+        {{ 'FOOTER.FOOTER_TITLE' | translate }}
+      </h2>
+
+      <p>
+        {{ 'FOOTER.FOOTER_DESCRIPTION' | translate }}
+      </p>
+
+    </div>
+
+
+    <!-- INFORMATION COLUMNS -->
+    <div class="train-footer__columns">
+
+      <!-- =========================
+           POPULAR ROUTES
+      ========================== -->
+
+      <div class="train-footer__column">
+
+        <h3>
+          {{ 'FOOTER.POPULAR_ROUTES' | translate }}
+        </h3>
+
+        <span class="route-link">
+          {{ 'FOOTER.CITY_TBILISI' | translate }}
+          →
+          {{ 'FOOTER.CITY_BORJOMI' | translate }}
+        </span>
+
+        <span class="route-link">
+          {{ 'FOOTER.CITY_TBILISI' | translate }}
+          →
+          {{ 'FOOTER.CITY_KUTAISI' | translate }}
+        </span>
+
+        <span class="route-link">
+          {{ 'FOOTER.CITY_TBILISI' | translate }}
+          →
+          {{ 'FOOTER.CITY_BATUMI' | translate }}
+        </span>
+
+        <span class="route-link">
+          {{ 'FOOTER.CITY_TBILISI' | translate }}
+          →
+          {{ 'FOOTER.CITY_ZUGDIDI' | translate }}
+        </span>
+
+      </div>
+
+
+      <!-- =========================
+           DESTINATIONS
+      ========================== -->
+
+      <div class="train-footer__column">
+
+        <h3>
+          {{ 'FOOTER.DESTINATIONS' | translate }}
+        </h3>
+
+        <span class="destination">
+          {{ 'FOOTER.CITY_TBILISI' | translate }}
+        </span>
+
+        <span class="destination">
+          {{ 'FOOTER.CITY_BORJOMI' | translate }}
+        </span>
+
+        <span class="destination">
+          {{ 'FOOTER.CITY_KUTAISI' | translate }}
+        </span>
+
+        <span class="destination">
+          {{ 'FOOTER.CITY_BATUMI' | translate }}
+        </span>
+
+        <span class="destination">
+          {{ 'FOOTER.CITY_ZUGDIDI' | translate }}
+        </span>
+
+      </div>
+
+
+      <!-- =========================
+           INFORMATION
+      ========================== -->
+
+      <div class="train-footer__column">
+
+        <h3>
+          {{ 'FOOTER.INFORMATION' | translate }}
+        </h3>
+
+        <span>
+          {{ 'FOOTER.BOOKING_INFO' | translate }}
+        </span>
+
+        <span>
+          {{ 'FOOTER.TRAIN_SCHEDULES' | translate }}
+        </span>
+
+        <span>
+          {{ 'FOOTER.SEAT_SELECTION' | translate }}
+        </span>
+
+        <span>
+          {{ 'FOOTER.TRAVEL_PLANNING' | translate }}
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       ROUTE SECTION
+  ========================== -->
+
+  <div class="train-route">
+
+    <!-- STATIONS -->
+
+    <div class="train-route__stations">
+
+      <!-- TBILISI -->
+      <div class="station">
+
+        <span class="station__dot"></span>
+
+        <span class="station__name">
+          {{ 'FOOTER.CITY_TBILISI' | translate }}
+        </span>
+
+      </div>
+
+
+      <!-- BORJOMI -->
+      <div class="station">
+
+        <span class="station__dot"></span>
+
+        <span class="station__name">
+          {{ 'FOOTER.CITY_BORJOMI' | translate }}
+        </span>
+
+      </div>
+
+
+      <!-- KUTAISI -->
+      <div class="station">
+
+        <span class="station__dot"></span>
+
+        <span class="station__name">
+          {{ 'FOOTER.CITY_KUTAISI' | translate }}
+        </span>
+
+      </div>
+
+
+      <!-- BATUMI -->
+      <div class="station">
+
+        <span class="station__dot"></span>
+
+        <span class="station__name">
+          {{ 'FOOTER.CITY_BATUMI' | translate }}
+        </span>
+
+      </div>
+
+
+      <!-- ZUGDIDI -->
+      <div class="station">
+
+        <span class="station__dot"></span>
+
+        <span class="station__name">
+          {{ 'FOOTER.CITY_ZUGDIDI' | translate }}
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- ROUTE LINE -->
+
+    <div class="train-route__line"></div>
+
+
+    <!-- =========================
+         MOVING TRAIN
+    ========================== -->
+
+    <div class="moving-train">
+
+      <img
+        src="/images/1-locomotive.png"
+        alt="Train"
+        class="moving-train__front"
+      >
+
+      <img
+        src="/images/2-locomotive.png"
+        alt="Train wagon"
+        class="moving-train__wagon"
+      >
+
+      <img
+        src="/images/2-locomotive.png"
+        alt="Train wagon"
+        class="moving-train__wagon"
+      >
+
+      <img
+        src="/images/2-locomotive.png"
+        alt="Train wagon"
+        class="moving-train__wagon"
+      >
+
+      <img
+        src="/images/3-locomotive.png"
+        alt="Train"
+        class="moving-train__rear"
+      >
+
+    </div>
+
+
+    <!-- RAILS -->
+
+    <div class="train-route__rails"></div>
+
+  </div>
+
+
+  <!-- =========================
+       FOOTER BOTTOM
+  ========================== -->
+
+  <div class="train-footer__bottom">
+
+    <span>
+      {{ 'FOOTER.COPYRIGHT' | translate }}
+    </span>
+
+    <span>
+      {{ 'FOOTER.JOURNEY_MESSAGE' | translate }}
+    </span>
+
+  </div>
+
+</footer>

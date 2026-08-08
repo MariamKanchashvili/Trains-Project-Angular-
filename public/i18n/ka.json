@@ -293,8 +293,29 @@
   "VALIDATION_NEW_PASSWORD_REQUIRED": "ახალი პაროლი აუცილებელია",
 
   "VALIDATION_CONFIRM_PASSWORD_REQUIRED": "პაროლის დადასტურება აუცილებელია"
+},
+"FOOTER": {
+  "FOOTER_EYEBROW": "შენი მოგზაურობა აქ იწყება",
+  "FOOTER_TITLE": "მზად ხარ შემდეგი მოგზაურობისთვის?",
+  "FOOTER_DESCRIPTION": "იპოვე მატარებელი, აირჩიე ადგილი და ისიამოვნე მგზავრობით.",
+
+  "POPULAR_ROUTES": "პოპულარული მარშრუტები",
+  "DESTINATIONS": "დანიშნულების ადგილები",
+  "INFORMATION": "ინფორმაცია",
+
+  "BOOKING_INFO": "ჯავშნის ინფორმაცია",
+  "TRAIN_SCHEDULES": "მატარებლების განრიგი",
+  "SEAT_SELECTION": "ადგილის არჩევა",
+  "TRAVEL_PLANNING": "მოგზაურობის დაგეგმვა",
+
+  "CITY_TBILISI": "თბილისი",
+  "CITY_BORJOMI": "ბორჯომი",
+  "CITY_KUTAISI": "ქუთაისი",
+  "CITY_BATUMI": "ბათუმი",
+  "CITY_ZUGDIDI": "ზუგდიდი",
+
+  "COPYRIGHT": "© 2026 Railway. ყველა უფლება დაცულია.",
+  "JOURNEY_MESSAGE": "ყოველი მოგზაურობა დანიშნულების ადგილით იწყება."
 }
-
-
 
 }
