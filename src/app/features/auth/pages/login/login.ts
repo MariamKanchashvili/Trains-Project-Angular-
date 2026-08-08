@@ -5,7 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { StorageService } from '../../../../core/services/storage.service';
 import { email } from '@angular/forms/signals';
-
+import { AlertService } from '../../../../shared/services/alert.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +17,7 @@ export class Login implements OnInit {
   private service=inject(AuthService);
   public router=inject(Router);
   private storage=inject(StorageService);
-
+  private alert=inject(AlertService);
   
   public loginFormInfo:FormGroup=new FormGroup({
     email:new FormControl('',[
@@ -50,7 +50,7 @@ ngOnInit(): void {
 
     this.service.signin(formData).subscribe((data:any)=>{
       console.log("login ფუნქცია ",data);
-      alert('Logged in SucessFully!')
+      this.alert.success('Logged in SucessFully!')
       this.router.navigate(["/home"])
     })
     }

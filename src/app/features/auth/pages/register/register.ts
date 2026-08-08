@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AuthService } from '../../services/auth.service';
 import { Router, RouterLink } from "@angular/router";
 import { TranslatePipe } from '@ngx-translate/core';
+import { AlertService } from '../../../../shared/services/alert.service';
 
 
 @Component({
@@ -14,6 +15,8 @@ import { TranslatePipe } from '@ngx-translate/core';
 export class Register {
   private service = inject(AuthService)
   public router = inject(Router);
+  private alert=inject(AlertService);
+
   public formInfo: FormGroup = new FormGroup({
     firstName: new FormControl('', [
       Validators.required,
@@ -42,7 +45,7 @@ export class Register {
     this.service.signup(this.formInfo.value).subscribe((data: any) => {
 
       console.log("register ფუნქცია ", data)
-      alert("Your account has been created")
+      this.alert.success("Your account has been created")
 
       this.router.navigate(['/resend-email'], {
         queryParams: { email }

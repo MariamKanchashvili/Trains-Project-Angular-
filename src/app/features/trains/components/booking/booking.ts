@@ -2,6 +2,7 @@ import { Component, inject, OnInit, signal, computed } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ServicesTrainsService } from '../../services/services.trains.service';
 import { TranslatePipe } from '@ngx-translate/core';
+import { AlertService } from '../../../../shared/services/alert.service';
 
 @Component({
   selector: 'app-booking',
@@ -13,7 +14,7 @@ export class Booking implements OnInit {
   private trainsService = inject(ServicesTrainsService);
   private route = inject(ActivatedRoute);
   private router=inject(Router);
-
+  private alert=inject(AlertService);
   // ============================================
   // საწყისი მონაცემები — მატარებელი და schedule
   // ============================================
@@ -224,17 +225,17 @@ const travelDate = this.selectedDate();
   });
     // ვალიდაცია
   if (!scheduleId) {
-    alert('Schedule not found.');
+    this.alert.error('Schedule not found.');
     return;
   }
 
   if (!travelDate) {
-    alert('Please select travel date.');
+    this.alert.warning('Please select travel date.');
     return;
   }
 
   if (seatIds.length === 0) {
-    alert('Please select at least one seat.');
+    this.alert.warning('Please select at least one seat.');
     return;
   }
 
@@ -252,7 +253,7 @@ const travelDate = this.selectedDate();
 
         console.log('Booking created successfully', response);
 
-        alert('Booking completed successfully!');
+       this.alert.success('Booking completed successfully!');
 
         // ადგილები თავიდან ჩაიტვირთოს,
         // რათა დაჯავშნილი ადგილი გახდეს unavailable
@@ -267,11 +268,11 @@ const travelDate = this.selectedDate();
         console.log(err);
 
         if (err.status === 409) {
-          alert('This seat has already been booked.');
+         this.alert.error('This seat has already been booked.');
           return;
         }
 
-        alert('Booking failed. Please try again.');
+       this.alert.error('Booking failed. Please try again.');
       }
  
     });

@@ -45,7 +45,7 @@ export class ChatWidget implements OnInit {
 
   // 🔧 history — მაქსიმუმ ბოლო 5 შეტყობინება
   private conversationHistory: ApiMessage[] = [];
-  private readonly MAX_HISTORY = 5;
+  private readonly MAX_HISTORY = 3;
 
   // 🔧 მატარებლების მარტივი მონაცემი, prompt-ისთვის
   private trainsOverview: any[] = [];

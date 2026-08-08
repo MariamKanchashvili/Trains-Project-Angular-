@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { TranslatePipe } from '@ngx-translate/core';
+import { AlertService } from '../../../../shared/services/alert.service';
 
 @Component({
   selector: 'app-resend-email',
@@ -14,7 +15,7 @@ export class ResendEmail implements OnInit {
   private service = inject(AuthService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-
+  private alert=inject(AlertService);
   public email = signal<string | null>(null);
 
   public errorMessage = signal<string>('');
@@ -55,7 +56,7 @@ export class ResendEmail implements OnInit {
       next: (data: any) => {
         console.log(data);
         this.isLoading.set(false);
-        alert("Email Verified Successfully!");
+        this.alert.success("Email Verified Successfully!");
         this.router.navigate(['/login']);
       },
       error: (err) => {
@@ -81,7 +82,7 @@ export class ResendEmail implements OnInit {
     next: (data: any) => {
       console.log(data);
       this.isResending.set(false);
-      alert("Verification Email Sent!");
+      this.alert.success("Verification Email Sent!");
     },
     error: (err) => {
       console.log(err);
@@ -89,7 +90,7 @@ export class ResendEmail implements OnInit {
 
       // 🔧 backend-ის კონკრეტული შეტყობინების ამოღება, თუ არსებობს
       const message = err?.error?.detail || 'Failed to resend code. Please try again.';
-      alert(message); // 🔧 პოპაპით ვაჩვენებთ, როგორც ითხოვე
+      this.alert.error(message); // 🔧 პოპაპით ვაჩვენებთ, როგორც ითხოვე
       this.errorMessage.set(message);
 
       

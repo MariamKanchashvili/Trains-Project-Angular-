@@ -1,0 +1,55 @@
+@if (alertService.alert(); as alert) {
+
+  <div class="alert-overlay">
+
+    <div
+      class="custom-alert"
+      [class.success]="alert.type === 'success'"
+      [class.error]="alert.type === 'error'"
+      [class.warning]="alert.type === 'warning'"
+      [class.info]="alert.type === 'info'"
+    >
+
+      <div class="alert-icon">
+
+        @if (alert.type === 'success') {
+          ✓
+        }
+
+        @if (alert.type === 'error') {
+          ×
+        }
+
+        @if (alert.type === 'warning') {
+          !
+        }
+
+        @if (alert.type === 'info') {
+          i
+        }
+
+      </div>
+
+      <div class="alert-content">
+        <h3>
+          {{ alert.type | titlecase }}
+        </h3>
+
+        <p>
+          {{ alert.message }}
+        </p>
+      </div>
+
+      <button
+        class="alert-close"
+        type="button"
+        (click)="alertService.close()"
+      >
+        ×
+      </button>
+
+    </div>
+
+  </div>
+
+}

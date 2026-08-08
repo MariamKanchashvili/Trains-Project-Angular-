@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AuthService } from '../../services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { AlertService } from '../../../../shared/services/alert.service';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 export class ForgotPassword {
   private service=inject(AuthService);
   public router=inject(Router)
-  
+  private alert=inject(AlertService);
 public forgotPassFormInfo:FormGroup=new FormGroup({
   email:new FormControl('',[
     Validators.required,
@@ -33,7 +34,7 @@ public forgotPassFormInfo:FormGroup=new FormGroup({
     next: (data:any) => {
       console.log(data);
        
-    alert("Reset Link Sent Sucessfully!")
+    this.alert.success("Reset Link Sent Sucessfully!")
     this.router.navigate(['login'])
     
     },
@@ -42,7 +43,7 @@ public forgotPassFormInfo:FormGroup=new FormGroup({
       console.log(err);
      
 
-      alert("Something went wrong!");
+      this.alert.error("Something went wrong!");
     }
   })
 
