@@ -7,12 +7,13 @@ import { apiKeyInterceptor } from './core/interceptors/auth.interceptor';
 import { provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { authorationInterceptor } from './core/interceptors/authoration.interceptor';
+import { aiInterceptor } from './core/interceptors/ai-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    provideHttpClient(withInterceptors([apiKeyInterceptor,authorationInterceptor])),
+    provideHttpClient(withInterceptors([apiKeyInterceptor,authorationInterceptor,aiInterceptor])),
     provideTranslateService({
       fallbackLang:'ka',
       lang:'ka',
