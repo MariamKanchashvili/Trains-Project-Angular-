@@ -8,6 +8,7 @@ import { Booking } from '../../interfaces/booking-interface';
 import { DatePipe } from '@angular/common';
 import { StateMessage } from '../../../../shared/components/state-message/state-message';
 import { TranslatePipe } from '@ngx-translate/core';
+import { AlertService } from '../../../../shared/services/alert.service';
 
 @Component({
   selector: 'app-profile',
@@ -20,6 +21,7 @@ export class Profile implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private alert=inject(AlertService);
   // ============================================
   // მენიუს მდგომარეობა
   // ============================================
@@ -70,6 +72,7 @@ public filteredBookings = signal<Booking[]>([]);
 public currentPage=signal<number>(1);
 public totalPages=signal<number>(1);
 public pageSize=5;
+public totalBookings=signal(0);
 
   public bookingFilterForm: FormGroup = new FormGroup({
     from: new FormControl(''),
@@ -197,7 +200,8 @@ public pageSize=5;
       next: (response) => {
         this.bookings.set(response.data.items);
           this.filteredBookings.set(response.data.items);
-          this.totalPages.set(response.data.totalPages)
+          this.totalPages.set(response.data.totalPages);
+            this.totalBookings.set(response.data.totalCount);
         this.isLoadingBookings.set(false);
         this.bookingsLoaded = true;
       },
@@ -273,6 +277,7 @@ this.loadBookings();
       next: () => {
         this.bookings.update(list => list.filter(b => b.id !== id));
          this.filteredBookings.update(list => list.filter(b => b.id !== id));
+         this.totalBookings.update(count => Math.max(0, count - 1));
         this.selectedBooking.set(null);
         this.isDeletingBooking.set(false);
       },
@@ -315,7 +320,7 @@ setNewPassword():void{
 
 if(formValue.newPassword!==formValue.confirmPassword){
 
-      alert('New password and confirm password do not match.');
+      this.alert.error('New password and confirm password do not match.');
        return
       }
 
@@ -330,7 +335,7 @@ if(formValue.newPassword!==formValue.confirmPassword){
 
     next: (response)=>{
       console.log('Password changed sucessfully',response);
-      alert('Password changed successfully! Please log in again.');
+      this.alert.success('Password changed successfully! Please log in again.');
 
       // წარმატების შემდეგ ფორმა უნდა გასუფთავდეს:
 
@@ -346,7 +351,7 @@ if(formValue.newPassword!==formValue.confirmPassword){
     error:(err)=>{
       console.log('Change password error:', err);
       const message=err?.error?.detail ||'Failed to change password';
-      alert(message)
+      this.alert.error(message)
     }
   })
 }
@@ -357,24 +362,24 @@ if(formValue.newPassword!==formValue.confirmPassword){
 deleteAccount():void{
   const confirmDelete=confirm('Are you sure you want to delete your account? This action cannot be undone')
 
-  if(confirmDelete){
+  if(!confirmDelete){
     return
   }
 
   this.userService.deleteAccount().subscribe({
     next:()=>{
-      alert('Your account has been deleted successfully.');
+      this.alert.success('Your account has been deleted successfully.');
       setTimeout(()=>{
           this.authService.logout();
 
         this.router.navigate(['/login']);
-      })
+      },2000);
     },
     error:(err)=>{
 
       console.log('Delete profile error:', err);
 
-        alert(err?.error?.detail ||  'Failed to delete account');
+         this.alert.error(err?.error?.detail ||  'Failed to delete account');
     }
     })
 }

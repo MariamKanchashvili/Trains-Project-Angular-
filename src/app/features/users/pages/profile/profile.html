@@ -245,6 +245,12 @@
           }
         </div>
       }
+      <div class="booking-summary">
+  <span class="booking-summary__label">Total bookings :</span>
+  <strong class="booking-summary__count">
+    {{ totalBookings() }}
+  </strong>
+</div>
  @if (bookings().length > 0 && totalPages() > 1) {
   <div class="pagination">
     <button

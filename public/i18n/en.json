@@ -272,8 +272,9 @@
   "BOOKING_ERROR_TITLE": "Something went wrong",
 
   "BOOKING_PAGE": "Page",
+  "BOOKING_PREVIOUS":"Prev",
   "BOOKING_OF": "of",
-  "BOOKING_NEXT": "Next →"
+  "BOOKING_NEXT": "Next"
 
 },
 "SETTINGS":{

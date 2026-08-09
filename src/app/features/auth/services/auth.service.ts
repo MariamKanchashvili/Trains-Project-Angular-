@@ -35,6 +35,7 @@ signin(info:any){
 }
 
 logout():void{
+     this.tokenService.clearTokens();
     this.authState.logout();
 }
 
