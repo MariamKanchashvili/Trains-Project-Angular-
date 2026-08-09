@@ -93,18 +93,44 @@ public totalBookings=signal(0);
 
    this.route.queryParams.subscribe(params => {
 
-  if (params['tab'] === 'bookings') {
+      const tab = params['tab'];
 
-    this.activeTab.set('bookings');
+    if (
+      tab === 'profile' ||
+      tab === 'bookings' ||
+      tab === 'settings'
+    ) {
+      this.activeTab.set(tab);
 
-    if (!this.bookingsLoaded) {
-      this.loadBookings();
-    }
+      if (tab === 'bookings' && !this.bookingsLoaded) {
+        this.loadBookings();
+      }
 
   }
 
 });
   }
+
+  changeTab(tab: 'profile' | 'bookings' | 'settings'): void {
+  this.activeTab.set(tab);
+
+  this.router.navigate([], {
+    relativeTo: this.route,
+    queryParams: {
+      tab: tab
+    },
+    queryParamsHandling: 'merge'
+  });
+
+  if (tab === 'bookings' && !this.bookingsLoaded) {
+    this.loadBookings();
+  }
+}
+
+
+
+
+
    private dateRangeValidator(group: AbstractControl) {
 
     const from = group.get('from')?.value;

@@ -24,21 +24,21 @@
         <button
           class="sidebar-nav__item"
           [class.active]="activeTab() === 'profile'"
-          (click)="setActiveTab('profile')">
+          (click)="changeTab('profile')">
           {{ 'PROFILE.PROFILE_SIDEBAR_PROFILE' | translate }}
         </button>
 
         <button
           class="sidebar-nav__item"
           [class.active]="activeTab() === 'bookings'"
-          (click)="setActiveTab('bookings')">
+          (click)="changeTab('bookings')">
              {{ 'PROFILE.PROFILE_SIDEBAR_BOOKINGS' | translate }}
         </button>
 
         <button
           class="sidebar-nav__item"
           [class.active]="activeTab() === 'settings'"
-          (click)="setActiveTab('settings')">
+          (click)="changeTab('settings')">
              {{ 'PROFILE.PROFILE_SIDEBAR_SETTINGS' | translate }}
         </button>
       </nav>
