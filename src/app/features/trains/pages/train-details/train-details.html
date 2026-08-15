@@ -62,7 +62,7 @@
               <button class="book-btn" (click)="goToBooking(schedule.id)">{{'TRAIN_DETAILS.BOOK' | translate}}</button>
 
             }@else {
-             <button class="book-btn" routerLink="/login">{{'TRAIN_DETAILS.SIGN_BOOK' | translate}}</button>
+             <button class="book-btn" (click)="goToLogin()">{{'TRAIN_DETAILS.SIGN_BOOK' | translate}}</button>
  
             }
           </div>

@@ -15,9 +15,9 @@ private trainsService = inject(ServicesTrainsService);
 private route = inject(ActivatedRoute);
 private location=inject(Location);
 
- private router = inject(Router); // 🔧 ახალი — booking-გვერდზე navigate-ისთვის
+ private router = inject(Router); //  ახალი — booking-გვერდზე navigate-ისთვის
 
-  public authState = inject(AuthState); // 🔧 ახალი — public, რომ HTML-მა პირდაპირ წაიკითხოს
+  public authState = inject(AuthState); //  ახალი — public, რომ HTML-მა პირდაპირ წაიკითხოს
 
   //  signal() 
   public train = signal<any>(null);
@@ -25,6 +25,8 @@ private location=inject(Location);
   public errorMessage = signal<string>('');
 // აქტიური ტაბის სიგნალი:
 public activeTab=signal<'schedules'|'coaches'>('schedules');
+
+
 // მეთოდი რითაც იცვლება ტაბები:
 setActiveTab(tab:'schedules'|'coaches'):void{
   this.activeTab.set(tab);
@@ -68,6 +70,12 @@ setActiveTab(tab:'schedules'|'coaches'):void{
     console.log('trainId:', trainId, 'scheduleId:', scheduleId);
     this.router.navigate(['/booking',trainId,scheduleId])
   }
-
+ goToLogin():void{
+this.router.navigate(['/login'],{
+  queryParams:{
+    returnUrl:this.router.url
+  }
+})
+ }
 
 }

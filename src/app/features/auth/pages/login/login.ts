@@ -1,7 +1,7 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Injector, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { StorageService } from '../../../../core/services/storage.service';
 import { email } from '@angular/forms/signals';
@@ -18,7 +18,9 @@ export class Login implements OnInit {
   public router=inject(Router);
   private storage=inject(StorageService);
   private alert=inject(AlertService);
-  
+  private route=inject(ActivatedRoute);
+
+  public returnUrl='/home';
   public loginFormInfo:FormGroup=new FormGroup({
     email:new FormControl('',[
       Validators.required,
@@ -31,7 +33,13 @@ export class Login implements OnInit {
   });
 
 ngOnInit(): void {
+ this.route.queryParamMap.subscribe(params => {
 
+    const returnUrl = params.get('returnUrl');
+
+    this.returnUrl = returnUrl || '/home';
+
+  });
   const savedEmail = this.storage.get('loginEmail');
   const savedPass = this.storage.get('loginPass');
 
@@ -53,7 +61,7 @@ ngOnInit(): void {
       next:(data:any)=>{
       console.log("login ფუნქცია ",data);
       this.alert.success('Logged in SucessFully!')
-      this.router.navigate(["/home"])
+    this.router.navigateByUrl(this.returnUrl);
     },
      error:(err)=>{
       this.alert.error(err?.error?.detail || 'Failed to login. Please try again ')
