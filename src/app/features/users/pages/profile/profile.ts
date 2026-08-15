@@ -465,16 +465,25 @@ saveBookingDate(booking: Booking): void {
   this.updateBookingError.set('');
 
   this.userService.updateBookingDate(booking.id, newDate).subscribe({
-    next: (response) => {
-      // 🔧 ორივე სიაში ვანახლებთ item-ს, ახალი travelDate-ით
-      const updateList = (list: Booking[]) =>
-        list.map(b => b.id === booking.id ? { ...b, travelDate: response.data.travelDate } : b);
+    next: () => {
+        const updateList = (list: Booking[]) =>
+        list.map(b =>
+          b.id === booking.id
+            ? {
+                ...b,
+                travelDate: newDate
+              }
+            : b
+        );
 
       this.bookings.update(updateList);
       this.filteredBookings.update(updateList);
 
       this.editingBookingId.set(null);
       this.isUpdatingBooking.set(false);
+      this.alert.success(
+        'Booking date updated successfully!'
+      );
     },
     error: (err) => {
       console.log(err);

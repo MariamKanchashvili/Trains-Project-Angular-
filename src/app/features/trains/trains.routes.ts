@@ -3,6 +3,8 @@ import { Trains } from "./pages/trains/trains";
 import { TrainDetails } from "./pages/train-details/train-details";
 import { Booking } from "./components/booking/booking";
 import { Profile } from "../users/pages/profile/profile";
+import { authGuard } from "../../core/guards/auth.guards/auth-guard";
+
 
 export const trainsRoutes:Routes=[
     {
@@ -15,11 +17,13 @@ export const trainsRoutes:Routes=[
     },
     {
         path:'booking/:trainId/:scheduleId',
-        component:Booking
+        component:Booking,
+         canActivate: [authGuard]
     },
     {
         path:'profile',
-        component:Profile
+        component:Profile,
+        canActivate: [authGuard]
     }
 ]
 
