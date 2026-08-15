@@ -57,7 +57,7 @@ export class ResendEmail implements OnInit {
         console.log(data);
         this.isLoading.set(false);
         this.alert.success("Email Verified Successfully!");
-        this.router.navigate(['/login']);
+        this.router.navigate(['/home']);
       },
       error: (err) => {
         console.log(err);

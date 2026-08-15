@@ -27,6 +27,7 @@ export class Login implements OnInit {
     password:new FormControl('',[
       Validators.required
     ]),
+    checkRemember:new FormControl(false)
   });
 
 ngOnInit(): void {
