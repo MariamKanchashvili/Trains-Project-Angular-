@@ -3,37 +3,28 @@ import { Service } from '@angular/core';
 @Service()
 export class StorageService {
 
-  
-    set(key:string,value:any){
-        sessionStorage.setItem(key,JSON.stringify(value));
+  set(key: string, value: any, persistent: boolean = false) {
+    const storage = persistent ? localStorage : sessionStorage;
+    storage.setItem(key, JSON.stringify(value));
+  }
 
-    }
-    get(key:string){
-     const data = sessionStorage.getItem(key);
+  get(key: string, persistent: boolean = false) {
+    const storage = persistent ? localStorage : sessionStorage;
+    const data = storage.getItem(key);
 
-
-    if(!data){
-
+    if (!data) {
       return null;
-
     }
 
-
-    try{
-
+    try {
       return JSON.parse(data);
-
-    }
-    catch{
-
+    } catch {
       return null;
+    }
+  }
 
-    }
-
-        
-        
-    }
-    remove(key:string){
-        sessionStorage.removeItem(key);
-    }
+  remove(key: string, persistent: boolean = false) {
+    const storage = persistent ? localStorage : sessionStorage;
+    storage.removeItem(key);
+  }
 }

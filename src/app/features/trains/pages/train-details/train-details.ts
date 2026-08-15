@@ -6,7 +6,7 @@ import { AuthState } from '../../../../core/services/auth-state';
 import { TranslatePipe } from '@ngx-translate/core';
 @Component({
   selector: 'app-train-details',
-  imports: [RouterLink,TranslatePipe],
+  imports: [TranslatePipe],
   templateUrl: './train-details.html',
   styleUrl: './train-details.scss',
 })
