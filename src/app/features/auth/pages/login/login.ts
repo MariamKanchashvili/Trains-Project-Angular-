@@ -48,10 +48,15 @@ ngOnInit(): void {
 
 
 
-    this.service.signin(formData).subscribe((data:any)=>{
+    this.service.signin(formData).subscribe({
+      next:(data:any)=>{
       console.log("login ფუნქცია ",data);
       this.alert.success('Logged in SucessFully!')
       this.router.navigate(["/home"])
+    },
+     error:(err)=>{
+      this.alert.error(err?.error?.detail || 'Failed to login. Please try again ')
+     }
     })
     }
 }
