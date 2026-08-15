@@ -262,3 +262,157 @@
 @else {
   <p class="status-msg"> {{ 'BOOKING.ERROR' | translate }}</p>
 }
+@if (showTicketModal()) {
+
+  <div class="ticket-modal-backdrop">
+
+    <div class="ticket-modal">
+
+      <!-- Close -->
+      <button
+        type="button"
+        class="ticket-close"
+        (click)="goToBookings()"
+      >
+        ×
+      </button>
+
+
+      <!-- Success -->
+      <div class="ticket-success-icon">
+        ✓
+      </div>
+
+      <h2>Booking Confirmed!</h2>
+
+      <p class="ticket-subtitle">
+        Your ticket has been successfully booked.
+      </p>
+
+
+      <!-- TICKET -->
+
+      <div class="ticket">
+
+        <div class="ticket-header">
+
+          <div>
+            <span>TRAIN TICKET</span>
+
+            <strong>
+              {{ train()?.name }}
+            </strong>
+          </div>
+
+          <span class="ticket-status">
+            CONFIRMED
+          </span>
+
+        </div>
+
+
+        <div class="ticket-route">
+
+          <div>
+            <small>FROM</small>
+
+            <strong>
+              {{ schedule()?.origin }}
+            </strong>
+
+            <span>
+              {{ schedule()?.departureTime }}
+            </span>
+          </div>
+
+
+          <div class="train-icon">
+            🚆
+          </div>
+
+
+          <div>
+            <small>TO</small>
+
+            <strong>
+              {{ schedule()?.destination }}
+            </strong>
+          </div>
+
+        </div>
+
+
+        <div class="ticket-info">
+
+          <div>
+            <small>DATE</small>
+
+            <strong>
+              {{ selectedDate() }}
+            </strong>
+          </div>
+
+          <div>
+            <small>TRAIN</small>
+
+            <strong>
+              #{{ train()?.number }}
+            </strong>
+          </div>
+
+          <div>
+            <small>SEAT</small>
+
+            <strong>
+  {{ confirmedSeatNumbers() }}
+</strong>
+          </div>
+
+        </div>
+
+
+        <div class="ticket-divider"></div>
+
+
+        <div class="ticket-footer">
+
+          <span>
+            Booking confirmed
+          </span>
+
+          <span>
+            Thank you for travelling with us!
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- ACTIONS -->
+
+      <div class="ticket-actions">
+
+        <button
+          type="button"
+          class="download-btn"
+          (click)="downloadTicket()"
+        >
+          ↓ Download Ticket
+        </button>
+
+        <button
+          type="button"
+          class="bookings-btn"
+          (click)="goToBookings()"
+        >
+          View My Bookings
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+}

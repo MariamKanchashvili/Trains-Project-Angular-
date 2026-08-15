@@ -3,6 +3,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ServicesTrainsService } from '../../services/services.trains.service';
 import { TranslatePipe } from '@ngx-translate/core';
 import { AlertService } from '../../../../shared/services/alert.service';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-booking',
@@ -35,12 +36,12 @@ export class Booking implements OnInit {
     { number: 4, label: 'CONFIRM' },
   ];
 
-  // 🔧 პროგრესის ხაზის შევსების პროცენტი, currentStep-ზე დამოკიდებული
+  //  პროგრესის ხაზის შევსების პროცენტი, currentStep-ზე დამოკიდებული
   public progressPercent = computed(() => {
     return ((this.currentStep() - 1) / (this.steps.length - 1)) * 100;
   });
 
-  // 🔧 წინა სტეპის ლეიბლი — "Back to Date" ტიპის ტექსტისთვის
+  //  წინა სტეპის ლეიბლი — "Back to Date" ტიპის ტექსტისთვის
   public previousStepLabel = computed(() => {
     const prevStep = this.steps.find(s => s.number === this.currentStep() - 1);
     return prevStep ? prevStep.label.toLowerCase() : null;
@@ -93,7 +94,13 @@ export class Booking implements OnInit {
 
 // ===============================================
 // STEP 4- CONFIRM
-// ===============================================
+// =============================================== 
+ public showTicketModal = signal<boolean>(false);
+
+private toggleModalScrollLock(isOpen: boolean): void {
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+}
+
 public selectedSeatNumbers = computed(() => {
 
   return this.seats()
@@ -210,77 +217,51 @@ public totalPrice = computed(() => {
   //===================================================
   // STEP 4 ის მოქმედებები 
   // =================================================
+  public confirmedSeatNumbers = signal<string>('');
+public confirmedTotalPrice = signal<number>(0);
+
   confirmBooking(): void {
-const scheduleId = this.schedule()?.id;
-const seatIds = this.selectedSeatIds();
-const travelDate = this.selectedDate();
+  const scheduleId = this.schedule()?.id;
+  const seatIds = this.selectedSeatIds();
+  const travelDate = this.selectedDate();
 
-
-  console.log('Booking confirmed');
-
-  console.log({
-    scheduleId: this.schedule()?.id,
-    date: this.selectedDate(),
-    seats: this.selectedSeatIds()
-  });
-    // ვალიდაცია
   if (!scheduleId) {
     this.alert.error('Schedule not found.');
     return;
   }
-
   if (!travelDate) {
     this.alert.warning('Please select travel date.');
     return;
   }
-
   if (seatIds.length === 0) {
     this.alert.warning('Please select at least one seat.');
     return;
   }
-
-  console.log('Booking request:', {
-    scheduleId,
-    seatIds,
-    travelDate
-  });
+ this.confirmedTotalPrice.set(this.totalPrice());
 
   this.trainsService
     .postNewBookig(scheduleId, seatIds, travelDate)
     .subscribe({
-
       next: (response) => {
-
         console.log('Booking created successfully', response);
+        this.alert.success('Booking completed successfully!');
+        // popup-ისთვის ვინახავთ ადგილის  ნომრებს, სანამ selectedSeatIds გასუფთავდება
+        this.confirmedSeatNumbers.set(this.selectedSeatNumbers());
 
-       this.alert.success('Booking completed successfully!');
-
-        // ადგილები თავიდან ჩაიტვირთოს,
-        // რათა დაჯავშნილი ადგილი გახდეს unavailable
         this.loadSeats();
-
-        // სურვილის შემთხვევაში მონიშვნაც გაასუფთავე
         this.selectedSeatIds.set([]);
+       this.showTicketModal.set(true);
+       this.toggleModalScrollLock(true);
       },
-
       error: (err) => {
-
         console.log(err);
-
         if (err.status === 409) {
-         this.alert.error('This seat has already been booked.');
+          this.alert.error('This seat has already been booked.');
           return;
         }
-
-       this.alert.error('Booking failed. Please try again.');
+        this.alert.error('Booking failed. Please try again.');
       }
- 
     });
-this.router.navigate(['/profile'], {
-  queryParams: {
-    tab: 'bookings'
-  }
-});
 }
 
   // ============================================
@@ -296,6 +277,17 @@ this.router.navigate(['/profile'], {
     }
   }
 
+goToBookings(): void {
+
+ this.toggleModalScrollLock(false); 
+
+  this.router.navigate(['/profile'], {
+    queryParams: {
+      tab: 'bookings'
+    }
+  });
+
+}
   // ============================================
   // UI დამხმარეები
   // ============================================
@@ -304,4 +296,170 @@ this.router.navigate(['/profile'], {
     const container = event.currentTarget as HTMLElement;
     container.scrollLeft += event.deltaY;
   }
+  // ===================================================
+// DOWNLOAD TICKET AS PDF
+// ===================================================
+
+downloadTicket(): void {
+
+  const doc = new jsPDF();
+
+  // ---------------------------------------------
+  // Booking-ის მონაცემები
+  // ---------------------------------------------
+
+  const trainName = this.train()?.name ?? 'Train';
+  const trainNumber = this.train()?.number ?? '-';
+
+  const origin = this.schedule()?.origin ?? '-';
+  const destination = this.schedule()?.destination ?? '-';
+
+  const departureTime =
+    this.schedule()?.departureTime ?? '-';
+
+  const travelDate =
+    this.selectedDate() ?? '-';
+
+  const coachNumber =
+    this.selectedCoach()?.number ?? '-';
+
+  const coachClass =
+    this.selectedCoach()?.class ?? '-';
+
+  const seats =
+    this.confirmedSeatNumbers() || '-';
+
+  
+const totalPrice = this.confirmedTotalPrice();
+
+
+  // ---------------------------------------------
+  // PDF Header
+  // ---------------------------------------------
+
+  doc.setFontSize(22);
+  doc.setFont('helvetica', 'bold');
+
+  doc.text('TRAIN TICKET', 20, 25);
+
+
+  doc.setFontSize(11);
+  doc.setFont('helvetica', 'normal');
+
+  doc.text('BOOKING CONFIRMED', 20, 34);
+
+
+  // ---------------------------------------------
+  // Divider
+  // ---------------------------------------------
+
+  doc.line(20, 42, 190, 42);
+
+
+  // ---------------------------------------------
+  // Train information
+  // ---------------------------------------------
+
+  doc.setFontSize(14);
+  doc.setFont('helvetica', 'bold');
+
+  doc.text(trainName, 20, 55);
+
+
+  doc.setFontSize(11);
+  doc.setFont('helvetica', 'normal');
+
+  doc.text(`Train number: #${trainNumber}`, 20, 63);
+
+
+  // ---------------------------------------------
+  // Route
+  // ---------------------------------------------
+
+  doc.setFont('helvetica', 'bold');
+
+  doc.text('ROUTE', 20, 78);
+
+  doc.setFont('helvetica', 'normal');
+
+  doc.text(
+    `${origin}  →  ${destination}`,
+    20,
+    87
+  );
+
+
+  // ---------------------------------------------
+  // Journey information
+  // ---------------------------------------------
+
+  doc.setFont('helvetica', 'bold');
+
+  doc.text('JOURNEY DETAILS', 20, 105);
+
+  doc.setFont('helvetica', 'normal');
+
+  doc.text(`Date: ${travelDate}`, 20, 115);
+
+  doc.text(
+    `Departure: ${departureTime}`,
+    20,
+    123
+  );
+
+  doc.text(
+    `Coach: ${coachNumber} (${coachClass})`,
+    20,
+    131
+  );
+
+  doc.text(
+    `Seat: ${seats}`,
+    20,
+    139
+  );
+
+
+  // ---------------------------------------------
+  // Total price
+  // ---------------------------------------------
+
+  doc.line(20, 150, 190, 150);
+
+  doc.setFontSize(14);
+  doc.setFont('helvetica', 'bold');
+
+  doc.text(
+    `TOTAL: $${totalPrice}`,
+    20,
+    164
+  );
+
+
+  // ---------------------------------------------
+  // Footer
+  // ---------------------------------------------
+
+  doc.setFontSize(10);
+  doc.setFont('helvetica', 'normal');
+
+  doc.text(
+    'Thank you for travelling with us!',
+    20,
+    185
+  );
+
+  doc.text(
+    'Please keep this ticket for your journey.',
+    20,
+    192
+  );
+
+
+  // ---------------------------------------------
+  // Download
+  // ---------------------------------------------
+
+doc.save('train-ticket.pdf');
+}
 }

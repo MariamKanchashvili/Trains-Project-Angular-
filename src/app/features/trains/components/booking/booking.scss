@@ -57,7 +57,7 @@ z-index: 0;
   position: relative;   //  ხაზის ზემოთ "ტივის" ეფექტისთვის
   display: flex;
   justify-content: space-between;
-  z-index: 999999;
+  z-index: 99;
 }
 
 .stepper-item {
@@ -564,6 +564,287 @@ z-index: 0;
   max-height: 650px;
   object-fit: contain;
 }
+/* ============================================
+   MODAL BACKDROP
+============================================ */
+.ticket-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, .65);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  animation: fadeIn .25s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ============================================
+   MODAL WINDOW
+============================================ */
+.ticket-modal {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  max-height: 100vh;        
+  overflow-y: auto;
+  background: vars.$bg-right;
+  border: 1px solid vars.$border;
+  border-radius: 20px;
+  padding: 32px 28px;
+  text-align: center;
+  animation: popIn .3s ease;
+
+  &::-webkit-scrollbar { width: 5px; }
+  &::-webkit-scrollbar-thumb {
+    background: vars.$border;
+    border-radius: 3px;
+  }
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(.92) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.ticket-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, .05);
+  color: vars.$text-muted;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  transition: .2s;
+
+  &:hover {
+    background: vars.$border;
+    color: vars.$text-main;
+  }
+}
+
+/* ============================================
+   SUCCESS HEADER
+============================================ */
+.ticket-success-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background: rgba(76, 217, 123, .15);
+  color: #4cd97b;
+  font-size: 28px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ticket-modal h2 {
+  color: vars.$text-main;
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+.ticket-subtitle {
+  color: vars.$text-muted;
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+/* ============================================
+   TICKET — მთავარი "ბილეთის" ვიზუალი
+============================================ */
+.ticket {
+  position: relative;
+  background: vars.$bg-left;
+  border: 1px solid vars.$border;
+  border-radius: 16px;
+  padding: 20px;
+  text-align: left;
+  margin-bottom: 24px;
+
+  // 🔧 "ჩარჩენილი" ბუდეები, მარცხნივ და მარჯვნივ — ბილეთის სტუბის ეფექტი
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 24px;
+    height: 24px;
+    background: vars.$bg-right; // 🔧 ისეთივე ფერი, რაც მოდალის ფონი — "ამოჭრილი" ილუზია
+    border-radius: 50%;
+    transform: translateY(-50%);
+  }
+  &::before { left: -12px; }
+  &::after { right: -12px; }
+}
+
+.ticket-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 16px;
+
+  span {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: vars.$text-muted;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  strong {
+    font-size: 17px;
+    color: vars.$gold;
+  }
+}
+
+.ticket-status {
+  background: rgba(76, 217, 123, .15);
+  color: #4cd97b;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  letter-spacing: .5px;
+  align-self: flex-start;
+}
+
+.ticket-route {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 0;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    &:last-child { text-align: right; }
+  }
+
+  small {
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: vars.$text-muted;
+  }
+
+  strong {
+    font-size: 15px;
+    color: vars.$text-main;
+  }
+
+  span {
+    font-size: 12px;
+    color: vars.$text-muted;
+  }
+}
+
+.train-icon {
+  font-size: 20px;
+  color: vars.$gold;
+  flex-shrink: 0;
+}
+
+.ticket-info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding: 16px 0;
+
+  small {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: vars.$text-muted;
+    margin-bottom: 4px;
+  }
+
+  strong {
+    font-size: 14px;
+    color: vars.$text-main;
+  }
+}
+
+// 🔧 დაშტრიხული, "ბილეთის" გამყოფი ხაზი
+.ticket-divider {
+  border-top: 2px dashed vars.$border;
+  margin: 4px 0 16px;
+}
+
+.ticket-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: center;
+
+  span:first-child {
+    font-weight: 600;
+    color: vars.$gold;
+    font-size: 13px;
+  }
+
+  span:last-child {
+    font-size: 12px;
+    color: vars.$text-muted;
+  }
+}
+
+/* ============================================
+   ACTIONS
+============================================ */
+.ticket-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.download-btn,
+.bookings-btn {
+  padding: 14px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  transition: .25s;
+}
+
+.download-btn {
+  background: vars.$gold;
+  color: vars.$bg-left;
+
+  &:hover { background: vars.$gold-dark; }
+}
+
+.bookings-btn {
+  background: transparent;
+  color: vars.$text-main;
+  border: 1px solid vars.$border;
+
+  &:hover {
+    border-color: vars.$gold;
+    color: vars.$gold;
+  }
+}
 
 
 // ===================================
@@ -586,4 +867,37 @@ z-index: 0;
   flex-direction: column;
   gap: 15px;
 }
+}
+@media (max-width: 480px) {
+  .ticket-modal {
+    padding: 20px 16px;
+    border-radius: 16px;
+    // max-height: 85vh;
+  }
+
+  .ticket {
+    padding: 16px;
+  }
+
+  .ticket-info {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .ticket-route {
+    strong { font-size: 13px; }
+    small { font-size: 9px; }
+  }
+}
+
+@media (max-width: 360px) {
+  .ticket-info {
+    grid-template-columns: 1fr; //  ძალიან ვიწრო ეკრანზე, ერთი სვეტი
+  }
+  .ticket-modal{
+    padding: 10px;
+  }
+      .ticket-route{
+        font-size: 11px;
+      }
 }
