@@ -15,7 +15,7 @@ import { AlertService } from '../../../../shared/services/alert.service';
 export class Register {
   private service = inject(AuthService)
   public router = inject(Router);
-  private alert=inject(AlertService);
+ public  alert=inject(AlertService);
 
   public formInfo: FormGroup = new FormGroup({
     firstName: new FormControl('', [
@@ -42,14 +42,20 @@ export class Register {
 
     const email = this.formInfo.value.email;
 
-    this.service.signup(this.formInfo.value).subscribe((data: any) => {
+    this.service.signup(this.formInfo.value).subscribe({
+      next: (data: any) => {
 
       console.log("register ფუნქცია ", data)
       this.alert.success("Your account has been created")
 
       this.router.navigate(['/resend-email'], {
         queryParams: { email }
+      
       });
+    },
+    error:(err)=>{
+      this.alert.error(err?.error?.detail ||'Failed to register.Try again later')
+    }
     })
 
   }

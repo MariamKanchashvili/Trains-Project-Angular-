@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { AlertService } from '../../../../shared/services/alert.service';
 
@@ -16,6 +16,8 @@ export class ForgotPassword {
   private service=inject(AuthService);
   public router=inject(Router)
   private alert=inject(AlertService);
+ 
+
 public forgotPassFormInfo:FormGroup=new FormGroup({
   email:new FormControl('',[
     Validators.required,
@@ -35,7 +37,9 @@ public forgotPassFormInfo:FormGroup=new FormGroup({
       console.log(data);
        
     this.alert.success("Reset Link Sent Sucessfully!")
-    this.router.navigate(['login'])
+ setTimeout(()=>{
+  this.router.navigate(['/reset-password'])
+ })
     
     },
 
@@ -43,7 +47,7 @@ public forgotPassFormInfo:FormGroup=new FormGroup({
       console.log(err);
      
 
-      this.alert.error("Something went wrong!");
+      this.alert.error(err?.error?.detail || 'Something went wrong');
     }
   })
 

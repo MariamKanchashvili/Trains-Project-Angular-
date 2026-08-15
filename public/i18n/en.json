@@ -323,8 +323,21 @@
 
   "COPYRIGHT": "© 2026 StepTrains. All rights reserved.",
   "JOURNEY_MESSAGE": "Every journey starts with a destination."
-}
+},
 
+"RESET_PASSWORD": {
+  "TITLE": "Reset Password",
+  "SUBTITLE": "Enter your new password below.",
+  "NEW_PASSWORD": "New Password",
+  "NEW_PASSWORD_PLACEHOLDER": "Enter your new password",
+  "CONFIRM_PASSWORD": "Confirm Password",
+  "CONFIRM_PASSWORD_PLACEHOLDER": "Confirm your new password",
+  "PASSWORD_REQUIRED": "Password is required.",
+  "PASSWORD_MIN_LENGTH": "Password must be at least 6 characters.",
+  "CONFIRM_PASSWORD_REQUIRED": "Please confirm your password.",
+  "RESET_BUTTON": "Reset Password",
+  "RESETTING": "Resetting..."
+}
 }
 
 

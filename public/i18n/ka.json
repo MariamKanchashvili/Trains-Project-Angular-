@@ -316,6 +316,19 @@
 
   "COPYRIGHT": "© 2026 StepTrains. ყველა უფლება დაცულია.",
   "JOURNEY_MESSAGE": "ყოველი მოგზაურობა დანიშნულების ადგილით იწყება."
+},
+"RESET_PASSWORD": {
+  "TITLE": "პაროლის აღდგენა",
+  "SUBTITLE": "შეიყვანეთ ახალი პაროლი ქვემოთ.",
+  "NEW_PASSWORD": "ახალი პაროლი",
+  "NEW_PASSWORD_PLACEHOLDER": "შეიყვანეთ ახალი პაროლი",
+  "CONFIRM_PASSWORD": "გაიმეორეთ პაროლი",
+  "CONFIRM_PASSWORD_PLACEHOLDER": "გაიმეორეთ ახალი პაროლი",
+  "PASSWORD_REQUIRED": "პაროლის შეყვანა აუცილებელია.",
+  "PASSWORD_MIN_LENGTH": "პაროლი უნდა შეიცავდეს მინიმუმ 6 სიმბოლოს.",
+  "CONFIRM_PASSWORD_REQUIRED": "გთხოვთ, გაიმეოროთ პაროლი.",
+  "RESET_BUTTON": "პაროლის შეცვლა",
+  "RESETTING": "იცვლება..."
 }
 
 }
