@@ -18,6 +18,8 @@ export class Login implements OnInit {
   private storage = inject(StorageService);
   private alert = inject(AlertService);
   private route = inject(ActivatedRoute);
+  public showPassword = false;
+
 
   public returnUrl = '/home';
   public loginFormInfo: FormGroup = new FormGroup({
@@ -64,4 +66,7 @@ export class Login implements OnInit {
       }
     });
   }
+  togglePassword(): void {
+  this.showPassword = !this.showPassword;
+}
 }
