@@ -9,10 +9,11 @@ import { DatePipe } from '@angular/common';
 import { StateMessage } from '../../../../shared/components/state-message/state-message';
 import { TranslatePipe } from '@ngx-translate/core';
 import { AlertService } from '../../../../shared/services/alert.service';
+import { PasswordField } from '../../../../shared/components/password-field/password-field';
 
 @Component({
   selector: 'app-profile',
-  imports: [ReactiveFormsModule, DatePipe,StateMessage,TranslatePipe],
+  imports: [ReactiveFormsModule, DatePipe,StateMessage,TranslatePipe,PasswordField],
   templateUrl: './profile.html',
   styleUrl: './profile.scss',
 })
@@ -56,6 +57,7 @@ export class Profile implements OnInit {
    confirmPassword:new FormControl('',Validators.required)
  })
 
+public newPasswordValue = '';
 
   // ============================================
   // Bookings — Lazy Loaded, ფილტრი და დეტალები
@@ -492,5 +494,15 @@ saveBookingDate(booking: Booking): void {
       this.isUpdatingBooking.set(false);
     }
   });
+}
+// =====================================
+// Password დამატებითი პარამეტრები:
+// ======================================
+onNewPasswordChange(password: string): void {
+  this.newPasswordValue = password;
+
+  this.passwordForm
+    .get('newPassword')
+    ?.setValue(password);
 }
 }

@@ -319,7 +319,10 @@
 
           <div class="form-field">
           <label for="newPassword">{{ 'SETTINGS.SETTINGS_NEW_PASSWORD' | translate }}</label>
-          <input type="text" formControlName="newPassword" name="newPassword">
+          <app-password-field
+  [password]="newPasswordValue"
+  (passwordChange)="onNewPasswordChange($event)"
+></app-password-field>
      @if (
   passwordForm.get('newPassword')?.touched && passwordForm.get('newPassword')?.hasError('required')
 ) {

@@ -10,12 +10,13 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 import { AuthService } from '../../services/auth.service';
 import { AlertService } from '../../../../shared/services/alert.service';
+import { PasswordField } from '../../../../shared/components/password-field/password-field';
 
 @Component({
   selector: 'app-reset-password',
   imports: [
     ReactiveFormsModule,
-    TranslatePipe
+    TranslatePipe,PasswordField
   ],
   templateUrl: './reset-password.html',
   styleUrl: './reset-password.scss',
@@ -26,7 +27,7 @@ export class ResetPassword implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private alert = inject(AlertService);
-
+public passwordValue = '';
   // URL-დან მიღებული reset token
   private resetToken = '';
 
@@ -189,5 +190,11 @@ export class ResetPassword implements OnInit {
     });
 
   }
+onPasswordChange(password: string): void {
+  this.passwordValue = password;
 
+  this.resetPasswordForm
+    .get('password')
+    ?.setValue(password);
+}
 }
