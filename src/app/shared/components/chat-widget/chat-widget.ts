@@ -43,11 +43,11 @@ export class ChatWidget implements OnInit {
   public isSending = signal<boolean>(false);
   public isThinking = signal<boolean>(false);
 
-  // 🔧 history — მაქსიმუმ ბოლო 5 შეტყობინება
+  //  history — მაქსიმუმ ბოლო 8 შეტყობინება
   private conversationHistory: ApiMessage[] = [];
-  private readonly MAX_HISTORY = 3;
+  private readonly MAX_HISTORY = 8;
 
-  // 🔧 მატარებლების მარტივი მონაცემი, prompt-ისთვის
+  //  მატარებლების მარტივი მონაცემი, prompt-ისთვის
   private trainsOverview: any[] = [];
   private trainsLoaded = false;
 
@@ -55,7 +55,7 @@ export class ChatWidget implements OnInit {
     this.loadTrainsOverview();
   }
 
-  // 🔧 ჯავშნისთვის საჭირო "ლანდშაფტის" ჩატვირთვა — ერთხელ, გვერდის გახსნისას
+  //  ჯავშნისთვის საჭირო "ლანდშაფტის" ჩატვირთვა — ერთხელ, გვერდის გახსნისას
 private loadTrainsOverview(): void {
   this.trainsService.getAllTrains().subscribe({
     next: (response: any) => {
@@ -66,12 +66,12 @@ private loadTrainsOverview(): void {
         return;
       }
 
-      // 🔧 თითოეული მატარებლის დეტალების ცალკე request, მასივში
+      //  თითოეული მატარებლის დეტალების ცალკე request, მასივში
         const detailRequests: Observable<any>[] = trainsList.map((t: any) =>
         this.trainsService.getTrainById(t.id)
       );
 
-      // 🔧 ველოდებით ყველა request-ის ერთდროულ დასრულებას
+      //  ველოდებით ყველა request-ის ერთდროულ დასრულებას
       forkJoin(detailRequests).subscribe({
         next: (detailedTrains: any[]) => {
           this.trainsOverview = detailedTrains.map((res: any) => {
@@ -99,7 +99,7 @@ private loadTrainsOverview(): void {
         },
         error: (err) => {
           console.log('Failed to load train details for chat:', err);
-          this.trainsLoaded = true; // 🔧 მაინც "დასრულებულად" ვნიშნავთ, ცარიელი მონაცემით მაინც გავაგრძელოთ
+          this.trainsLoaded = true; //  მაინც "დასრულებულად" ვნიშნავთ, ცარიელი მონაცემით მაინც გავაგრძელოთ
         }
       });
     },
@@ -130,7 +130,7 @@ private loadTrainsOverview(): void {
     this.callClaude();
   }
 
-  // 🔧 გატანილია ცალკე მეთოდად — რადგან ორ ადგილას გვჭირდება გამოძახება
+  //  გატანილია ცალკე მეთოდად — რადგან ორ ადგილას გვჭირდება გამოძახება
   //    (ჩვეულებრივი შეტყობინებისას, და მარკერების დამუშავების შემდეგაც)
   private callClaude(): void {
     this.isSending.set(true);
@@ -155,7 +155,7 @@ private loadTrainsOverview(): void {
     });
   }
 
-  // 🔧 ისტორიაში დამატება, ბოლო 5-მდე შეზღუდვით
+  //  ისტორიაში დამატება, ბოლო 5-მდე შეზღუდვით
   private pushToHistory(msg: ApiMessage): void {
     this.conversationHistory.push(msg);
     if (this.conversationHistory.length > this.MAX_HISTORY) {
@@ -163,10 +163,10 @@ private loadTrainsOverview(): void {
     }
   }
 
-  // 🔧 Claude-ის პასუხის "დაშიფვრა" — მარკერების ძებნა
+  //  Claude-ის პასუხის "დაშიფვრა" — მარკერების ძებნა
   private handleClaudeResponse(responseText: string): void {
 
-    // === 1) სეატების მოთხოვნა ===
+    // === 1)ადგილების მოთხოვნა ===
     if (responseText.includes('SEATS_REQUEST:')) {
       const [visibleText, jsonPart] = responseText.split('SEATS_REQUEST:');
 
@@ -208,7 +208,7 @@ private loadTrainsOverview(): void {
     this.isSending.set(false);
   }
 
-  // 🔧 რეალური სეატების წამოღება, backend-იდან
+  //  რეალური ადგილის წამოღება, backend-იდან
   private fetchSeatsAndContinue(request: { scheduleId: number; coachId: number; travelDate: string }): void {
     this.trainsService.getSeatsAvailability(request.scheduleId, request.coachId, request.travelDate).subscribe({
       next: (response: any) => {
@@ -216,11 +216,11 @@ private loadTrainsOverview(): void {
           .filter((s: any) => s.isAvailable)
           .map((s: any) => ({ seatId: s.id, number: s.number }));
 
-        // 🔧 ეს მონაცემი "ვუბრუნებთ" Claude-ს, როგორც ახალ user-შეტყობინებას
+        // ამ მონაცემს "ვუბრუნებთ" Claude-ს, როგორც ახალ user-შეტყობინებას
         const dataMessage = `[SYSTEM DATA] Available seats: ${JSON.stringify(availableSeats)}. Ask the user to pick one, using the exact seatId when you write BOOKING_ACTION later.`;
 
         this.pushToHistory({ role: 'user', content: dataMessage });
-        this.callClaude(); // 🔧 ხელახლა ვეკითხებით Claude-ს, ახლა სეატების მონაცემით
+        this.callClaude(); //  ხელახლა ვეკითხებით Claude-ს, ახლა ადგილების მონაცემით
       },
       error: (err) => {
         console.log(err);
@@ -231,7 +231,7 @@ private loadTrainsOverview(): void {
     });
   }
 
-  // 🔧 რეალური ჯავშნის შექმნა
+  //  რეალური ჯავშნის შექმნა
   private executeBooking(action: { scheduleId: number; seatId: number; travelDate: string }): void {
     this.userService.createBooking({
       scheduleId: action.scheduleId,
@@ -267,14 +267,15 @@ ${JSON.stringify(this.trainsOverview, null, 2)}
 
 წესები:
 1. უპასუხე ქართულად
-2. თუ მომხმარებელი ჯავშნის გაკეთებას ითხოვს და არაავტორიზებულია, უთხარი, jერ უნდა შევიდეს სისტემაში, და აღარ განაგრძო
+2. თუ მომხმარებელი ჯავშნის გაკეთებას ითხოვს და არაავტორიზებულია, უთხარი, ჯერ უნდა შევიდეს სისტემაში, და აღარ განაგრძო
 3. არასდროს გამოიგონო scheduleId/coachId — გამოიყენე მხოლოდ ზემოთ მოცემული სია
 4. თუ იცი კონკრეტული schedule, coach და თარიღი, მაგრამ ჯერ არ იცი კონკრეტული ადგილი (seat), დაწერე ცალკე ხაზზე:
    SEATS_REQUEST: {"scheduleId": <რიცხვი>, "coachId": <რიცხვი>, "travelDate": "<YYYY-MM-DD>"}
-5. მას შემდეგ, რაც მიიღებ ხელმისაწვდომ სეატებს (SYSTEM DATA-ს სახით) და მომხმარებელი აირჩევს კონკრეტულს, დაწერე:
+5. მას შემდეგ, რაც მიიღებ ხელმისაწვდომ ადგილებს(seats) (SYSTEM DATA-ს სახით) და მომხმარებელი აირჩევს კონკრეტულს, დაწერე:
    BOOKING_ACTION: {"scheduleId": <რიცხვი>, "coachId": <რიცხვი>, "seatId": <რიცხვი>, "travelDate": "<YYYY-MM-DD>"}
 6. არასდროს გამოიყენო markdown ფორმატირება (** # -)
-
+7. "მნიშვნელოვანი შენიშვნა" რიტაც იწყებ შეტყობინებას და აფრთხილებ რომ ხარ ასისტენტი და რეალურ ჯავშანზე არ მიგიწვდება ხელი საერთოდ ამოიღე . არსებული მონაცემები გაადაამუშავე და ჯავშანი გააკეტე. 
+8.მომხმარებლისთვის თვალში უბფორ გარკვევიტ და ლამაზად რომ ჩანდეს რესისების და ადგილებსი ჩამონავალი  ზედმეტი სიმბოლოების გარეშე გაკეთე.
 მომხმარებლის მოთხოვნა: "${userMessage}"
     `;
   }
