@@ -15,12 +15,7 @@ export const authRoutes: Routes = [
   { path: 'resend-email', component: ResendEmail },
   { path: 'forgot-password', component: ForgotPassword,canActivate: [guestGuard] },
   {path:'home',component:HomeComponent},
-{
-    path: 'reset-password',
-    loadComponent: () =>
-      import('./pages/reset-password/reset-password')
-        .then(m => m.ResetPassword)
-  }
+{  path: 'auth/reset-password',     loadComponent: () =>import('./pages/reset-password/reset-password').then(m => m.ResetPassword)}
 
  
 ];

@@ -35,11 +35,13 @@ public forgotPassFormInfo:FormGroup=new FormGroup({
 
     next: (data:any) => {
       console.log(data);
-       
-    this.alert.success("Reset Link Sent Sucessfully!")
+             this.forgotPassFormInfo.reset();
+    this.alert.success("Reset Link Sent Sucessfully!");
+
+   
  setTimeout(()=>{
   this.router.navigate(['/reset-password'])
- })
+ },2000)
     
     },
 
