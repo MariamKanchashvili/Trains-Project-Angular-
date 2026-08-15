@@ -8,13 +8,14 @@ import { TokenService } from '../../../core/services/token.service';
 import { StorageService } from '../../../core/services/storage.service';
 
 export interface UpdateUserRequest {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phoneNumber: string;
-  address: string;
-  pictureUrl: string;
-  dateOfBirth: string;
+  firstName: string,
+  lastName: string,
+  email: string,
+  phoneNumber: string,
+  address: string,
+
+  dateOfBirth?: string,
+  pictureUrl:string,
 }
 
 @Service()
@@ -82,6 +83,10 @@ deleteAccount(){
 
 createBooking(payload: { scheduleId: number; seatId: number[]; travelDate: string }) {
     return this.http.post<{ data: any }>(`${API_URL}/bookings`, payload);
+};
+
+updateBookingDate(id: number, travelDate: string) {
+    return this.http.put<{ data: Booking }>(`${API_URL}/bookings/${id}`, { travelDate });
 }
 
 }

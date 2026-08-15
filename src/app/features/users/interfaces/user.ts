@@ -7,7 +7,7 @@ export interface UserResponse{
     phoneNumber: string,
     address: string,
     dob: string,
-    pictureUrl: string
+    pictureUrl:string,
   }
 }
 

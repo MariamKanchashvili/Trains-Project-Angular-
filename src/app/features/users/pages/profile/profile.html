@@ -235,12 +235,35 @@
               <div class="booking-item__price">${{ booking.price }}</div>
 
               <!--  delete ღილაკი, თითოეულ item-ზე -->
-    <button
-      class="booking-item__delete"
-      [disabled]="isDeletingBooking()"
-      (click)="deleteBooking(booking.id); $event.stopPropagation()">
-      ✕
-    </button>
+                
+                  
+@if (editingBookingId() === booking.id) {
+  <!--  რედაქტირების რეჟიმი -->
+  <div class="booking-item__edit" (click)="$event.stopPropagation()">
+    <input
+      type="date"
+      [value]="editDateValue()"
+      (input)="editDateValue.set($any($event.target).value)">
+    <button [disabled]="isUpdatingBooking()" (click)="saveBookingDate(booking)">✓</button>
+    <button (click)="cancelEditingBooking()">✕</button>
+  </div>
+} @else {
+  <div class="btn-wrapper">
+  <!-- 🔧 ჩვეულებრივი რეჟიმი -->
+  <button class="booking-item__edit-btn" (click)="startEditingBooking(booking); $event.stopPropagation()">✏️</button>
+  <button
+    class="booking-item__delete"
+    [disabled]="isDeletingBooking()"
+    (click)="deleteBooking(booking.id); $event.stopPropagation()">
+    ✕
+  </button>
+  </div>
+}
+ 
+@if (updateBookingError() && editingBookingId() === booking.id) {
+  <p class="field-error">{{ updateBookingError() }}</p>
+}
+
             </div>
           }
         </div>

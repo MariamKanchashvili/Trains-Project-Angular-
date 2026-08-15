@@ -41,8 +41,8 @@ export class Profile implements OnInit {
   public saveMessage = signal<string>('');
 
   public profileForm: FormGroup = new FormGroup({
-    firstName: new FormControl('', Validators.required),
-    lastName: new FormControl('', Validators.required),
+    firstName: new FormControl(''),
+    lastName: new FormControl(''),
     phoneNumber: new FormControl(''),
     address: new FormControl(''),
     dob: new FormControl(''),
@@ -175,43 +175,71 @@ public totalBookings=signal(0);
   }
 
   saveProfile(): void {
-    if (this.profileForm.invalid) {
-      this.profileForm.markAllAsTouched();
-      return;
-    }
+
+
+    console.log('FORM:', this.profileForm.value);
+  console.log('VALID:', this.profileForm.valid);
+  console.log('FIRST NAME ERRORS:', this.profileForm.get('firstName')?.errors);
+  console.log('LAST NAME ERRORS:', this.profileForm.get('lastName')?.errors);
+
+    // if (this.profileForm.invalid) {
+    //   this.profileForm.markAllAsTouched();
+    //   return;
+    // }
 
     this.isSaving.set(true);
     this.saveMessage.set('');
 
     const formValue = this.profileForm.value;
+      const currentUser = this.user()!;
 
-    const payload: UpdateUserRequest = {
-      firstName: formValue.firstName,
-      lastName: formValue.lastName,
-      email: this.user()!.email,
-      phoneNumber: formValue.phoneNumber ?? '',
-      address: formValue.address ?? '',
-      pictureUrl: this.user()?.details.pictureUrl ?? '',
-      dateOfBirth: formValue.dob
-        ? new Date(formValue.dob).toISOString()
-        : '',
+    const payload: any = {
+        firstName: formValue.firstName || currentUser.firstName,
+    lastName: formValue.lastName || currentUser.lastName,
+    email: currentUser.email,
     };
 
-    this.userService.updateUser(payload).subscribe({
-      next: (response) => {
-        console.log(response);
-        this.user.set(response.data);
-        this.isSaving.set(false);
-        this.saveMessage.set('Profile updated successfully!');
-      },
-      error: (err) => {
-        console.log(err);
-        const message = err?.error?.detail || 'Failed to update profile.';
-        this.isSaving.set(false);
-        this.saveMessage.set(message);
-      }
-    });
+     //  დამხმარე ფუნქცია — ველს ამატებს payload-ს მხოლოდ იმ შემთხვევაში, თუ მას რეალური მნიშვნელობა აქვს
+  const addIfPresent = (key: string, value: any) => {
+    if (value) {
+      payload[key] = value;
+    }
+  };
+
+  addIfPresent('phoneNumber', formValue.phoneNumber || currentUser.details.phoneNumber);
+  addIfPresent('address', formValue.address || currentUser.details.address);
+  addIfPresent('pictureUrl', currentUser.details.pictureUrl);
+  const dobValue = formValue.dob || currentUser.details.dob;
+  if (dobValue) {
+    payload.dateOfBirth = new Date(dobValue).toISOString();
   }
+ this.userService.updateUser(payload).subscribe({
+    next: () => {
+      // 🔧 response.data არის მხოლოდ ID — ჩვენ თვითონ ვაწყობთ განახლებულ user-ს, payload-იდან
+      this.user.update(oldUser => ({
+        ...oldUser!,
+        firstName: payload.firstName,
+        lastName: payload.lastName,
+        details: {
+          ...oldUser!.details,
+          phoneNumber: payload.phoneNumber ?? oldUser!.details.phoneNumber,
+          address: payload.address ?? oldUser!.details.address,
+          pictureUrl: payload.pictureUrl ?? oldUser!.details.pictureUrl,
+          dob: payload.dateOfBirth ?? oldUser!.details.dob,
+        }
+      }));
+
+      this.isSaving.set(false);
+      this.alert.success('Profile updated successfully!'); // 🔧 ალერტად, საბანერო შეტყობინების ნაცვლად
+    },
+    error: (err) => {
+      console.log(err);
+      const message = err?.error?.detail || 'Failed to update profile.';
+      this.isSaving.set(false);
+      this.alert.error(message); // 🔧 ალერტად, აქაც
+    }
+  });
+}
 
   // ============================================
   // Bookings — ჩატვირთვა (ფილტრის მხარდაჭერით)
@@ -408,5 +436,52 @@ deleteAccount():void{
          this.alert.error(err?.error?.detail ||  'Failed to delete account');
     }
     })
+}
+
+// ============================================
+// Booking-ის თარიღის რედაქტირება
+// ============================================
+public editingBookingId = signal<number | null>(null);
+public editDateValue = signal<string>('');
+public isUpdatingBooking = signal<boolean>(false);
+public updateBookingError = signal<string>('');
+
+startEditingBooking(booking: Booking): void {
+  this.editingBookingId.set(booking.id);
+  this.editDateValue.set(booking.travelDate.split('T')[0]); // 🔧 მხოლოდ თარიღის ნაწილი, input-ისთვის
+  this.updateBookingError.set('');
+}
+
+cancelEditingBooking(): void {
+  this.editingBookingId.set(null);
+  this.editDateValue.set('');
+}
+
+saveBookingDate(booking: Booking): void {
+  const newDate = this.editDateValue();
+  if (!newDate) return;
+
+  this.isUpdatingBooking.set(true);
+  this.updateBookingError.set('');
+
+  this.userService.updateBookingDate(booking.id, newDate).subscribe({
+    next: (response) => {
+      // 🔧 ორივე სიაში ვანახლებთ item-ს, ახალი travelDate-ით
+      const updateList = (list: Booking[]) =>
+        list.map(b => b.id === booking.id ? { ...b, travelDate: response.data.travelDate } : b);
+
+      this.bookings.update(updateList);
+      this.filteredBookings.update(updateList);
+
+      this.editingBookingId.set(null);
+      this.isUpdatingBooking.set(false);
+    },
+    error: (err) => {
+      console.log(err);
+      const message = err?.error?.detail || 'Failed to update booking date.';
+      this.updateBookingError.set(message);
+      this.isUpdatingBooking.set(false);
+    }
+  });
 }
 }
