@@ -6,6 +6,7 @@ import { AlertService } from '../../../../shared/services/alert.service';
 import jsPDF from 'jspdf';
 import { BookingConfirm } from '../../../../shared/services/booking-confirm';
 import { UserService } from '../../../users/services/user.service';
+
 @Component({
   selector: 'app-booking',
   imports: [RouterLink,TranslatePipe],
@@ -19,6 +20,7 @@ export class Booking implements OnInit {
   private alert=inject(AlertService);
   private bookingConfirmService=inject(BookingConfirm);
   private userService = inject(UserService);
+
   // ============================================
   // საწყისი მონაცემები — მატარებელი და schedule
   // ============================================
@@ -248,41 +250,39 @@ const seatNumbers = this.selectedSeatNumbers();
     .subscribe({
       next: (response) => {
         console.log('Booking created successfully', response);
-
-         this.userService.getCurrentUser().subscribe({
-    next: (userResponse) => {
-
-      const userEmail = userResponse.data.email;
-console.log('SELECTED SEATS:', seatNumbers);
-      const bookingData = {
-      
-        userEmail,
-        trainNumber: this.train()?.number?.toString() ?? '',
-        from: this.schedule()?.origin ?? '',
-        to: this.schedule()?.destination ?? '',
-        travelDate,
-        seatNumber:  seatNumbers,
-      };
-      
-console.log('BOOKING DATA FOR N8N:', bookingData);
-
-      this.bookingConfirmService
-        .sendBookingConfirmation(bookingData)
-        .subscribe({
-          next: () => {
-            console.log('Booking confirmation email sent');
-          },
-          error: (emailError) => {
-            console.error('Failed to send confirmation email', emailError);
-          }
-        });
-    },
-
-    error: (userError) => {
-      console.error('Failed to get current user', userError);
-    }
-  });
         this.alert.success('Booking completed successfully!');
+
+        this.userService.getCurrentUser().subscribe({
+  next: (userResponse) => {
+
+    const userEmail = userResponse.data.email;
+
+    const bookingData = {
+      userEmail,
+      trainNumber: this.train()?.number?.toString() ?? '',
+      from: this.schedule()?.origin ?? '',
+      to: this.schedule()?.destination ?? '',
+      travelDate: travelDate,
+      seatNumber: this.selectedSeatNumbers()
+    };
+console.log('📧 SENDING TO N8N:', bookingData);
+
+    this.bookingConfirmService
+      .sendBookingConfirmation(bookingData)
+      .subscribe({
+        next: () => {
+          console.log('Booking confirmation email sent');
+        },
+        error: (err) => {
+          console.error('Failed to send confirmation email', err);
+        }
+      });
+  },
+
+  error: (err) => {
+    console.error('Failed to get current user:', err);
+  }
+});
         // popup-ისთვის ვინახავთ ადგილის  ნომრებს, სანამ selectedSeatIds გასუფთავდება
         this.confirmedSeatNumbers.set(this.selectedSeatNumbers());
 

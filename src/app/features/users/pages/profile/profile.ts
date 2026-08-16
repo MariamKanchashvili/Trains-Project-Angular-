@@ -505,4 +505,17 @@ onNewPasswordChange(password: string): void {
     .get('newPassword')
     ?.setValue(password);
 }
+// ========================================
+// Eye toggle
+// ========================================
+public showCurrentPassword = false;
+public showConfirmPassword = false;
+
+toggleCurrentPassword(): void {
+  this.showCurrentPassword = !this.showCurrentPassword;
+}
+
+toggleConfirmPassword(): void {
+  this.showConfirmPassword = !this.showConfirmPassword;
+}
 }

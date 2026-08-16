@@ -43,9 +43,9 @@ export class ChatWidget implements OnInit {
   public isSending = signal<boolean>(false);
   public isThinking = signal<boolean>(false);
 
-  //  history — მაქსიმუმ ბოლო 8 შეტყობინება
+  //  history — მაქსიმუმ ბოლო 6 შეტყობინება
   private conversationHistory: ApiMessage[] = [];
-  private readonly MAX_HISTORY = 8;
+  private readonly MAX_HISTORY = 6;
 
   //  მატარებლების მარტივი მონაცემი, prompt-ისთვის
   private trainsOverview: any[] = [];
