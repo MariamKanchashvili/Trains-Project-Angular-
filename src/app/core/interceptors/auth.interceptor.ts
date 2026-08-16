@@ -1,6 +1,10 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 
 export const apiKeyInterceptor: HttpInterceptorFn = (req, next) => {
+  if (req.url.startsWith('http://localhost:5678')) {
+    return next(req);
+  }
+  
   const cloned = req.clone({
     setHeaders: { 'x-api-key': 'b8b3a17d-54e7-43e8-96ee-33d9122e757a' },
   });

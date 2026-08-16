@@ -3,6 +3,11 @@ import { inject } from '@angular/core';
 import { TokenService } from '../services/token.service';
  
 export const authorationInterceptor: HttpInterceptorFn = (req, next) => {
+  
+   if (req.url.startsWith('http://localhost:5678')) {
+    return next(req);
+  }
+
   const tokenService = inject(TokenService);
   const accessToken = tokenService.getAcessToken();
  
