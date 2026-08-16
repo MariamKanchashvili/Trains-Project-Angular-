@@ -46,9 +46,16 @@ resendVerify(email:string){
 forgotPass(email:string){
     return this.http.post(`${API_URL}/auth/forget-password/${email}`, {})
 }
-verifyEmail(email: string, code: string) {
-  return this.http.put(`${API_URL}/auth/verify-email`, { email, code });
-}
+ verifyEmail(email: string, code: string) {
+        return this.http.put(`${API_URL}/auth/verify-email`, { email, code }).pipe(
+            tap((response: any) => {
+                //  ვერიფიკაციის შემდეგ, backend აბრუნებს ახალ,  ტოკენებს
+                this.tokenService.saveAccessToken(response.data.accessToken);
+                this.tokenService.saveRefreshToken(response.data.refreshToken);
+            })
+        );
+    }
+
 resetPassword(info:any){
     return this.http.put(`${API_URL}/auth/reset-password`, info)
 }

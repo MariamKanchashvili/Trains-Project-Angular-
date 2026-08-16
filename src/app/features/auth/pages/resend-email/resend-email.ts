@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { TranslatePipe } from '@ngx-translate/core';
 import { AlertService } from '../../../../shared/services/alert.service';
+import { AuthState } from '../../../../core/services/auth-state';
 
 @Component({
   selector: 'app-resend-email',
@@ -17,6 +18,8 @@ export class ResendEmail implements OnInit {
   private router = inject(Router);
   private alert=inject(AlertService);
   public email = signal<string | null>(null);
+   private authState = inject(AuthState);
+
 
   public errorMessage = signal<string>('');
   public isLoading = signal<boolean>(false);
@@ -56,7 +59,8 @@ export class ResendEmail implements OnInit {
       next: (data: any) => {
         console.log(data);
         this.isLoading.set(false);
-        this.alert.success("Email Verified Successfully!");
+        this.authState.login();  //  signal-ს ვატყობინებ, რომ ახლა დალოგინებულია
+        this.alert.success("Email Verified Successfully! Welcome to STEP TRAINS.");
         this.router.navigate(['/home']);
       },
       error: (err) => {
