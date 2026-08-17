@@ -416,6 +416,11 @@ if(formValue.newPassword!==formValue.confirmPassword){
 // =====================================
 
 deleteAccount():void{
+  
+   if (this.bookings().length > 0) {
+    this.alert.warning('You have active bookings. Please cancel them before deleting your account.');
+    return;
+  }
   const confirmDelete=confirm('Are you sure you want to delete your account? This action cannot be undone')
 
   if(!confirmDelete){
