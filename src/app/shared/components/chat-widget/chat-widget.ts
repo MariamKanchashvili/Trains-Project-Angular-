@@ -6,7 +6,7 @@ import { UserService } from '../../../features/users/services/user.service';
 import { ServicesTrainsService } from '../../../features/trains/services/services.trains.service'; // 🔧 დაარეგულირე path
 import { environment } from '../../../../environments/environment';
 import { forkJoin, Observable } from 'rxjs';
-
+import { BookingConfirm } from '../../services/booking-confirm';
 interface ChatMessage {
   text: string;
   type: 'user' | 'ai';
@@ -29,7 +29,7 @@ export class ChatWidget implements OnInit {
   private userService = inject(UserService);
   private trainsService = inject(ServicesTrainsService);
   public authState = inject(AuthState);
-
+  private bookingConfirmService=inject(BookingConfirm)
   public isChatOpen = signal<boolean>(false);
   public hasNewNotification = signal<boolean>(true);
 
@@ -50,6 +50,8 @@ export class ChatWidget implements OnInit {
   //  მატარებლების მარტივი მონაცემი, prompt-ისთვის
   private trainsOverview: any[] = [];
   private trainsLoaded = false;
+//  ახალი — ბოლოს მოძებნილი, თავისუფალი ადგილების სია, seatNumber-ის მოსაძებნად
+  private lastFetchedSeats: { seatId: number; number: string }[] = [];
 
   ngOnInit(): void {
     this.loadTrainsOverview();
@@ -216,6 +218,8 @@ private loadTrainsOverview(): void {
           .filter((s: any) => s.isAvailable)
           .map((s: any) => ({ seatId: s.id, number: s.number }));
 
+         this.lastFetchedSeats = availableSeats; 
+
         // ამ მონაცემს "ვუბრუნებთ" Claude-ს, როგორც ახალ user-შეტყობინებას
         const dataMessage = `[SYSTEM DATA] Available seats: ${JSON.stringify(availableSeats)}. Ask the user to pick one, using the exact seatId when you write BOOKING_ACTION later.`;
 
@@ -232,26 +236,63 @@ private loadTrainsOverview(): void {
   }
 
   //  რეალური ჯავშნის შექმნა
-  private executeBooking(action: { scheduleId: number; seatId: number; travelDate: string }): void {
-    this.userService.createBooking({
-      scheduleId: action.scheduleId,
-      seatId: [action.seatId],
-      travelDate: action.travelDate
-    }).subscribe({
-      next: () => {
-        this.messages.update(msgs => [...msgs, { text: '✅ ჯავშანი წარმატებით შესრულდა! დეტალები ნახეთ თქვენს პროფილში.', type: 'ai' }]);
-        this.isThinking.set(false);
-        this.isSending.set(false);
-      },
-      error: (err) => {
-        console.log(err);
-        const message = err?.error?.detail || 'ჯავშნის შექმნა ვერ მოხერხდა.';
-        this.messages.update(msgs => [...msgs, { text: `❌ ${message}`, type: 'ai' }]);
-        this.isThinking.set(false);
-        this.isSending.set(false);
-      }
-    });
-  }
+  private executeBooking(action: { scheduleId: number; coachId: number; seatId: number; travelDate: string }): void {
+  this.userService.createBooking({
+    scheduleId: action.scheduleId,
+    seatId: [action.seatId],
+    travelDate: action.travelDate
+  }).subscribe({
+    next: () => {
+      this.messages.update(msgs => [...msgs, { text: '✅ ჯავშანი წარმატებით შესრულდა! დეტალები ნახეთ თქვენს პროფილში.', type: 'ai' }]);
+      this.isThinking.set(false);
+      this.isSending.set(false);
+
+      // 🔧 ახალი — email-შეტყობინების გაგზავნა, booking.ts-ის იგივე პრინციპით
+      this.sendChatBookingConfirmation(action);
+    },
+    error: (err) => {
+      console.log(err);
+      const message = err?.error?.detail || 'ჯავშნის შექმნა ვერ მოხერხდა.';
+      this.messages.update(msgs => [...msgs, { text: `❌ ${message}`, type: 'ai' }]);
+      this.isThinking.set(false);
+      this.isSending.set(false);
+    }
+  });
+}
+
+// 🔧 ახალი მეთოდი — მონაცემის "აწყობა" ჩატის state-იდან, და n8n-ზე გაგზავნა
+private sendChatBookingConfirmation(action: { scheduleId: number; coachId: number; seatId: number; travelDate: string }): void {
+
+  // ვპოულობთ schedule-ს, ჩვენს trainsOverview-ში, action.scheduleId-ის მიხედვით
+  const matchedTrain = this.trainsOverview.find((t: any) =>
+    t.schedules.some((s: any) => s.scheduleId === action.scheduleId)
+  );
+  const matchedSchedule = matchedTrain?.schedules.find((s: any) => s.scheduleId === action.scheduleId);
+
+  //  ვპოულობთ seatNumber-ს, ბოლოს ჩატვირთული სეატებიდან
+  const matchedSeat = this.lastFetchedSeats.find(s => s.seatId === action.seatId);
+
+  this.userService.getCurrentUser().subscribe({
+    next: (userResponse) => {
+      const bookingData = {
+        userEmail: userResponse.data.email,
+        trainNumber: matchedTrain?.number?.toString() ?? '',
+        from: matchedSchedule?.origin ?? '',
+        to: matchedSchedule?.destination ?? '',
+        travelDate: action.travelDate,
+        seatNumber: matchedSeat?.number ?? ''
+      };
+
+      console.log('📧 SENDING TO N8N (from chat):', bookingData);
+
+      this.bookingConfirmService.sendBookingConfirmation(bookingData).subscribe({
+        next: () => console.log('Booking confirmation email sent (chat)'),
+        error: (err) => console.error('Failed to send confirmation email (chat)', err)
+      });
+    },
+    error: (err) => console.error('Failed to get current user (chat):', err)
+  });
+}
 
   private buildPrompt(userMessage: string): string {
     const isLoggedIn = this.authState.isLoggedIn();
